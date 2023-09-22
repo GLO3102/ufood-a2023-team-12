@@ -10,6 +10,9 @@
       <li>
         <router-link to="/user">User Profile</router-link>
       </li>
+      <li>
+        <router-link to="/user">User Profile</router-link>
+      </li>
     </ul>
   </nav>
 </template>
