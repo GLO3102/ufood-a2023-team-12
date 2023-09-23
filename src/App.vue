@@ -15,4 +15,11 @@ export default {
 };
 </script>
 
-<style></style>
+<style>
+body {
+  font-family: "Ubuntu", sans-serif;
+}
+.alt-font {
+  font-family: "Croissant One", cursive;
+}
+</style>

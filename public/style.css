@@ -1,63 +1,54 @@
 /* Restaurant */
 
-.restaurant {
-    width : 100; 
-    
+.restaurant-items {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
 }
 
-.restaurant h1{
-    font-size: 60px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin-bottom: 30px;
+.restaurant h1 {
+  font-size: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 30px;
 }
 
 .restaurant h1 span {
-    color: rgb(253,57,8);
-    margin-left: 15PX;
-    font-family: mv boli;
+  color: rgb(253, 57, 8);
+  margin-left: 15px;
+  font-family: mv boli;
 }
 
-.restaurant .restaurant_box {
-    width:95%;
-    margin :0 auto ;
-    display: flex;
-    padding: 10px 10px;
-    
+.restaurant_card {
+  width: 325px;
+  height: 425px;
+  padding-top: 20px;
+  margin-right: 30px;
+  margin-bottom: 20px;
+  box-shadow: 0px 10px 10px rgba(0, 0, 0, 0.2);
 }
 
-.restaurant .restaurant_box .restaurant_card {
-    width:325px;
-    height:425px;
-    padding-top: 20px;
-    margin-right: 30px;
-    margin-bottom: 20px;
-    box-shadow: 0px 10px 10px rgba(0,0,0,0.2);
-    
+.restaurant_image {
+  width: 280px;
+  height: 200px;
+  margin: 10px 10px;
+  overflow: hidden;
+  object-position: center;
 }
 
-.restaurant .restaurant_box .restaurant_card .restaurant_image {
-    width:280px;
-    height:200px;  
-    margin: 10px 10px;
-    overflow:hidden;
-    object-position: center;
+.restaurant_image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: 0.3s;
+}
+.restaurant_image:hover img {
+  transform: scale(1.1);
 }
 
-.restaurant .restaurant_box .restaurant_card .restaurant_image img{
-    width:100%;
-    height: 100%;
-    object-fit: cover;
-    transition: 0.3s;
-}
-.restaurant .restaurant_box .restaurant_card .restaurant_image:hover img {
-    transform: scale(1.1);
-}
-
-.restaurant .restaurant_box .restaurant_card .restaurant_info {
- 
-    margin: -10px 20px;
-    overflow:hidden;
-    object-position: center;
+.restaurant_info {
+  margin: -10px 20px;
+  overflow: hidden;
+  object-position: center;
 }
