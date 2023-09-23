@@ -1,5 +1,12 @@
-/* Home_restaurant */
+.home{
+    display: grid;
+    grid-template-columns: 200px 1fr; 
+    gap: 20px;
+}
 
+
+
+/* Home_restaurant */
 .restaurant-items {
   display: flex;
   flex-wrap: wrap;
@@ -50,6 +57,7 @@
   height: 100%;
   object-fit: cover;
   transition: 0.3s;
+  /* border-radius: 10px; */
 }
 .restaurant_image:hover img {
   transform: scale(1.1);
