@@ -1,4 +1,4 @@
-/* Restaurant */
+/* Home_restaurant */
 
 .restaurant-items {
   display: flex;
@@ -15,9 +15,17 @@
 }
 
 .restaurant h1 span {
-  color: rgb(253, 57, 8);
+  color: #fac031;
   margin-left: 15px;
   font-family: mv boli;
+}
+
+.restaurant_box {
+    width:95%;
+    margin :0 auto ;
+    display: flex;
+    padding: 10px 10px;
+     
 }
 
 .restaurant_card {
@@ -51,4 +59,34 @@
   margin: -10px 20px;
   overflow: hidden;
   object-position: center;
+}
+
+.restaurant .restaurant_box .restaurant_card .restaurant_info h2 {
+ 
+    width: 60%;
+    text-align:center;
+    margin:10px auto 10px auto;
+    font-size: 25px;
+    color:#fac031;  
+}
+
+.restaurant .restaurant_box .restaurant_card .restaurant_info p {
+ 
+    text-align:center;
+    margin-top: 8px;
+    line-height: 21px;
+}
+
+.restaurant .restaurant_box .restaurant_card .restaurant_info h3 {
+ 
+    text-align:center;
+    margin-top: 10px;
+    font-size:medium;
+}
+
+.restaurant .restaurant_box .restaurant_card .restaurant_info .restaurant_star {
+ 
+    text-align:center;
+    margin: 10px 0 20px 0;
+    color:#fac031; 
 }
