@@ -1,5 +1,5 @@
 <template>
-<div>
+<div class="main-container">
     <div class="header-container">
       <div class="text-center header-content">
         <h1 class="header-title alt-font">Taste the World. One Restaurant at a Time.</h1>
@@ -140,8 +140,8 @@
     <!-- Restaurant -->
     
     <section class="restaurant" id="restaurant">
-        <h1>Find Your <span> Restaurant </span></h1>
-        <ul class="restaurant_box">
+        <!-- <h1>Find Your <span> Restaurant </span></h1> -->
+        <div class="restaurant_box">
             <div class="restaurant_card">
             <div class="restaurant_image">
                 <a href="#">
@@ -153,7 +153,7 @@
             </div>
 
             <div class="restaurant_info">
-                <h2>Restaurant A</h2>
+                <h2>Gourmet Corner</h2>
                 <p>Address: 123 Republic Street</p>
                 <h3>Price Range: Cheap</h3>
                 <h3>Genre: Fast Food</h3>
@@ -176,8 +176,8 @@
                 </a>
             </div>
             <div class="restaurant_info">
-                <h2>Restaurant A</h2>
-                <p>Address: 123 Republic Street</p>
+                <h2>Savory Delights</h2>
+                <p>Address: 456 Elm Avenue</p>
                 <h3>Price Range: Expensive</h3>
                 <h3>Genre: Healthy Food</h3>
                 <div class="restaurant_star">
@@ -200,9 +200,10 @@
                 </a>
             </div>
 
+
             <div class="restaurant_info">
-                <h2>Restaurant A</h2>
-                <p>Address: 123 Republic Street</p>
+                <h2>Taste Sensations</h2>
+                <p>Address: 999 Savor Street</p>
                 <h3>Price Range: Moderate</h3>
                 <h3>Genre: Pastry Food</h3>
                 <div class="restaurant_star">
@@ -226,8 +227,8 @@
             </div>
 
             <div class="restaurant_info">
-                <h2>Restaurant A</h2>
-                <p>Address: 123 Republic Street</p>
+                <h2>Street Cafe</h2>
+                <p>Address: 101 Gourmet Road</p>
                 <h3>Price Range: Moderate</h3>
                 <h3>Genre: Cafe</h3>
                 <div class="restaurant_star">
@@ -237,9 +238,7 @@
                 </div>
             </div>
             </div>
-        </ul>
 
-        <ul class="restaurant_box">
             <div class="restaurant_card">
             <div class="restaurant_image">
                 <a href="#">
@@ -250,10 +249,10 @@
                 </a>
             </div>
             <div class="restaurant_info">
-                <h2>Restaurant A</h2>
-                <p>Address: 123 Republic Street</p>
+                <h2>The Gourmet</h2>
+                <p>Address: 555 Delight Drive</p>
                 <h3>Price Range: Expensive</h3>
-                <h3>Genre: Suchi</h3>
+                <h3>Genre: Asian Food</h3>
                 <div class="restaurant_star">
                 <i class="fa-solid fa-star"></i>
                 <i class="fa-solid fa-star"></i>
@@ -274,8 +273,8 @@
                 </a>
             </div>
             <div class="restaurant_info">
-                <h2>Restaurant A</h2>
-                <p>Address: 123 Republic Street</p>
+                <h2>Palace of Tastes</h2>
+                <p>Address: 369 Foodie Lane</p>
                 <h3>Price Range: Cheap</h3>
                 <h3>Genre: Pastry Food</h3>
                 <div class="restaurant_star">
@@ -295,8 +294,8 @@
                 </a>
             </div>
             <div class="restaurant_info">
-                <h2>Restaurant A</h2>
-                <p>Address: 123 Republic Street</p>
+                <h2>Yummy Pizza</h2>
+                <p>Address: 777 Star Street</p>
                 <h3>Price Range: Cheap</h3>
                 <h3>Genre: Fast Food</h3>
                 <div class="restaurant_star">
@@ -320,8 +319,8 @@
             </div>
 
             <div class="restaurant_info">
-                <h2>Restaurant A</h2>
-                <p>Address: 123 Republic Street</p>
+                <h2>Savory Delights</h2>
+                <p>Address: 55 Republic Street</p>
                 <h3>Price Range: Moderate</h3>
                 <h3>Genre: Healthy Food</h3>
                 <div class="restaurant_star">
@@ -332,9 +331,7 @@
                 </div>
             </div>
             </div>
-        </ul>
 
-        <ul class="restaurant_box">
             <div class="restaurant_card">
             <div class="restaurant_image">
                 <a href="#">
@@ -346,7 +343,7 @@
             </div>
 
             <div class="restaurant_info">
-                <h2>Restaurant A</h2>
+                <h2>Cafe Serendipity</h2>
                 <p>Address: 123 Republic Street</p>
                 <h3>Price Range: Cheap</h3>
                 <h3>Genre: Cafe</h3>
@@ -369,10 +366,10 @@
                 </a>
             </div>
             <div class="restaurant_info">
-                <h2>Restaurant A</h2>
-                <p>Address: 123 Republic Street</p>
+                <h2>Suchi and Movie</h2>
+                <p>Address: 587 Star Street</p>
                 <h3>Price Range: Moderate</h3>
-                <h3>Genre: Suchi</h3>
+                <h3>Genre: Asian Food</h3>
                 <div class="restaurant_star">
                 <i class="fa-solid fa-star"></i>
                 <i class="fa-solid fa-star"></i>
@@ -387,15 +384,15 @@
             <div class="restaurant_image">
                 <a href="#">
                 <img
-                    src="https://images.unsplash.com/photo-1558326567-98ae2405596b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1959&q=80"
+                    src="https://plus.unsplash.com/premium_photo-1675806257134-2d3e30833d05?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1780&q=80"
                     alt="Restaurant A Image"
                 />
                 </a>
             </div>
 
             <div class="restaurant_info">
-                <h2>Restaurant A</h2>
-                <p>Address: 123 Republic Street</p>
+                <h2>Parisian Choice </h2>
+                <p>Address: 789 Oak Lane</p>
                 <h3>Price Range: Moderate</h3>
                 <h3>Genre: Pastry Food</h3>
                 <div class="restaurant_star">
@@ -419,8 +416,8 @@
             </div>
 
             <div class="restaurant_info">
-                <h2>Restaurant A</h2>
-                <p>Address: 123 Republic Street</p>
+                <h2>G_star</h2>
+                <p>Address: 78 Gourmet Road</p>
                 <h3>Price Range: Moderate</h3>
                 <h3>Genre: Fast Food</h3>
                 <div class="restaurant_star">
@@ -430,7 +427,8 @@
                 </div>
             </div>
             </div>
-        </ul>
+
+        </div>  
     </section> 
             
     </div>
@@ -439,9 +437,11 @@
 </template>
 
 <style>
+
 .header-container {
   background-image: url("https://images.unsplash.com/photo-1552566626-52f8b828add9?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=3570&q=80;");
   height: 400px;
+  width:100%;
   
   background-size: cover;
   background-position: center;
