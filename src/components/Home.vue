@@ -138,7 +138,7 @@
     </div>
 
     <!-- Restaurant -->
-    
+
     <section class="restaurant" id="restaurant">
         <!-- <h1>Find Your <span> Restaurant </span></h1> -->
         <div class="restaurant_box">
@@ -428,9 +428,9 @@
             </div>
             </div>
 
-        </div>  
-    </section> 
-            
+        </div>
+    </section>
+
     </div>
 
 </div>
@@ -442,7 +442,7 @@
   background-image: url("https://images.unsplash.com/photo-1552566626-52f8b828add9?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=3570&q=80;");
   height: 400px;
   width:100%;
-  
+
   background-size: cover;
   background-position: center;
   display: flex;
@@ -480,7 +480,7 @@
 .content {
   display: flex;
   padding-top: 40px;
-  padding-bottom: 40px;   
+  padding-bottom: 40px;
 }
 
 
