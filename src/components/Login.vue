@@ -12,10 +12,26 @@
     <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
   </div>
     
-    <button type="submit" class="btn btn-light mt-4">Login</button>
+    <button @click="submit" class="btn btn-light mt-4" >Login</button>
   </form>
 </div>
 </template>
+
+<script>
+
+export default {
+  data() {
+    return {
+      
+    }
+  },
+  methods: {
+    submit() {
+      this.$router.push("/");
+    }
+  }
+}
+</script>
 
 <style>
     .h-75 {

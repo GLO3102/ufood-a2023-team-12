@@ -16,9 +16,15 @@
         this.txt_logout = "Logout"
       },
       disableLogoutBtn(event){
+        console.log(this.$data.loggedIn);
         this.txt_user = ""
         this.txt_login = "Login"
         this.txt_logout = ""
+      }
+    },
+    mounted(){
+      if(this.$data.loggedIn){
+        console.log("allo");
       }
     }
     
@@ -45,7 +51,7 @@
         <router-link class="nav-link text-warning" to="/user">{{txt_user}}</router-link>
       </li>
       <li class="nav-item" id="btn_login">
-        <router-link class="nav-link" to="/" @click="disableLoginBtn">{{txt_login}}</router-link>
+        <router-link class="nav-link" to="/login" @click="disableLoginBtn">{{txt_login}}</router-link>
       </li>
       <li class="nav-item" id="btn_logout">
         <router-link class="nav-link" to="/" @click="disableLogoutBtn">{{txt_logout}}</router-link>
