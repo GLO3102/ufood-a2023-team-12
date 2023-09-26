@@ -2,6 +2,15 @@
 
   export default{
     name: "Navigation",
+    props: {
+        isLoggedIn: Boolean,
+    },
+    watch: { 
+        isLoggedIn: function(newVal, oldVal) {
+
+            newVal == true ? this.loggedIn() : this.loggedOut();
+        }
+    },
     data() {
       return {
         txt_user: "",
@@ -10,24 +19,22 @@
       }
     },
     methods: {
-      disableLoginBtn(event){
+      loggedIn(){
         this.txt_user = "Admin"
         this.txt_login = ""
         this.txt_logout = "Logout"
       },
-      disableLogoutBtn(event){
-        console.log(this.$data.loggedIn);
+      loggedOut(){
         this.txt_user = ""
         this.txt_login = "Login"
         this.txt_logout = ""
+      },
+      logout(){
+        this.$emit('asLoggedOut', {
+            isLoggedIn :false,
+        })
       }
     },
-    mounted(){
-      if(this.$data.loggedIn){
-        console.log("allo");
-      }
-    }
-    
   }
 </script>
 
@@ -40,21 +47,25 @@
   <div class="collapse navbar-collapse justify-content-between" id="navbarNav">
     <ul class="navbar-nav">
       <li class="nav-item">
+        <router-link class="nav-link" to="/">Home</router-link>
+      </li>
+      <li class="nav-item">
         <router-link class="nav-link" to="/restaurant">Restaurants</router-link>
       </li>
       <li class="nav-item">
         <router-link class="nav-link" to="/user">User Profile</router-link>
       </li>
     </ul>
+    <input type="text" class="form-control nav_searchbar" placeholder="Search..." />
     <ul class="navbar-nav">
       <li class="nav-item" id="username">
         <router-link class="nav-link text-warning" to="/user">{{txt_user}}</router-link>
       </li>
       <li class="nav-item" id="btn_login">
-        <router-link class="nav-link" to="/login" @click="disableLoginBtn">{{txt_login}}</router-link>
+        <router-link class="nav-link" to="/login">{{txt_login}}</router-link>
       </li>
       <li class="nav-item" id="btn_logout">
-        <router-link class="nav-link" to="/" @click="disableLogoutBtn">{{txt_logout}}</router-link>
+        <router-link class="nav-link" to="/" @click="logout">{{txt_logout}}</router-link>
       </li>
     </ul>
   </div>
@@ -64,4 +75,11 @@
 
 
 <style>
+    .nav_searchbar{
+        max-width: 40%;
+        border-radius: 25px;
+    }
+    .start-25{
+        left: 40%;
+    }
 </style>

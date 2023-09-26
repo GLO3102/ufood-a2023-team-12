@@ -27,7 +27,10 @@ export default {
   },
   methods: {
     submit() {
-      this.$router.push("/");
+        this.$emit('asLoggedIn', {
+            isLoggedIn :true,
+        }),
+        this.$router.push("/");
     }
   }
 }

@@ -1,17 +1,30 @@
 <template>
   <div id="app">
-    <nav-menu></nav-menu>
-    <router-view></router-view>
+    <navigation
+        :is-logged-in="isLoggedIn"
+        @as-logged-out="isLoggedIn = false">
+    </navigation>
+    <router-view 
+        @as-logged-in="isLoggedIn = true">
+    </router-view>
   </div>
 </template>
 
 <script>
-import Navigation from "@/components/Navigation";
+
+import Navigation from './components/Navigation.vue';
+
 export default {
   name: "app",
   components: {
-    "nav-menu": Navigation,
+    Navigation,
   },
+  data(){
+    Navigation
+    return {
+      isLoggedIn: false,
+    }
+  }
 };
 </script>
 
