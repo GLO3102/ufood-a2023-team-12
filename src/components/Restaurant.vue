@@ -7,7 +7,6 @@
     <div class="restaurant_name">
       <h2>Gourmet Corner</h2>
     </div>
-
     <div class="mosaic" id="mosaic">
       <div class="big-img">
         <img
@@ -24,14 +23,10 @@
           src="https://images.unsplash.com/photo-1630384060421-cb20d0e0649d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1925&q=80"
           alt=""
         />
-
         <img
           src="https://images.unsplash.com/photo-1622431062669-ed38267b6de5?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80"
           alt=""
         />
-
-
-
         <img
           src="https://images.unsplash.com/photo-1613985216255-a26ecf1df4a2?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1887&q=80"
           alt=""
@@ -44,27 +39,14 @@
           src="https://plus.unsplash.com/premium_photo-1683657860305-86cc79472f55?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1974&q=80"
           alt=""
         />
-
-
-
         <img
           src="https://images.unsplash.com/photo-1565299507177-b0ac66763828?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1922&q=80"
           alt=""
         />
-
-
-
-
-
-
-
         <img
           src="https://images.unsplash.com/photo-1598679253544-2c97992403ea?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1974&q=80"
           alt=""
         />
-
-
-
       </div>
     </div>
 
@@ -105,39 +87,36 @@
 
 .mosaic {
   display: flex;
-  width: auto;
-  height: 400px;
+  flex-wrap: wrap;
+  height: 400px; 
   margin: 0 200px;
+  overflow: hidden;
 }
 
 .big-img {
-  flex: 1;
+  flex: 1 1 50%; /* This means it will take up 50% of the parent's width */
+  height: 400px;
+  margin-top: 2px;
+}
 
+.small-img {
+  flex: 1 1 50%; /* This means it will take up 50% of the parent's width */
+  height: 400px;
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.small-img img {
+  height: 50%; /* Since there are two rows */
+  object-fit: cover;
+  flex-grow: 1;
+  margin: 2px;
 }
 
 .big-img img {
   width: 100%;
   height: 100%;
   object-fit: cover;
-
-
-
-}
-
-.small-img {
-  flex: 1;
-  overflow:hidden;
-  justify-content: space-between;
-  object-fit: cover;
-  align-items: flex-start;
-}
-
-.small-img img {
-  height: 50%;
-  max-width: 100%;
-  flex-wrap: wrap;
-
-  flex-grow: 1;
 }
 
 
@@ -146,7 +125,6 @@
   flex-direction: column;
   align-items: center;
   margin:  auto;
-
 }
 
 
@@ -154,8 +132,6 @@
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
-  width: 80%;
-
 }
 
 
