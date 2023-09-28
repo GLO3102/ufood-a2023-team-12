@@ -14,7 +14,7 @@
       <div class="filters pe-5">
         <div class="pb-3">
           <h4>Filters</h4>
-          <p class="clear-filters"><i class="fa-solid fa-xmark"></i> clear filters</p>
+          <p class="clear-filters"><font-awesome-icon icon="fa-solid fa-xmark" /> clear filters</p>
         </div>
 
         <h6>Price</h6>
@@ -91,22 +91,22 @@
         <div class="form-check">
           <input class="form-check-input" type="checkbox" value="" id="filterRatings1" />
           <label class="form-check-label" for="filterRatings1">
-            <i class="fa-solid fa-star"></i>
+            <font-awesome-icon icon="fa-solid fa-star" />
           </label>
         </div>
         <div class="form-check">
           <input class="form-check-input" type="checkbox" value="" id="filterRatings2" />
           <label class="form-check-label" for="filterRatings2">
-            <i class="fa-solid fa-star"></i>
-            <i class="fa-solid fa-star"></i>
+            <font-awesome-icon icon="fa-solid fa-star" />
+            <font-awesome-icon icon="fa-solid fa-star" />
           </label>
         </div>
         <div class="form-check">
           <input class="form-check-input" type="checkbox" value="" id="filterRatings3" />
           <label class="form-check-label" for="filterRatings3">
-            <i class="fa-solid fa-star"></i>
-            <i class="fa-solid fa-star"></i>
-            <i class="fa-solid fa-star"></i>
+            <font-awesome-icon icon="fa-solid fa-star" />
+            <font-awesome-icon icon="fa-solid fa-star" />
+            <font-awesome-icon icon="fa-solid fa-star" />
           </label>
         </div>
         <div class="form-check">
@@ -118,20 +118,20 @@
             checked
           />
           <label class="form-check-label" for="filterRatings4">
-            <i class="fa-solid fa-star"></i>
-            <i class="fa-solid fa-star"></i>
-            <i class="fa-solid fa-star"></i>
-            <i class="fa-solid fa-star"></i>
+            <font-awesome-icon icon="fa-solid fa-star" />
+            <font-awesome-icon icon="fa-solid fa-star" />
+            <font-awesome-icon icon="fa-solid fa-star" />
+            <font-awesome-icon icon="fa-solid fa-star" />
           </label>
         </div>
         <div class="form-check">
           <input class="form-check-input" type="checkbox" value="" id="filterRatings5" />
           <label class="form-check-label" for="filterRatings5">
-            <i class="fa-solid fa-star"></i>
-            <i class="fa-solid fa-star"></i>
-            <i class="fa-solid fa-star"></i>
-            <i class="fa-solid fa-star"></i>
-            <i class="fa-solid fa-star"></i>
+            <font-awesome-icon icon="fa-solid fa-star" />
+            <font-awesome-icon icon="fa-solid fa-star" />
+            <font-awesome-icon icon="fa-solid fa-star" />
+            <font-awesome-icon icon="fa-solid fa-star" />
+            <font-awesome-icon icon="fa-solid fa-star" />
           </label>
         </div>
       </div>
@@ -158,9 +158,9 @@
                 <h3>Price Range: Cheap</h3>
                 <h3>Genre: Fast Food</h3>
                 <div class="restaurant_star">
-                <i class="fa-solid fa-star"></i>
-                <i class="fa-solid fa-star"></i>
-                <i class="fa-solid fa-star"></i>
+                <font-awesome-icon icon="fa-solid fa-star" />
+                <font-awesome-icon icon="fa-solid fa-star" />
+                <font-awesome-icon icon="fa-solid fa-star" />
                 <i class="fa-solid fa-star-half-stroke"></i>
                 </div>
             </div>
@@ -181,10 +181,10 @@
                 <h3>Price Range: Expensive</h3>
                 <h3>Genre: Healthy Food</h3>
                 <div class="restaurant_star">
-                <i class="fa-solid fa-star"></i>
-                <i class="fa-solid fa-star"></i>
-                <i class="fa-solid fa-star"></i>
-                <i class="fa-solid fa-star"></i>
+                <font-awesome-icon icon="fa-solid fa-star" />
+                <font-awesome-icon icon="fa-solid fa-star" />
+                <font-awesome-icon icon="fa-solid fa-star" />
+                <font-awesome-icon icon="fa-solid fa-star" />
                 <i class="fa-solid fa-star-half-stroke"></i>
                 </div>
             </div>
@@ -207,11 +207,11 @@
                 <h3>Price Range: Moderate</h3>
                 <h3>Genre: Pastry Food</h3>
                 <div class="restaurant_star">
-                <i class="fa-solid fa-star"></i>
-                <i class="fa-solid fa-star"></i>
-                <i class="fa-solid fa-star"></i>
-                <i class="fa-solid fa-star"></i>
-                <i class="fa-solid fa-star"></i>
+                <font-awesome-icon icon="fa-solid fa-star" />
+                <font-awesome-icon icon="fa-solid fa-star" />
+                <font-awesome-icon icon="fa-solid fa-star" />
+                <font-awesome-icon icon="fa-solid fa-star" />
+                <font-awesome-icon icon="fa-solid fa-star" />
                 </div>
             </div>
             </div>
@@ -232,8 +232,8 @@
                 <h3>Price Range: Moderate</h3>
                 <h3>Genre: Cafe</h3>
                 <div class="restaurant_star">
-                <i class="fa-solid fa-star"></i>
-                <i class="fa-solid fa-star"></i>
+                <font-awesome-icon icon="fa-solid fa-star" />
+                <font-awesome-icon icon="fa-solid fa-star" />
                 <i class="fa-solid fa-star-half-stroke"></i>
                 </div>
             </div>
@@ -254,10 +254,10 @@
                 <h3>Price Range: Expensive</h3>
                 <h3>Genre: Asian Food</h3>
                 <div class="restaurant_star">
-                <i class="fa-solid fa-star"></i>
-                <i class="fa-solid fa-star"></i>
-                <i class="fa-solid fa-star"></i>
-                <i class="fa-solid fa-star"></i>
+                <font-awesome-icon icon="fa-solid fa-star" />
+                <font-awesome-icon icon="fa-solid fa-star" />
+                <font-awesome-icon icon="fa-solid fa-star" />
+                <font-awesome-icon icon="fa-solid fa-star" />
                 <i class="fa-solid fa-star-half-stroke"></i>
                 </div>
             </div>
@@ -278,8 +278,8 @@
                 <h3>Price Range: Cheap</h3>
                 <h3>Genre: Pastry Food</h3>
                 <div class="restaurant_star">
-                <i class="fa-solid fa-star"></i>
-                <i class="fa-solid fa-star"></i>
+                <font-awesome-icon icon="fa-solid fa-star" />
+                <font-awesome-icon icon="fa-solid fa-star" />
                 </div>
             </div>
             </div>
@@ -299,10 +299,10 @@
                 <h3>Price Range: Cheap</h3>
                 <h3>Genre: Fast Food</h3>
                 <div class="restaurant_star">
-                <i class="fa-solid fa-star"></i>
-                <i class="fa-solid fa-star"></i>
-                <i class="fa-solid fa-star"></i>
-                <i class="fa-solid fa-star"></i>
+                <font-awesome-icon icon="fa-solid fa-star" />
+                <font-awesome-icon icon="fa-solid fa-star" />
+                <font-awesome-icon icon="fa-solid fa-star" />
+                <font-awesome-icon icon="fa-solid fa-star" />
                 <i class="fa-solid fa-star-half-stroke"></i>
                 </div>
             </div>
@@ -324,9 +324,9 @@
                 <h3>Price Range: Moderate</h3>
                 <h3>Genre: Healthy Food</h3>
                 <div class="restaurant_star">
-                <i class="fa-solid fa-star"></i>
-                <i class="fa-solid fa-star"></i>
-                <i class="fa-solid fa-star"></i>
+                <font-awesome-icon icon="fa-solid fa-star" />
+                <font-awesome-icon icon="fa-solid fa-star" />
+                <font-awesome-icon icon="fa-solid fa-star" />
                 <i class="fa-solid fa-star-half-stroke"></i>
                 </div>
             </div>
@@ -348,9 +348,9 @@
                 <h3>Price Range: Cheap</h3>
                 <h3>Genre: Cafe</h3>
                 <div class="restaurant_star">
-                <i class="fa-solid fa-star"></i>
-                <i class="fa-solid fa-star"></i>
-                <i class="fa-solid fa-star"></i>
+                <font-awesome-icon icon="fa-solid fa-star" />
+                <font-awesome-icon icon="fa-solid fa-star" />
+                <font-awesome-icon icon="fa-solid fa-star" />
                 <i class="fa-solid fa-star-half-stroke"></i>
                 </div>
             </div>
@@ -371,10 +371,10 @@
                 <h3>Price Range: Moderate</h3>
                 <h3>Genre: Asian Food</h3>
                 <div class="restaurant_star">
-                <i class="fa-solid fa-star"></i>
-                <i class="fa-solid fa-star"></i>
-                <i class="fa-solid fa-star"></i>
-                <i class="fa-solid fa-star"></i>
+                <font-awesome-icon icon="fa-solid fa-star" />
+                <font-awesome-icon icon="fa-solid fa-star" />
+                <font-awesome-icon icon="fa-solid fa-star" />
+                <font-awesome-icon icon="fa-solid fa-star" />
                 <i class="fa-solid fa-star-half-stroke"></i>
                 </div>
             </div>
@@ -396,11 +396,11 @@
                 <h3>Price Range: Moderate</h3>
                 <h3>Genre: Pastry Food</h3>
                 <div class="restaurant_star">
-                <i class="fa-solid fa-star"></i>
-                <i class="fa-solid fa-star"></i>
-                <i class="fa-solid fa-star"></i>
-                <i class="fa-solid fa-star"></i>
-                <i class="fa-solid fa-star"></i>
+                <font-awesome-icon icon="fa-solid fa-star" />
+                <font-awesome-icon icon="fa-solid fa-star" />
+                <font-awesome-icon icon="fa-solid fa-star" />
+                <font-awesome-icon icon="fa-solid fa-star" />
+                <font-awesome-icon icon="fa-solid fa-star" />
                 </div>
             </div>
             </div>
@@ -421,8 +421,8 @@
                 <h3>Price Range: Moderate</h3>
                 <h3>Genre: Fast Food</h3>
                 <div class="restaurant_star">
-                <i class="fa-solid fa-star"></i>
-                <i class="fa-solid fa-star"></i>
+                <font-awesome-icon icon="fa-solid fa-star" />
+                <font-awesome-icon icon="fa-solid fa-star" />
                 <i class="fa-solid fa-star-half-stroke"></i>
                 </div>
             </div>
