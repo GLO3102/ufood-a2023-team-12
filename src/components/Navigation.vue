@@ -8,27 +8,16 @@
     watch: { 
         isLoggedIn: function(newVal, oldVal) {
 
-            newVal == true ? this.loggedIn() : this.loggedOut();
+            this.loggedIn = newVal;
         }
     },
     data() {
       return {
-        txt_user: "",
-        txt_logout: "",
-        txt_login: "Login",
+        loggedIn: false,
+        txt_user: "Admin",
       }
     },
     methods: {
-      loggedIn(){
-        this.txt_user = "Admin"
-        this.txt_login = ""
-        this.txt_logout = "Logout"
-      },
-      loggedOut(){
-        this.txt_user = ""
-        this.txt_login = "Login"
-        this.txt_logout = ""
-      },
       logout(){
         this.$emit('asLoggedOut', {
             isLoggedIn :false,
@@ -39,38 +28,38 @@
 </script>
 
 <template>
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark px-3">
+<div>
+<nav class="navbar navbar-expand-lg fixed-top navbar-dark bg-dark px-3">
   <router-link class="navbar-brand" to="/">UFood</router-link>
-  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
   </button>
-  <div class="collapse navbar-collapse justify-content-between" id="navbarNav">
-    <ul class="navbar-nav">
+
+  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+    <ul class="col navbar-nav mr-auto">
       <li class="nav-item">
         <router-link class="nav-link" to="/">Home</router-link>
       </li>
-      <li class="nav-item">
-        <router-link class="nav-link" to="/restaurant">Restaurants</router-link>
-      </li>
-      <li class="nav-item">
-        <router-link class="nav-link" to="/user">User Profile</router-link>
-      </li>
     </ul>
-    <input type="text" class="form-control nav_searchbar" placeholder="Search..." />
-     
-    <ul class="navbar-nav">
-      <li class="nav-item" id="username">
+    <form class="col form-inline my-2 my-lg-0">
+      <div class="input-group">
+        <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+      </div>
+    </form>
+    <ul class="col justify-content-end navbar-nav">
+      <li v-if="loggedIn" class="nav-item" id="username">
         <router-link class="nav-link text-warning" to="/user">{{txt_user}}</router-link>
       </li>
-      <li class="nav-item" id="btn_login">
-        <router-link class="nav-link" to="/login">{{txt_login}}</router-link>
+      <li v-if="!loggedIn" class="nav-item">
+        <router-link class="nav-link" to="/login">Login</router-link>
       </li>
-      <li class="nav-item" id="btn_logout">
-        <router-link class="nav-link" to="/" @click="logout">{{txt_logout}}</router-link>
+      <li v-if="loggedIn" class="nav-item" id="btn_logout">
+        <router-link class="nav-link" to="/" @click="logout">Logout</router-link>
       </li>
     </ul>
   </div>
 </nav>
+</div>
 </template>
 
 
@@ -83,5 +72,4 @@
     .start-25{
         left: 40%;
     }
-
 </style>
