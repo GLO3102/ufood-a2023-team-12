@@ -4,7 +4,7 @@
       <div class="text-center header-content">
         <h1 class="header-title alt-font">Taste the World. One Restaurant at a Time.</h1>
         <div class="mt-3">
-          <input type="text" class="form-control searchbar" placeholder="Search..." />
+          <input type="search" class="form-control searchbar" placeholder="Search..." />
         </div>
       </div>
     </div>
@@ -144,12 +144,12 @@
         <div class="restaurant_box">
             <div class="restaurant_card">
             <div class="restaurant_image">
-                <a href="#">
+                 <router-link class="nav-link" to="/restaurant">
                 <img
                     src="https://images.unsplash.com/photo-1586816001966-79b736744398?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1770&q=80"
                     alt="Restaurant A Image"
                 />
-                </a>
+                </router-link>
             </div>
 
             <div class="restaurant_info">
@@ -496,5 +496,181 @@
 .clear-filters {
   font-size: 14px;
   color: #aaa;
+}
+
+/* Home_restaurant */
+
+body{
+    background-color: rgb(136, 128, 128);
+}
+
+.home{
+    display: grid;
+    grid-template-columns: 160px 1fr; 
+    gap: 20px;
+    background-image: url("https://images.unsplash.com/photo-1678924587662-d8c63e57eb11?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80");
+    background-size: cover;
+}
+
+
+
+
+.restaurant-items {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+ 
+}
+
+.restaurant h1 {
+  font-size: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 30px;
+}
+
+.restaurant h1 span {
+  color: #daa00f;
+  margin-left: 40px;
+  font-family: mv boli;
+}
+
+.restaurant_box {
+    width:95%;
+    margin :0 auto ;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    
+    padding: 10px 10px;     
+}
+
+.restaurant_card {
+  width: 325px;
+  height: 425px;
+  padding-top: 20px;
+  margin-right: 30px;
+  margin-bottom: 20px;
+  box-shadow: 0px 10px 10px rgba(0, 0, 0, 0.2);
+  border-radius: 20px;
+
+}
+
+.restaurant_image {
+  width: 300px;
+  height: 200px;
+  margin: 10px 10px;
+  overflow: hidden;
+  object-position: center;
+}
+
+.restaurant_image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: 0.3s;
+  border-radius: 20px;
+}
+.restaurant_image:hover img {
+  transform: scale(1.1);
+}
+
+.restaurant_info {
+  margin: -10px 20px;
+  overflow: hidden;
+  object-position: center;
+}
+
+.restaurant_box .small_card .fa-heart {
+    position : relative;
+    top:-200px; 
+    right:-270px; 
+    font-size: larger;
+    color: rgb(136, 128, 128);
+    display: flex ;
+    transition:0.3s; 
+    cursor: pointer;
+
+}
+
+.restaurant_box .small_card:hover .fa-heart {
+    color: #da4b0a;
+}
+
+.restaurant_info h2 {
+ 
+    width: 60%;
+    text-align:center;
+    margin:10px auto 10px auto;
+    font-size: 22px;
+    color:#f9bd26;  
+}
+
+.restaurant_info p {
+ 
+    text-align:center;
+    margin-top: 8px;
+    line-height: 21px;
+    font-size: 15px;
+}
+
+.restaurant_info h3 {
+ 
+    text-align:center;
+    margin-top: 10px;
+    font-size:15px;
+}
+
+.restaurant .restaurant_box .restaurant_card .restaurant_info .restaurant_star {
+ 
+    text-align:center;
+    margin: 10px 0 20px 0;
+    color:#fac031; 
+}
+
+
+@media screen and (max-width:768px) {
+
+
+    /* .filters {
+        display: none;
+    } */
+
+    .restaurant_box {
+        flex-direction: column; 
+        padding: 10px auto;
+        align-items: center;
+    }
+    
+    .restaurant_card {
+        width: 90%; 
+        margin-right: 0px; 
+        height: auto;
+    }
+
+    .restaurant_image {
+        /* width: 280px;
+        height: 200px;  */
+        width: 95%;  
+        height: auto; 
+        margin: auto; 
+
+    }
+
+     .restaurant_info h2 {
+        font-size: 17px;
+    }
+
+.restaurant_info p {
+ 
+    font-size: 14px;
+}
+
+.restaurant_info h3 {
+ 
+    font-size: 15px;
+}  
 }
 </style>

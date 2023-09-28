@@ -57,6 +57,7 @@
       </li>
     </ul>
     <input type="text" class="form-control nav_searchbar" placeholder="Search..." />
+     
     <ul class="navbar-nav">
       <li class="nav-item" id="username">
         <router-link class="nav-link text-warning" to="/user">{{txt_user}}</router-link>
@@ -82,4 +83,5 @@
     .start-25{
         left: 40%;
     }
+
 </style>

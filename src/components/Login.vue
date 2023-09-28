@@ -37,7 +37,9 @@ export default {
 </script>
 
 <style>
+
     .h-75 {
         margin-top: 200px;
+        
     }
 </style>
