@@ -8,13 +8,19 @@
     watch: { 
         isLoggedIn: function(newVal, oldVal) {
 
-            this.loggedIn = newVal;
-        }
+          this.loggedIn = newVal;
+        },
+        innerWidth: function(newVal, oldVal) {
+
+          this.innerWidth = newVal;
+        },
     },
     data() {
       return {
         loggedIn: false,
+        innerWidth: window.innerWidth,
         txt_user: "Admin",
+        navCollapseValue: 990,
       }
     },
     methods: {
@@ -22,7 +28,13 @@
         this.$emit('asLoggedOut', {
             isLoggedIn :false,
         })
+      },
+      handleWindowResize(){
+        this.innerWidth = window.innerWidth;
       }
+    },
+    created() {
+      window.addEventListener("resize", this.handleWindowResize);
     },
   }
 </script>
@@ -31,7 +43,14 @@
 <div>
 <nav class="navbar navbar-expand-lg fixed-top navbar-dark bg-dark px-3">
   <router-link class="navbar-brand" to="/">UFood</router-link>
-  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+
+  <form v-if="innerWidth <= navCollapseValue" class="form-inline my-2 my-lg-0">
+    <div class="input-group">
+      <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+    </div>
+  </form>
+
+  <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
   </button>
 
@@ -41,7 +60,7 @@
         <router-link class="nav-link" to="/">Home</router-link>
       </li>
     </ul>
-    <form class="col form-inline my-2 my-lg-0">
+    <form v-if="innerWidth >= navCollapseValue" class="col form-inline my-2 my-lg-0">
       <div class="input-group">
         <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
       </div>
