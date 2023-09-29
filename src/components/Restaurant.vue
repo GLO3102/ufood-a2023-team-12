@@ -52,10 +52,10 @@
           <h3>Price Range: Cheap</h3>
           <div class="restaurant_star">
             <h3>Reviews:</h3>
-            <span><i class="fa-solid fa-star"></i></span>
-            <span><i class="fa-solid fa-star"></i></span>
-            <span><i class="fa-solid fa-star"></i></span>
-            <span><i class="fa-solid fa-star-half-stroke"></i></span>
+            <span><font-awesome-icon icon="fa-solid fa-star"></font-awesome-icon></span>
+            <span><font-awesome-icon icon="fa-solid fa-star"></font-awesome-icon></span>
+            <span><font-awesome-icon icon="fa-solid fa-star"></font-awesome-icon></span>
+            <span><font-awesome-icon icon="fa-solid fa-star-half-stroke "></font-awesome-icon></span>
           </div>
           <h3>Address: 123 Republic Street</h3>
           <h3>Phone: 555-555-5555</h3>
