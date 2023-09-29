@@ -160,7 +160,7 @@
                 <font-awesome-icon icon="fa-solid fa-star" />
                 <font-awesome-icon icon="fa-solid fa-star" />
                 <font-awesome-icon icon="fa-solid fa-star" />
-                <i class="fa-solid fa-star-half-stroke"></i>
+                <font-awesome-icon icon="fa-solid fa-star-half-stroke" />
                 </div>
             </div>
             </div>
@@ -184,7 +184,7 @@
                 <font-awesome-icon icon="fa-solid fa-star" />
                 <font-awesome-icon icon="fa-solid fa-star" />
                 <font-awesome-icon icon="fa-solid fa-star" />
-                <i class="fa-solid fa-star-half-stroke"></i>
+                <font-awesome-icon icon="fa-solid fa-star-half-stroke" />
                 </div>
             </div>
             </div>
@@ -233,7 +233,7 @@
                 <div class="restaurant_star">
                 <font-awesome-icon icon="fa-solid fa-star" />
                 <font-awesome-icon icon="fa-solid fa-star" />
-                <i class="fa-solid fa-star-half-stroke"></i>
+                <font-awesome-icon icon="fa-solid fa-star-half-stroke" />
                 </div>
             </div>
             </div>
@@ -257,7 +257,7 @@
                 <font-awesome-icon icon="fa-solid fa-star" />
                 <font-awesome-icon icon="fa-solid fa-star" />
                 <font-awesome-icon icon="fa-solid fa-star" />
-                <i class="fa-solid fa-star-half-stroke"></i>
+                <font-awesome-icon icon="fa-solid fa-star-half-stroke" />
                 </div>
             </div>
             </div>
@@ -302,7 +302,7 @@
                 <font-awesome-icon icon="fa-solid fa-star" />
                 <font-awesome-icon icon="fa-solid fa-star" />
                 <font-awesome-icon icon="fa-solid fa-star" />
-                <i class="fa-solid fa-star-half-stroke"></i>
+                <font-awesome-icon icon="fa-solid fa-star-half-stroke" />
                 </div>
             </div>
             </div>
@@ -326,7 +326,7 @@
                 <font-awesome-icon icon="fa-solid fa-star" />
                 <font-awesome-icon icon="fa-solid fa-star" />
                 <font-awesome-icon icon="fa-solid fa-star" />
-                <i class="fa-solid fa-star-half-stroke"></i>
+                <font-awesome-icon icon="fa-solid fa-star-half-stroke" />
                 </div>
             </div>
             </div>
@@ -350,7 +350,7 @@
                 <font-awesome-icon icon="fa-solid fa-star" />
                 <font-awesome-icon icon="fa-solid fa-star" />
                 <font-awesome-icon icon="fa-solid fa-star" />
-                <i class="fa-solid fa-star-half-stroke"></i>
+                <font-awesome-icon icon="fa-solid fa-star-half-stroke" />
                 </div>
             </div>
             </div>
@@ -374,7 +374,7 @@
                 <font-awesome-icon icon="fa-solid fa-star" />
                 <font-awesome-icon icon="fa-solid fa-star" />
                 <font-awesome-icon icon="fa-solid fa-star" />
-                <i class="fa-solid fa-star-half-stroke"></i>
+                <font-awesome-icon icon="fa-solid fa-star-half-stroke" />
                 </div>
             </div>
             </div>
@@ -422,7 +422,7 @@
                 <div class="restaurant_star">
                 <font-awesome-icon icon="fa-solid fa-star" />
                 <font-awesome-icon icon="fa-solid fa-star" />
-                <i class="fa-solid fa-star-half-stroke"></i>
+                <font-awesome-icon icon="fa-solid fa-star-half-stroke" />
                 </div>
             </div>
             </div>
