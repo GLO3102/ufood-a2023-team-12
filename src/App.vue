@@ -1,32 +1,28 @@
 <template>
   <div id="app">
-    <navigation
-        :is-logged-in="isLoggedIn"
-        @as-logged-out="isLoggedIn = false">
+    <navigation :is-logged-in="isLoggedIn" @as-logged-out="isLoggedIn = false">
     </navigation>
-    <router-view 
-        @as-logged-in="isLoggedIn = true">
-    </router-view>
+    <router-view @as-logged-in="isLoggedIn = true"> </router-view>
   </div>
 </template>
 
 <script>
-import 'bootstrap';
+import "bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
-import Navigation from './components/Navigation.vue';
-import "./stylesheets/home.css"
+import Navigation from "./components/Navigation.vue";
+import "./stylesheets/home.css";
 
 export default {
   name: "app",
   components: {
     Navigation,
   },
-  data(){
-    Navigation
+  data() {
+    Navigation;
     return {
       isLoggedIn: false,
-    }
-  }
+    };
+  },
 };
 </script>
 

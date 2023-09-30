@@ -5,10 +5,15 @@ import App from "./App.vue";
 /* import the fontawesome core */
 import { library } from "@fortawesome/fontawesome-svg-core";
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
-import { faXmark, faStar, faStarHalfStroke } from "@fortawesome/free-solid-svg-icons";
+import {
+  faXmark,
+  faStar,
+  faStarHalfStroke,
+  faSliders,
+} from "@fortawesome/free-solid-svg-icons";
 
 /* add icons to the library */
-library.add(faXmark, faStar, faStarHalfStroke);
+library.add(faXmark, faStar, faStarHalfStroke, faSliders);
 
 const app = createApp(App);
 
