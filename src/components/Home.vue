@@ -55,17 +55,15 @@ const clearFilters = () => {
 <template>
   <div class="main-container">
     <div class="header-container">
-      <div class="text-center header-content">
+      <div class="header-content">
         <h1 class="header-title alt-font">
           Taste the World. One Restaurant at a Time.
         </h1>
-        <div class="mt-3">
-          <input
+        <input
             type="search"
-            class="form-control searchbar"
+            class="form-control searchbar mt-3"
             placeholder="Search..."
-          />
-        </div>
+        />
       </div>
     </div>
 
@@ -92,7 +90,6 @@ const clearFilters = () => {
             >
               <div class="accordion-body">
                 <div class="pb-3">
-                  <!-- <h4>Filters</h4> -->
                   <button class="clear-filters" @click="clearFilters">
                     <font-awesome-icon icon="fa-solid fa-xmark" /> Clear Filters
                   </button>
