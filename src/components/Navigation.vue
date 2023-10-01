@@ -19,7 +19,7 @@
       return {
         loggedIn: false,
         innerWidth: window.innerWidth,
-        txt_user: "Admin",
+        txt_user: "John Doe",
         navCollapseValue: 990,
       }
     },
