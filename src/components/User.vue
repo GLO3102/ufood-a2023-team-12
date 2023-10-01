@@ -31,7 +31,8 @@
       </router-link>
     </div>
     <div v-else>
-      <div class="restaurant_card">
+      <div class="restaurant_card text-center">
+        <span class="badge rounded-pill text-bg-dark">7 visits in the last month</span>
         <div class="restaurant_image">
           <router-link class="nav-link" to="/restaurant">
             <img
