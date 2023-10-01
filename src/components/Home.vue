@@ -7,7 +7,7 @@ const filterTypes = ref([
   "French",
   "Italian",
   "Fast Food",
-  "Healthy",
+  "Healthy Food",
   "Breakfast",
   "Desert",
 ]);
@@ -239,7 +239,7 @@ const clearFilters = () => {
               <h2>Taste Sensations</h2>
               <p>Address: 999 Savor Street</p>
               <h3>Price Range: Moderate</h3>
-              <h3>Genre: Pastry Food</h3>
+              <h3>Genre: Desert</h3>
               <div class="restaurant_star">
                 <font-awesome-icon icon="fa-solid fa-star" />
                 <font-awesome-icon icon="fa-solid fa-star" />
@@ -263,7 +263,7 @@ const clearFilters = () => {
               <h2>Street Cafe</h2>
               <p>Address: 101 Gourmet Road</p>
               <h3>Price Range: Moderate</h3>
-              <h3>Genre: Cafe</h3>
+              <h3>Genre: Breakfast</h3>
               <div class="restaurant_star">
                 <font-awesome-icon icon="fa-solid fa-star" />
                 <font-awesome-icon icon="fa-solid fa-star" />
@@ -285,7 +285,7 @@ const clearFilters = () => {
               <h2>The Gourmet</h2>
               <p>Address: 555 Delight Drive</p>
               <h3>Price Range: Expensive</h3>
-              <h3>Genre: Asian Food</h3>
+              <h3>Genre: Asian</h3>
               <div class="restaurant_star">
                 <font-awesome-icon icon="fa-solid fa-star" />
                 <font-awesome-icon icon="fa-solid fa-star" />
@@ -309,7 +309,7 @@ const clearFilters = () => {
               <h2>Palace of Tastes</h2>
               <p>Address: 369 Foodie Lane</p>
               <h3>Price Range: Cheap</h3>
-              <h3>Genre: Pastry Food</h3>
+              <h3>Genre: Desert</h3>
               <div class="restaurant_star">
                 <font-awesome-icon icon="fa-solid fa-star" />
                 <font-awesome-icon icon="fa-solid fa-star" />
@@ -379,7 +379,7 @@ const clearFilters = () => {
               <h2>Cafe Serendipity</h2>
               <p>Address: 123 Republic Street</p>
               <h3>Price Range: Cheap</h3>
-              <h3>Genre: Cafe</h3>
+              <h3>Genre: Breakfast</h3>
               <div class="restaurant_star">
                 <font-awesome-icon icon="fa-solid fa-star" />
                 <font-awesome-icon icon="fa-solid fa-star" />
@@ -402,7 +402,7 @@ const clearFilters = () => {
               <h2>Suchi and Movie</h2>
               <p>Address: 587 Star Street</p>
               <h3>Price Range: Moderate</h3>
-              <h3>Genre: Asian Food</h3>
+              <h3>Genre: Asian</h3>
               <div class="restaurant_star">
                 <font-awesome-icon icon="fa-solid fa-star" />
                 <font-awesome-icon icon="fa-solid fa-star" />
@@ -427,7 +427,7 @@ const clearFilters = () => {
               <h2>Parisian Choice</h2>
               <p>Address: 789 Oak Lane</p>
               <h3>Price Range: Moderate</h3>
-              <h3>Genre: Pastry Food</h3>
+              <h3>Genre: Desert</h3>
               <div class="restaurant_star">
                 <font-awesome-icon icon="fa-solid fa-star" />
                 <font-awesome-icon icon="fa-solid fa-star" />
