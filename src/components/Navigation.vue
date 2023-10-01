@@ -44,9 +44,9 @@
 <nav class="navbar navbar-expand-lg fixed-top navbar-dark bg-dark px-3">
   <router-link class="navbar-brand" to="/">UFood</router-link>
 
-  <form v-if="innerWidth <= navCollapseValue" class="form-inline my-2 my-lg-0">
-    <div class="input-group">
-      <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+  <form v-if="innerWidth <= navCollapseValue" class="form-inline col justify-content-center me-1">
+    <div class="input-group m-auto w-85">
+      <input class="form-control nav_searchbar" type="search" placeholder="Search" aria-label="Search">
     </div>
   </form>
 
@@ -60,9 +60,9 @@
         <router-link class="nav-link" to="/">Home</router-link>
       </li>
     </ul>
-    <form v-if="innerWidth >= navCollapseValue" class="col form-inline my-2 my-lg-0">
+    <form v-if="innerWidth >= navCollapseValue" class="col form-inline">
       <div class="input-group">
-        <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+        <input class="form-control mr-sm-2 nav_searchbar" type="search" placeholder="Search" aria-label="Search">
       </div>
     </form>
     <ul class="col justify-content-end navbar-nav">
@@ -85,8 +85,11 @@
 
 <style>
     .nav_searchbar{
-        max-width: 40%;
-        border-radius: 25px;
+        border-radius: 45px;
+        height: 30px;
+    }
+    .w-85{
+      width: 85%;
     }
     .start-25{
         left: 40%;

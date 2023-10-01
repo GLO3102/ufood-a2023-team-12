@@ -151,6 +151,10 @@
   align-items: center;
 }
 
+.restaurant_star span{
+  color: #fac031;
+}
+
 iframe {
     width: 70%;       
     height: 600px;     
