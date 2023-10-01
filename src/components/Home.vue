@@ -59,82 +59,116 @@ const clearFilters = () => {
         <h1 class="header-title alt-font">
           Taste the World. One Restaurant at a Time.
         </h1>
-        <div class="mt-3 search-input">
+        <div class="mt-3">
           <input
             type="search"
             class="form-control searchbar"
             placeholder="Search..."
           />
-          <font-awesome-icon icon="fa-solid fa-sliders" />
         </div>
       </div>
     </div>
 
     <div class="home">
-      <div class="content px-5">
-        <div class="filters pe-5">
-          <div class="pb-3">
-            <h4>Filters</h4>
-            <button class="clear-filters" @click="clearFilters">
-              <font-awesome-icon icon="fa-solid fa-xmark" /> Clear Filters
-            </button>
-          </div>
-          <h6>Price</h6>
-          <!-- Price Filters -->
-          <div
-            v-for="(price, index) in filterPrices"
-            :key="index"
-            class="form-check"
-          >
-            <input
-              class="form-check-input"
-              type="checkbox"
-              :value="price"
-              :id="`filterPrices${index + 1}`"
-              v-model="selectedPrices[price]"
-            />
-            <label :for="`filterPrices${index + 1}`" class="form-check-label">
-              {{ price }}
-            </label>
-          </div>
-          <hr />
-          <h6>Cuisine / Food Types</h6>
-          <!-- Cuisine / Type Filters -->
-          <div
-            v-for="(type, index) in filterTypes"
-            :key="index"
-            class="form-check"
-          >
-            <input
-              class="form-check-input"
-              type="checkbox"
-              :value="type"
-              :id="`filterTypes${index + 1}`"
-              v-model="selectedTypes[type]"
-            />
-            <label :for="`filterTypes${index + 1}`" class="form-check-label">
-              {{ type }}
-            </label>
-          </div>
+      <div class="filters p-5">
+        <div class="accordion" id="accordionFilters">
+          <div class="accordion-item">
+            <h2 class="accordion-header">
+              <button
+                class="accordion-button"
+                type="button"
+                data-bs-toggle="collapse"
+                data-bs-target="#collapseOne"
+                aria-expanded="true"
+                aria-controls="collapseOne"
+              >
+                <h6 class="mb-0">Filters</h6>
+              </button>
+            </h2>
+            <div
+              id="collapseOne"
+              class="accordion-collapse collapse show"
+              data-bs-parent="#accordionFilters"
+            >
+              <div class="accordion-body">
+                <div class="pb-3">
+                  <!-- <h4>Filters</h4> -->
+                  <button class="clear-filters" @click="clearFilters">
+                    <font-awesome-icon icon="fa-solid fa-xmark" /> Clear Filters
+                  </button>
+                </div>
+                <h6>Price</h6>
+                <!-- Price Filters -->
+                <div
+                  v-for="(price, index) in filterPrices"
+                  :key="index"
+                  class="form-check"
+                >
+                  <input
+                    class="form-check-input"
+                    type="checkbox"
+                    :value="price"
+                    :id="`filterPrices${index + 1}`"
+                    v-model="selectedPrices[price]"
+                  />
+                  <label
+                    :for="`filterPrices${index + 1}`"
+                    class="form-check-label"
+                  >
+                    {{ price }}
+                  </label>
+                </div>
+                <hr />
+                <h6>Cuisine / Food Types</h6>
+                <!-- Cuisine / Type Filters -->
+                <div
+                  v-for="(type, index) in filterTypes"
+                  :key="index"
+                  class="form-check"
+                >
+                  <input
+                    class="form-check-input"
+                    type="checkbox"
+                    :value="type"
+                    :id="`filterTypes${index + 1}`"
+                    v-model="selectedTypes[type]"
+                  />
+                  <label
+                    :for="`filterTypes${index + 1}`"
+                    class="form-check-label"
+                  >
+                    {{ type }}
+                  </label>
+                </div>
 
-          <hr />
-          <h6>Ratings</h6>
-          <!-- Ratings Filters -->
-          <div v-for="rating in filterRatings" :key="rating" class="form-check">
-            <input
-              class="form-check-input"
-              type="checkbox"
-              :value="rating"
-              :id="`filterRatings${rating}`"
-              v-model="selectedRatings[rating]"
-            />
-            <label :for="`filterRatings${rating}`" class="form-check-label">
-              <font-awesome-icon
-                v-for="n in rating"
-                :key="n"
-                icon="fa-solid fa-star"
-              />
-            </label>
+                <hr />
+                <h6>Ratings</h6>
+                <!-- Ratings Filters -->
+                <div
+                  v-for="rating in filterRatings"
+                  :key="rating"
+                  class="form-check"
+                >
+                  <input
+                    class="form-check-input"
+                    type="checkbox"
+                    :value="rating"
+                    :id="`filterRatings${rating}`"
+                    v-model="selectedRatings[rating]"
+                  />
+                  <label
+                    :for="`filterRatings${rating}`"
+                    class="form-check-label"
+                  >
+                    <font-awesome-icon
+                      v-for="n in rating"
+                      :key="n"
+                      icon="fa-solid fa-star"
+                    />
+                  </label>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </div>
