@@ -59,8 +59,7 @@
             <h3>Address: 123 Republic Street</h3>
             <h3>Phone: 555-555-5555</h3>
             <h3>Hours: Mon-Sat: 10:00 AM - 8:00 PM</h3>
-            <iframe src="https://www.google.com/maps/embed?pb=!1m28!1m12!1m3!1d3506223.7967033475!2d-80.61081281458323!3d43.727125527406656!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!4m13!3e6!4m5!1s0x4cb896c469ff32f9%3A0x15feb853bd2f8247!2sUniversit%C3%A9%20Laval%2C%20Rue%20de%20l&#39;Universit%C3%A9%2C%20Qu%C3%A9bec%20City%2C%20QC!3m2!1d46.781746299999995!2d-71.2747424!4m5!1s0x883a3c4b2518bb67%3A0x3068af63e0b6f8e2!2s123%20Republic%20St%20Norwalk%2C%20OH%2044857%20%C3%89tats-Unis!3m2!1d41.261713799999995!2d-82.6063005!5e0!3m2!1sen!2sca!4v1695849772118!5m2!1sen!2sca" style="border:0;"  loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>      
-          </div>
+            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d5998.289737692365!2d-82.60609665460301!3d41.26218153487043!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x883a3c4b2518bb67%3A0x3068af63e0b6f8e2!2s123%20Republic%20St%2C%20Norwalk%2C%20OH%2044857%2C%20USA!5e0!3m2!1sen!2sca!4v1696173495814!5m2!1sen!2sca" style="border:0;" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>          </div>
       </div>
     </div>
   </div>
