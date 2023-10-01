@@ -19,8 +19,8 @@
         class="form-select"
         aria-label="Default select example"
       >
-        <option selected value="1">Some</option>
-        <option value="0">None</option>
+        <option selected value="1">List with results</option>
+        <option value="0">List with no results</option>
       </select>
     </div>
 
