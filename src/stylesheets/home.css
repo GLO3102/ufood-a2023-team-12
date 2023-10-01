@@ -211,6 +211,6 @@ body {
 }
 
 .accordion-button, .accordion-button:not(.collapsed) {
-  background-color: darkgreen;
+  background-color: #daa00f;
   color: #fff;
 }
