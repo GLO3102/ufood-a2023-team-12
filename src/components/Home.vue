@@ -1,6 +1,8 @@
 <script setup>
 import { onMounted } from "vue";
-import { getRestaurants, getRestaurantById, getVisitsByRestaurantId } from "../services/api.js";
+import { getRestaurants, getRestaurantById, getVisitsByRestaurantId } from "../api/restaurants.js";
+import {getAllGenres} from "../api/filters.js";
+
 
 const restaurants = ref([]);
 // console.log("rest1 ", restaurants);
@@ -16,16 +18,16 @@ onMounted(async () => {
 });
 import { ref } from "vue";
 const filterPrices = ref(["Cheap", "Moderate", "Expensive"]);
-const filterTypes = ref([
-  "American",
-  "Asian",
-  "French",
-  "Italian",
-  "Fast Food",
-  "Healthy Food",
-  "Breakfast",
-  "Desert",
-]);
+
+const filterGenres = ref([]);
+onMounted(async () => {
+  try {
+    const genres = await getAllGenres();
+    filterGenres.value = genres; // Update the reactive reference with the fetched data
+  } catch (e) {
+    console.log(e);
+  }
+});
 
 const filterRatings = ref([1, 2, 3, 4, 5]);
 
@@ -128,15 +130,15 @@ const clearFilters = () => {
                 <hr />
                 <h6>Cuisine / Food Types</h6>
                 <!-- Cuisine / Type Filters -->
-                <div v-for="(type, index) in filterTypes" :key="index" class="form-check">
+                <div v-for="(type, index) in filterGenres" :key="index" class="form-check">
                   <input
                     class="form-check-input"
                     type="checkbox"
                     :value="type"
-                    :id="`filterTypes${index + 1}`"
+                    :id="`filterGenres${index + 1}`"
                     v-model="selectedTypes[type]"
                   />
-                  <label :for="`filterTypes${index + 1}`" class="form-check-label">
+                  <label :for="`filterGenres${index + 1}`" class="form-check-label">
                     {{ type }}
                   </label>
                 </div>
