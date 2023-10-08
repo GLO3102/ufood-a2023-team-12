@@ -1,9 +1,9 @@
 <script setup>
 import { onMounted } from "vue";
-import { getRestaurants, getRestaurantById, getVisitsByRestaurantId } from "./api.js";
+import { getRestaurants, getRestaurantById, getVisitsByRestaurantId } from "../services/api.js";
 
 const restaurants = ref([]);
-console.log("rest1 ", restaurants);
+// console.log("rest1 ", restaurants);
 onMounted(async () => {
   try {
     const fetchedRestaurants = await getRestaurants();
@@ -172,12 +172,12 @@ const clearFilters = () => {
         <div class="restaurant_box">
           <div v-if="restaurants.length > 0">
             <p>Total Restaurants: {{ restaurants.length }}</p>
-            <div v-for="restaurant in restaurants" :key="restaurant.id">
+            <div classe="Boucle_for" v-for="restaurant in restaurants" :key="restaurant.id">
               <div class="restaurant_card">
                 <div class="restaurant_image">
                   <router-link :to="'/restaurant/' + restaurant.id">
                     <img
-                      :src="restaurant.pictures[0]"
+                      :src="restaurant.pictures[2]"
                       :alt="restaurant.name + ' Image'"
                     />
                   </router-link>

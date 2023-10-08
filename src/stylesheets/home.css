@@ -29,7 +29,7 @@ body {
   font-family: mv boli;
 }
 
-.restaurant_box {
+.restaurant_box ,.Boucle_for {
   width: 95%;
   margin: 0 auto;
   display: flex;
