@@ -12,8 +12,8 @@ onMounted(async () => {
     restaurants.value = fetchedRestaurants;
 
     
-  } catch (error) {
-    console.error("Erreur lors de la récupération des restaurants", error);
+  } catch (e) {
+    console.log(e);
   }
 });
 import { ref } from "vue";
@@ -172,8 +172,6 @@ const clearFilters = () => {
 
       <section class="restaurant" id="restaurant">
         <div class="restaurant_box">
-          <div v-if="restaurants.length > 0">
-            <p>Total Restaurants: {{ restaurants.length }}</p>
             <div classe="Boucle_for" v-for="restaurant in restaurants" :key="restaurant.id">
               <div class="restaurant_card">
                 <div class="restaurant_image">
@@ -190,18 +188,11 @@ const clearFilters = () => {
                   <p>Address: {{ restaurant.address }}</p>
                   <h3>Price Range: {{ restaurant.price_range }}</h3>
                   <h3>Genre: {{ restaurant.genres }}</h3>
-                  <!-- Ajoute d'autres détails du restaurant selon les besoins -->
                   <div class="restaurant_star">
-                    <!-- Tu devras adapter cette partie en fonction de la notation réelle du restaurant -->
-                    <!-- Par exemple, si le serveur renvoie une notation sous forme de nombre, tu pourrais faire une boucle pour afficher des étoiles en fonction de ce nombre -->
                   </div>
                 </div>
               </div>
             </div>
-          </div>
-          <div v-else>
-            <p>Total Restaurants: {{ restaurants.length }}</p>
-            Loading restaurants...</div>
         </div>
       </section>
       <!-- <section class="restaurant" id="restaurant">
