@@ -74,6 +74,10 @@ body {
   overflow: hidden;
   object-position: center;
 }
+.highlight{
+  font-weight: bold;
+  font-size: 1.2em;
+}
 
 .restaurant_box .small_card .fa-heart {
   position: relative;
