@@ -1,70 +1,74 @@
 <script setup>
-import { onMounted } from "vue";
-import { getRestaurants, getRestaurantById, getVisitsByRestaurantId } from "../api/restaurants.js";
-import {getAllGenres} from "../api/filters.js";
-
+import { onMounted, ref, reactive } from "vue";
+import {
+  getRestaurants,
+  getRestaurantById,
+  getVisitsByRestaurantId,
+} from "../api/restaurants.js";
+import { getAllFilterTypes } from "../api/filters.js";
 
 const restaurants = ref([]);
-console.log("rest1 ", restaurants);
 onMounted(async () => {
   try {
     const fetchedRestaurants = await getRestaurants();
     restaurants.value = fetchedRestaurants;
-
-    
   } catch (e) {
     console.log(e);
   }
 });
-import { ref } from "vue";
-const filterPrices = ref(["Cheap", "Moderate", "Expensive"]);
 
-const filterGenres = ref([]);
+// Filter Price Range
+const filterPrices = ref([1,2,3]);
+const selectedPrices = reactive({});
+
+filterPrices.value.forEach((range) => {
+  selectedPrices[range.price_range] = false;
+});
+
+const getFilterPriceName = (price) => {
+  switch (price) {
+    case 1:
+      return "Cheap";
+    case 2:
+      return "Moderate";
+    case 3:
+      return "Expensive";
+  }
+};
+
+// Filter Genres
+const filterTypes = ref([]);
+const selectedTypes = reactive({});
+
 onMounted(async () => {
   try {
-    const genres = await getAllGenres();
-    filterGenres.value = genres; // Update the reactive reference with the fetched data
+    const genres = await getAllFilterTypes();
+    filterTypes.value = genres;
+    genres.forEach((genre) => {
+      selectedTypes[genre] = false;
+    });
   } catch (e) {
     console.log(e);
   }
 });
 
-const filterRatings = ref([1, 2, 3, 4, 5]);
+// Filter Ratings
+const filterRatings = ref([5, 4, 3, 2, 1]);
+const selectedRatings = reactive({});
 
-const selectedPrices = ref({
-  cheap: false,
-  average: false,
-  expensive: false,
-});
-
-const selectedTypes = ref({
-  American: false,
-  Asian: false,
-  French: false,
-  Italian: false,
-  "Fast Food": false,
-  Healthy: false,
-  Breakfast: false,
-  Desert: false,
-});
-
-const selectedRatings = ref({
-  1: false,
-  2: false,
-  3: false,
-  4: false,
-  5: false,
+filterRatings.value.forEach((rating) => {
+  selectedRatings[rating] = false;
 });
 
 const clearFilters = () => {
-  for (const price in selectedPrices.value) {
-    selectedPrices.value[price] = false;
+  for (const price in selectedPrices) {
+    selectedPrices[price] = false;
   }
-  for (const type in selectedTypes.value) {
-    selectedTypes.value[type] = false;
+  for (const type in selectedTypes) {
+    selectedTypes[type] = false;
   }
-  for (const rating in selectedRatings.value) {
-    selectedRatings.value[rating] = false;
+  for (const rating in selectedRatings) {
+    selectedRatings[rating] = false;
   }
 };
 
@@ -72,21 +76,23 @@ function generateStarRating(rating) {
   const fullStars = Math.floor(rating);
   const hasHalfStar = rating % 1 !== 0;
 
-  const stars = Array(fullStars).fill('<font-awesome-icon icon="fa-solid fa-star" />');
+  const stars = Array(fullStars).fill(
+    '<font-awesome-icon icon="fa-solid fa-star" />',
+  );
 
   if (hasHalfStar) {
     stars.push('<font-awesome-icon icon="fa-solid fa-star-half-stroke" />');
   }
-  console.log('Stars generated:', stars);
-  return stars.join('');
+  return stars.join("");
 }
 </script>
-
 <template>
   <div class="main-container">
     <div class="header-container">
       <div class="header-content">
-        <h1 class="header-title alt-font">Taste the World. One Restaurant at a Time.</h1>
+        <h1 class="header-title alt-font">
+          Taste the World. One Restaurant at a Time.
+        </h1>
         <input
           type="search"
           class="form-control searchbar mt-3"
@@ -123,35 +129,45 @@ function generateStarRating(rating) {
                   </button>
                 </div>
                 <h6>Price</h6>
-                <!-- Price Filters -->
                 <div
-                  v-for="(price, index) in filterPrices"
-                  :key="index"
+                  v-for="price in filterPrices"
+                  :key="price"
                   class="form-check"
                 >
                   <input
                     class="form-check-input"
                     type="checkbox"
                     :value="price"
-                    :id="`filterPrices${index + 1}`"
+                    :id="`filterPrices${price}`"
                     v-model="selectedPrices[price]"
                   />
-                  <label :for="`filterPrices${index + 1}`" class="form-check-label">
-                    {{ price }}
+                  <label
+                    :for="`filterPrices${price}`"
+                    class="form-check-label"
+                  >
+                    {{ getFilterPriceName(price) }}
                   </label>
                 </div>
+
                 <hr />
                 <h6>Cuisine / Food Types</h6>
                 <!-- Cuisine / Type Filters -->
-                <div v-for="(type, index) in filterGenres" :key="index" class="form-check">
+                <div
+                  v-for="(type, index) in filterTypes"
+                  :key="index"
+                  class="form-check"
+                >
                   <input
                     class="form-check-input"
                     type="checkbox"
                     :value="type"
-                    :id="`filterGenres${index + 1}`"
+                    :id="`filterTypes${index + 1}`"
                     v-model="selectedTypes[type]"
                   />
-                  <label :for="`filterGenres${index + 1}`" class="form-check-label">
+                  <label
+                    :for="`filterTypes${index + 1}`"
+                    class="form-check-label"
+                  >
                     {{ type }}
                   </label>
                 </div>
@@ -159,7 +175,11 @@ function generateStarRating(rating) {
                 <hr />
                 <h6>Ratings</h6>
                 <!-- Ratings Filters -->
-                <div v-for="rating in filterRatings" :key="rating" class="form-check">
+                <div
+                  v-for="rating in filterRatings"
+                  :key="rating"
+                  class="form-check"
+                >
                   <input
                     class="form-check-input"
                     type="checkbox"
@@ -167,7 +187,10 @@ function generateStarRating(rating) {
                     :id="`filterRatings${rating}`"
                     v-model="selectedRatings[rating]"
                   />
-                  <label :for="`filterRatings${rating}`" class="form-check-label">
+                  <label
+                    :for="`filterRatings${rating}`"
+                    class="form-check-label"
+                  >
                     <font-awesome-icon
                       v-for="n in rating"
                       :key="n"
@@ -185,28 +208,42 @@ function generateStarRating(rating) {
 
       <section class="restaurant" id="restaurant">
         <div class="restaurant_box">
-            <div classe="Boucle_for" v-for="restaurant in restaurants" :key="restaurant.id">
-              <div class="restaurant_card">
-                <div class="restaurant_image">
-                  <router-link :to="'/restaurant/' + restaurant.id">
-                    <img
-                      :src="restaurant.pictures[2]"
-                      :alt="restaurant.name + ' Image'"
-                    />
-                  </router-link>
-                </div>
+          <div
+            classe="Boucle_for"
+            v-for="restaurant in restaurants"
+            :key="restaurant.id"
+          >
+            <div class="restaurant_card">
+              <div class="restaurant_image">
+                <router-link :to="'/restaurant/' + restaurant.id">
+                  <img
+                    :src="restaurant.pictures[2]"
+                    :alt="restaurant.name + ' Image'"
+                  />
+                </router-link>
+              </div>
 
-                <div class="restaurant_info">
-                  <h2>{{ restaurant.name }}</h2>
-                  <p><span class="highlight">Address:</span> {{ restaurant.address }}</p>
-                  <h3><span class="highlight">Price Range:</span> {{ restaurant.price_range }}</h3>
-                  <h3><span class="highlight">Genre:</span> {{ restaurant.genres }}</h3>
-                  <div class="restaurant_star" v-html="generateStarRating(restaurant.rating)"></div>
-                    <!-- {{ generateStarRating(restaurant.rating) }} -->
-                  
-                </div>
+              <div class="restaurant_info">
+                <h2>{{ restaurant.name }}</h2>
+                <p>
+                  <span class="highlight">Address:</span>
+                  {{ restaurant.address }}
+                </p>
+                <h3>
+                  <span class="highlight">Price Range:</span>
+                  {{ restaurant.price_range }}
+                </h3>
+                <h3>
+                  <span class="highlight">Genre:</span> {{ restaurant.genres }}
+                </h3>
+                <div
+                  class="restaurant_star"
+                  v-html="generateStarRating(restaurant.rating)"
+                ></div>
+                <!-- {{ generateStarRating(restaurant.rating) }} -->
               </div>
             </div>
+          </div>
         </div>
       </section>
     </div>

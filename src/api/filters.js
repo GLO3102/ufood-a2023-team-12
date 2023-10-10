@@ -1,11 +1,7 @@
-const BASE_URL = "https://ufoodapi.herokuapp.com/unsecure";
+import { getRestaurants } from "./restaurants";
 
-export const getAllGenres = async () => {
-  const response = await fetch(`${BASE_URL}/restaurants`);
-  if (response.status != 200) {
-    throw new Error("An error occurred");
-  }
-  const result = await response.json();
-  const genresElements = [...new Set(result.items.map(item => item.genres).flat())];
+export const getAllFilterTypes = async () => {
+  const restaurants = await getRestaurants();
+  const genresElements = [...new Set(restaurants.map(item => item.genres).flat())];
   return genresElements;
 };
