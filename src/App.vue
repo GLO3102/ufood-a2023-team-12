@@ -1,8 +1,8 @@
 <template>
   <div id="app">
-    <navigation :is-logged-in="isLoggedIn" @as-logged-out="isLoggedIn = false">
-    </navigation>
-    <router-view @as-logged-in="isLoggedIn = true"> </router-view>
+    <navigation :is-logged-in="isLoggedIn" @as-logged-out="isLoggedIn = false"/>
+    
+    <router-view @as-logged-in="isLoggedIn = true"></router-view>
   </div>
 </template>
 
@@ -18,7 +18,6 @@ export default {
     Navigation,
   },
   data() {
-    Navigation;
     return {
       isLoggedIn: false,
     };

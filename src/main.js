@@ -10,10 +10,11 @@ import {
   faStar,
   faStarHalfStroke,
   faSliders,
+  faX
 } from "@fortawesome/free-solid-svg-icons";
 
 /* add icons to the library */
-library.add(faXmark, faStar, faStarHalfStroke, faSliders);
+library.add(faXmark, faStar, faStarHalfStroke, faSliders, faX);
 
 const app = createApp(App);
 

@@ -81,8 +81,6 @@
 </div>
 </template>
 
-
-
 <style>
     .nav_searchbar{
         border-radius: 45px;

@@ -54,18 +54,32 @@
             <font-awesome-icon icon="fa-solid fa-star-half-stroke" />
           </div>
         </div>
+        <button class="btn btn-primary" @click="openModale">Rate</button>
       </div>
     </div>
+    <modale @close-modale="closeModale" :is-opened="isModaleOpen">
+      <div class="d-flex justify-content-center">
+        <h1 class="text-danger">TODO</h1>
+      </div>
+    </modale>
   </div>
 </template>
-<script>
-export default {
-  data() {
-    return {
-      selectedValue: "1", // Set the default selected value
-    };
-  },
-};
+
+<script setup>
+
+import { ref } from "vue";
+import Modale from "./Modale.vue";
+
+const isModaleOpen = ref(false);
+
+function openModale() {
+  isModaleOpen.value = true;
+}
+
+function closeModale() {
+  isModaleOpen.value = false;
+}
+
 </script>
 
 <style>
