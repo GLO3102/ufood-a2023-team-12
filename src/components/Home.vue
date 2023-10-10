@@ -1,5 +1,5 @@
 <script setup>
-import { onMounted, ref, reactive } from "vue";
+import { onMounted, ref, reactive, watch } from "vue";
 import {
   getRestaurants,
   getRestaurantById,
@@ -8,21 +8,26 @@ import {
 import { getAllFilterTypes } from "../api/filters.js";
 
 const restaurants = ref([]);
+const filtered_restaurants = ref([]);
+const isLoading = ref(true);
 onMounted(async () => {
   try {
     const fetchedRestaurants = await getRestaurants();
     restaurants.value = fetchedRestaurants;
+    filtered_restaurants.value = fetchedRestaurants;
   } catch (e) {
-    console.log(e);
+    console.error("Failed to fetch restaurants:", e);
+  } finally {
+    isLoading.value = false;
   }
 });
 
 // Filter Price Range
-const filterPrices = ref([1,2,3]);
+const filterPrices = ref([1, 2, 3]);
 const selectedPrices = reactive({});
 
 filterPrices.value.forEach((range) => {
-  selectedPrices[range.price_range] = false;
+  selectedPrices[range] = false;
 });
 
 const getFilterPriceName = (price) => {
@@ -71,6 +76,32 @@ const clearFilters = () => {
     selectedRatings[rating] = false;
   }
 };
+
+watch(
+  [selectedPrices, selectedTypes, selectedRatings],
+  ([newValPrice, newValType, newValRating]) => {
+    const getSelectedKeys = (obj, defaultValue) => {
+      const selectedKeys = Object.keys(obj).filter((key) => obj[key]);
+      return selectedKeys.length > 0 ? selectedKeys : defaultValue;
+    };
+
+    const priceFilterList = getSelectedKeys(newValPrice, ["1", "2", "3"]).map(
+      Number,
+    );
+    const typeFilterList = getSelectedKeys(newValType, filterTypes.value);
+    const ratingFilterList = getSelectedKeys(
+      newValRating,
+      filterRatings.value,
+    ).map(Number);
+
+    filtered_restaurants.value = restaurants.value.filter(
+      (restaurant) =>
+        priceFilterList.includes(restaurant.price_range) &&
+        typeFilterList.some((el) => restaurant.genres.includes(el)) &&
+        ratingFilterList.includes(Math.floor(restaurant.rating)),
+    );
+  },
+);
 
 function generateStarRating(rating) {
   const fullStars = Math.floor(rating);
@@ -141,10 +172,7 @@ function generateStarRating(rating) {
                     :id="`filterPrices${price}`"
                     v-model="selectedPrices[price]"
                   />
-                  <label
-                    :for="`filterPrices${price}`"
-                    class="form-check-label"
-                  >
+                  <label :for="`filterPrices${price}`" class="form-check-label">
                     {{ getFilterPriceName(price) }}
                   </label>
                 </div>
@@ -207,10 +235,20 @@ function generateStarRating(rating) {
       <!-- Restaurant -->
 
       <section class="restaurant" id="restaurant">
-        <div class="restaurant_box">
+        <div class="text-center pt-5" v-if="isLoading">
+          <div class="spinner-border text-warning" role="status">
+            <span class="sr-only">Loading...</span>
+          </div>
+          <h2>Loading restaurants...</h2>
+        </div>
+        <div
+          class="restaurant_box"
+          v-else-if="filtered_restaurants && filtered_restaurants.length"
+        >
+          <!--Renommer la classe Boucle_for. Ce n'est très clair comme nom de classe et pas uniforme-->
           <div
             classe="Boucle_for"
-            v-for="restaurant in restaurants"
+            v-for="restaurant in filtered_restaurants"
             :key="restaurant.id"
           >
             <div class="restaurant_card">
@@ -231,10 +269,11 @@ function generateStarRating(rating) {
                 </p>
                 <h3>
                   <span class="highlight">Price Range:</span>
-                  {{ restaurant.price_range }}
+                  {{ getFilterPriceName(restaurant.price_range) }}
                 </h3>
                 <h3>
-                  <span class="highlight">Genre:</span> {{ restaurant.genres }}
+                  <span class="highlight">Genre:</span>
+                  {{ restaurant.genres.join(", ") }}
                 </h3>
                 <div
                   class="restaurant_star"
@@ -244,6 +283,9 @@ function generateStarRating(rating) {
               </div>
             </div>
           </div>
+        </div>
+        <div class="text-center pt-5" v-else>
+          <h2>No result</h2>
         </div>
       </section>
     </div>
