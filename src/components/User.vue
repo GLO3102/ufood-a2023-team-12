@@ -57,18 +57,14 @@
         <button class="btn btn-primary" @click="openModale">Rate</button>
       </div>
     </div>
-    <modale @close-modale="closeModale" :is-opened="isModaleOpen">
-      <div class="d-flex justify-content-center">
-        <h1 class="text-danger">TODO</h1>
-      </div>
-    </modale>
+    <rate-restaurant-modale @close-modale="closeModale" :is-opened="isModaleOpen"/>
   </div>
 </template>
 
 <script setup>
 
 import { ref } from "vue";
-import Modale from "./Modale.vue";
+import RateRestaurantModale from "./Modales/RateRestaurantModale.vue";
 
 const isModaleOpen = ref(false);
 

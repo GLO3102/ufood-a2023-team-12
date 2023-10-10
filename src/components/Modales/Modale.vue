@@ -32,8 +32,8 @@ function closeModale() {
     #modaleContainer{
 
         /*Variables*/
-        --modale-width: 1000px;
-        --modale-height: 500px;
+        --modale-width: 60%;
+        --modale-height: auto;
         --modale-left-margin-offset: calc(var(--modale-width) / -2);
         --modale-top-margin-offset: calc(var(--modale-height) / -2);
 
@@ -41,27 +41,34 @@ function closeModale() {
 
         /*--------*/
         position: fixed;
-        top: 50%;
+        top: 15%;
         left: 50%;
         z-index: 100;
         margin-left: var(--modale-left-margin-offset);
-        margin-top: var(--modale-top-margin-offset);
 
         /*--------*/
         width: var(--modale-width);
         height: var(--modale-height);
 
         /*--------*/
-        background-color: bisque;
+        background-color: #C6AC8F;
         border-radius: 10px;
+
+        animation: fadeIn 0.5s;
     }
 
     #modaleHeader{
 
         display: flex;
         justify-content: flex-end;
-        background-color: gray;
+        background-color: #22333B;
         height: auto;
+        border-radius: 10px 10px 0px 0px;
+    }
+
+    @keyframes fadeIn {
+        0% { opacity: 0; }
+        100% { opacity: 1; }
     }
 
 </style>
