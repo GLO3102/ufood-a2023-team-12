@@ -1,5 +1,5 @@
 <template>
-    <modale @close-modale="closeModale" :is-opened="isModaleOpen">
+    <modale @close-modale="closeModale">
         <div class="d-flex justify-content-center row align-items-center">
             <h1 class="mt-4 text-center alt-font">Rate this restaurant</h1>
             <div id="starsContainer" class="d-flex justify-content-center text-warning">
@@ -23,6 +23,7 @@
             </div>
 
             <textarea class="textArea mt-3 w-50" name="ratingComment" id="ratingComment" cols="30" rows="13" placeholder="Comment..."></textarea>
+            <p>{{ props.restaurantId }}</p>
 
             <div class="d-flex mt-4 mb-4 justify-content-center">
                 <button class="w-25 btn btn-success">Rate</button>
@@ -33,33 +34,39 @@
 
 <script setup>
 
-import Modale from './Modale.vue';
-import { ref } from "vue";
+    import Modale from './Modale.vue';
+    import { ref } from "vue";
 
-const rating = ref(0);
-const hover = ref(0);
+    const rating = ref(0);
+    const hover = ref(0);
 
-const emit = defineEmits([
-    'closeModale',
-])
+    //Emits
+    const emit = defineEmits([
+        'closeModale',
+    ])
 
-const rate = (number) => {
-    rating.value = number;
-}
+    //Props
+    const props = defineProps({
+        restaurantId: String,
+    })
 
-const color = (number) => {
-
-    if(number == 0){
-        hover.value == rating.value;
+    const rate = (number) => {
+        rating.value = number;
     }
 
-    hover.value = number;
-}
+    const color = (number) => {
 
-function closeModale(){
-    rating.value = 0;
-    emit('closeModale');
-}
+        if(number == 0){
+            hover.value == rating.value;
+        }
+
+        hover.value = number;
+    }
+
+    function closeModale(){
+        rating.value = 0;
+        emit('closeModale');
+    }
 
 </script>
 

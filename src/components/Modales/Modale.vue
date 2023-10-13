@@ -1,5 +1,5 @@
 <template>
-    <div v-if="isOpened" id="modaleContainer">
+    <div id="modaleContainer">
         <div id="modaleHeader">
             <button type="button" class="btn btn-danger m-2" @click="closeModale">
                 <font-awesome-icon icon="fa-solid fa-xmark" />

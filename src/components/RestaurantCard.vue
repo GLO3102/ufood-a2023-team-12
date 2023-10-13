@@ -36,33 +36,37 @@
         <button @click="setVisited" class="visitedBtn btn btn-success" v-if="!visited">Mark as visited</button>
 
         <!--TODO: Rate button-->
-        <button @click="console.log('TODO')" class="rateBtn btn btn-success" v-if="visited">Rate</button>
+        <button @click="emit('openRateModale', props.restaurant.id)" class="rateBtn btn btn-success" v-if="visited">Rate</button>
 
     </div>
 </template>
 
 <script setup>
 
-import { ref } from "vue";
-import { getFilterPriceName } from "./Utils.js";
+    import { ref } from "vue";
+    import { getFilterPriceName } from "./Utils.js";
 
-//Rating
-const ratingFloored = Math.floor(props.restaurant.rating);
-const rating = props.restaurant.rating;
+    //Rating
+    const ratingFloored = Math.floor(props.restaurant.rating);
+    const rating = props.restaurant.rating;
 
-//Visited
-const visited = ref(false);
+    //Visited
+    const visited = ref(false);
 
-//Modale
-const isRatingModaleOpened = ref(false);
+    //Modale
+    const isRatingModaleOpened = ref(false);
 
-const props = defineProps({
-    restaurant: Object,
-})
+    const emit = defineEmits([
+        'openRateModale'
+    ])
 
-function setVisited() {
-    visited.value = true;
-}
+    const props = defineProps({
+        restaurant: Object,
+    })
+
+    function setVisited() {
+        visited.value = true;
+    }
 
 </script>
 

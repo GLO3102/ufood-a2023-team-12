@@ -11,6 +11,11 @@ import RestaurantCard from "./RestaurantCard.vue";
 const restaurants = ref([]);
 const filtered_restaurants = ref([]);
 const isLoading = ref(true);
+
+const emit = defineEmits([
+  'openRateModale'
+])
+
 onMounted(async () => {
   try {
     const fetchedRestaurants = await getRestaurants();
@@ -125,11 +130,7 @@ function generateStarRating(rating) {
         <h1 class="header-title alt-font">
           Taste the World. One Restaurant at a Time.
         </h1>
-        <input
-          type="search"
-          class="form-control searchbar mt-3"
-          placeholder="Search..."
-        />
+        <input type="search" class="form-control searchbar mt-3" placeholder="Search..." />
       </div>
     </div>
 
@@ -138,22 +139,12 @@ function generateStarRating(rating) {
         <div class="accordion" id="accordionFilters">
           <div class="accordion-item">
             <h2 class="accordion-header">
-              <button
-                class="accordion-button"
-                type="button"
-                data-bs-toggle="collapse"
-                data-bs-target="#collapseOne"
-                aria-expanded="true"
-                aria-controls="collapseOne"
-              >
+              <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne"
+                aria-expanded="true" aria-controls="collapseOne">
                 <h6 class="mb-0">Filters</h6>
               </button>
             </h2>
-            <div
-              id="collapseOne"
-              class="accordion-collapse collapse show"
-              data-bs-parent="#accordionFilters"
-            >
+            <div id="collapseOne" class="accordion-collapse collapse show" data-bs-parent="#accordionFilters">
               <div class="accordion-body">
                 <div class="pb-3">
                   <button class="clear-filters" @click="clearFilters">
@@ -161,18 +152,9 @@ function generateStarRating(rating) {
                   </button>
                 </div>
                 <h6>Price</h6>
-                <div
-                  v-for="price in filterPrices"
-                  :key="price"
-                  class="form-check"
-                >
-                  <input
-                    class="form-check-input"
-                    type="checkbox"
-                    :value="price"
-                    :id="`filterPrices${price}`"
-                    v-model="selectedPrices[price]"
-                  />
+                <div v-for="price in filterPrices" :key="price" class="form-check">
+                  <input class="form-check-input" type="checkbox" :value="price" :id="`filterPrices${price}`"
+                    v-model="selectedPrices[price]" />
                   <label :for="`filterPrices${price}`" class="form-check-label">
                     {{ getFilterPriceName(price) }}
                   </label>
@@ -181,22 +163,10 @@ function generateStarRating(rating) {
                 <hr />
                 <h6>Cuisine / Food Types</h6>
                 <!-- Cuisine / Type Filters -->
-                <div
-                  v-for="(type, index) in filterTypes"
-                  :key="index"
-                  class="form-check"
-                >
-                  <input
-                    class="form-check-input"
-                    type="checkbox"
-                    :value="type"
-                    :id="`filterTypes${index + 1}`"
-                    v-model="selectedTypes[type]"
-                  />
-                  <label
-                    :for="`filterTypes${index + 1}`"
-                    class="form-check-label"
-                  >
+                <div v-for="(type, index) in filterTypes" :key="index" class="form-check">
+                  <input class="form-check-input" type="checkbox" :value="type" :id="`filterTypes${index + 1}`"
+                    v-model="selectedTypes[type]" />
+                  <label :for="`filterTypes${index + 1}`" class="form-check-label">
                     {{ type }}
                   </label>
                 </div>
@@ -204,27 +174,11 @@ function generateStarRating(rating) {
                 <hr />
                 <h6>Ratings</h6>
                 <!-- Ratings Filters -->
-                <div
-                  v-for="rating in filterRatings"
-                  :key="rating"
-                  class="form-check"
-                >
-                  <input
-                    class="form-check-input"
-                    type="checkbox"
-                    :value="rating"
-                    :id="`filterRatings${rating}`"
-                    v-model="selectedRatings[rating]"
-                  />
-                  <label
-                    :for="`filterRatings${rating}`"
-                    class="form-check-label"
-                  >
-                    <font-awesome-icon
-                      v-for="n in rating"
-                      :key="n"
-                      icon="fa-solid fa-star"
-                    />
+                <div v-for="rating in filterRatings" :key="rating" class="form-check">
+                  <input class="form-check-input" type="checkbox" :value="rating" :id="`filterRatings${rating}`"
+                    v-model="selectedRatings[rating]" />
+                  <label :for="`filterRatings${rating}`" class="form-check-label">
+                    <font-awesome-icon v-for="n in rating" :key="n" icon="fa-solid fa-star" />
                   </label>
                 </div>
               </div>
@@ -234,30 +188,22 @@ function generateStarRating(rating) {
       </div>
 
       <!-- Restaurant -->
-        <section class="restaurant" id="restaurant">
-          <div class="text-center pt-5" v-if="isLoading">
-            <div class="spinner-border text-warning" role="status">
-              <span class="sr-only">Loading...</span>
-            </div>
-            <h2>Loading restaurants...</h2>
+      <section class="restaurant" id="restaurant">
+        <div class="text-center pt-5" v-if="isLoading">
+          <div class="spinner-border text-warning" role="status">
+            <span class="sr-only">Loading...</span>
           </div>
-          <div
-    class="restaurant_box"
-            v-else-if="filtered_restaurants && filtered_restaurants.length"
-          >
-            <!--Renommer la classe Boucle_for. Ce n'est très clair comme nom de classe et pas uniforme-->
-            <div
-              classe="Boucle_for"
-              v-for="restaurant in filtered_restaurants"
-              :key="restaurant.id"
-            >
-              <restaurant-card :restaurant="restaurant"></restaurant-card>
-            </div>
+          <h2>Loading restaurants...</h2>
+        </div>
+        <div class="restaurant_box" v-else-if="filtered_restaurants && filtered_restaurants.length">
+          <div v-for="restaurant in filtered_restaurants" :key="restaurant.id">
+            <restaurant-card @open-rate-modale="(e) => {emit('openRateModale', e)}" :restaurant="restaurant"></restaurant-card>
           </div>
-          <div class="text-center pt-5" v-else>
-            <h2>No result</h2>
-          </div>
-        </section>
+        </div>
+        <div class="text-center pt-5" v-else>
+          <h2>No result</h2>
+        </div>
+      </section>
     </div>
   </div>
 </template>
