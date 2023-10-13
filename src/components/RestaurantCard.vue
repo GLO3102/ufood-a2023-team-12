@@ -33,25 +33,35 @@
         </div>
 
         <!--Visited button-->
-        <button @click="test" class="visitedBtn btn btn-success">Mark as visited</button>
+        <button @click="setVisited" class="visitedBtn btn btn-success" v-if="!visited">Mark as visited</button>
 
         <!--TODO: Rate button-->
+        <button @click="console.log('TODO')" class="rateBtn btn btn-success" v-if="visited">Rate</button>
+
     </div>
 </template>
 
 <script setup>
 
+import { ref } from "vue";
 import { getFilterPriceName } from "./Utils.js";
 
+//Rating
 const ratingFloored = Math.floor(props.restaurant.rating);
 const rating = props.restaurant.rating;
+
+//Visited
+const visited = ref(false);
+
+//Modale
+const isRatingModaleOpened = ref(false);
 
 const props = defineProps({
     restaurant: Object,
 })
 
-function test() {
-    console.log("todo");
+function setVisited() {
+    visited.value = true;
 }
 
 </script>
@@ -75,6 +85,10 @@ function test() {
 }
 
 .visitedBtn{
+    width: fit-content;
+}
+
+.rateBtn{
     width: fit-content;
 }
 </style>

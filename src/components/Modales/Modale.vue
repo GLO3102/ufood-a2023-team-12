@@ -6,7 +6,7 @@
             </button>
         </div>
         <div id="modaleContent" class="d-flex justify-content-center">
-            <slot />
+            <slot/>
         </div>
     </div>
 </template>

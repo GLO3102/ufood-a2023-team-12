@@ -234,30 +234,30 @@ function generateStarRating(rating) {
       </div>
 
       <!-- Restaurant -->
-      <section class="restaurant" id="restaurant">
-        <div class="text-center pt-5" v-if="isLoading">
-          <div class="spinner-border text-warning" role="status">
-            <span class="sr-only">Loading...</span>
+        <section class="restaurant" id="restaurant">
+          <div class="text-center pt-5" v-if="isLoading">
+            <div class="spinner-border text-warning" role="status">
+              <span class="sr-only">Loading...</span>
+            </div>
+            <h2>Loading restaurants...</h2>
           </div>
-          <h2>Loading restaurants...</h2>
-        </div>
-        <div
-          class="restaurant_box"
-          v-else-if="filtered_restaurants && filtered_restaurants.length"
-        >
-          <!--Renommer la classe Boucle_for. Ce n'est très clair comme nom de classe et pas uniforme-->
           <div
-            classe="Boucle_for"
-            v-for="restaurant in filtered_restaurants"
-            :key="restaurant.id"
+    class="restaurant_box"
+            v-else-if="filtered_restaurants && filtered_restaurants.length"
           >
-            <restaurant-card :restaurant="restaurant"></restaurant-card>
+            <!--Renommer la classe Boucle_for. Ce n'est très clair comme nom de classe et pas uniforme-->
+            <div
+              classe="Boucle_for"
+              v-for="restaurant in filtered_restaurants"
+              :key="restaurant.id"
+            >
+              <restaurant-card :restaurant="restaurant"></restaurant-card>
+            </div>
           </div>
-        </div>
-        <div class="text-center pt-5" v-else>
-          <h2>No result</h2>
-        </div>
-      </section>
+          <div class="text-center pt-5" v-else>
+            <h2>No result</h2>
+          </div>
+        </section>
     </div>
   </div>
 </template>

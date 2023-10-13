@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <navigation :is-logged-in="isLoggedIn" @as-logged-out="isLoggedIn = false"/>
-    
+
     <router-view @as-logged-in="isLoggedIn = true"></router-view>
   </div>
 </template>
