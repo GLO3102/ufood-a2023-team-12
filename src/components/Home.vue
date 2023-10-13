@@ -6,6 +6,7 @@ import {
   getVisitsByRestaurantId,
 } from "../api/restaurants.js";
 import { getAllFilterTypes } from "../api/filters.js";
+import RestaurantCard from "./RestaurantCard.vue";
 
 const restaurants = ref([]);
 const filtered_restaurants = ref([]);
@@ -233,7 +234,6 @@ function generateStarRating(rating) {
       </div>
 
       <!-- Restaurant -->
-
       <section class="restaurant" id="restaurant">
         <div class="text-center pt-5" v-if="isLoading">
           <div class="spinner-border text-warning" role="status">
@@ -251,37 +251,7 @@ function generateStarRating(rating) {
             v-for="restaurant in filtered_restaurants"
             :key="restaurant.id"
           >
-            <div class="restaurant_card">
-              <div class="restaurant_image">
-                <router-link :to="'/restaurant/' + restaurant.id">
-                  <img
-                    :src="restaurant.pictures[2]"
-                    :alt="restaurant.name + ' Image'"
-                  />
-                </router-link>
-              </div>
-
-              <div class="restaurant_info">
-                <h2>{{ restaurant.name }}</h2>
-                <p>
-                  <span class="highlight">Address:</span>
-                  {{ restaurant.address }}
-                </p>
-                <h3>
-                  <span class="highlight">Price Range:</span>
-                  {{ getFilterPriceName(restaurant.price_range) }}
-                </h3>
-                <h3>
-                  <span class="highlight">Genre:</span>
-                  {{ restaurant.genres.join(", ") }}
-                </h3>
-                <div
-                  class="restaurant_star"
-                  v-html="generateStarRating(restaurant.rating)"
-                ></div>
-                <!-- {{ generateStarRating(restaurant.rating) }} -->
-              </div>
-            </div>
+            <restaurant-card :restaurant="restaurant"></restaurant-card>
           </div>
         </div>
         <div class="text-center pt-5" v-else>
