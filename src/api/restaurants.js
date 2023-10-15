@@ -28,7 +28,7 @@ export const getRestaurants = async () => {
 
 export const getRestaurantById = async (restaurantId) => {
   try {
-    const response = await fetch(`${baseURL}/restaurants/${restaurantId}`,{
+    const response = await fetch(`${baseURL}/unsecure/restaurants/${restaurantId}`,{
       method: "GET",
       headers : {
           "Content-Type": "application/json",
