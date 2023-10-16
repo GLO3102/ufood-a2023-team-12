@@ -40,7 +40,7 @@ function closeModale() {
         /*--------*/
 
         /*--------*/
-        position: fixed;
+        position: absolute;
         top: 15%;
         left: 50%;
         z-index: 100;

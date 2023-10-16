@@ -36,7 +36,7 @@ export const getRestaurantById = async (restaurantId) => {
 
   });
     if (response.status != 200) {
-      throw new Error('Error fetching restaurant ${restaurantId}"');
+      throw new Error(`Error fetching restaurant ${restaurantId}`);
     }
 
     const restaurant = await response.json();
@@ -59,11 +59,41 @@ export const getVisitsByRestaurantId = async (restaurantId) => {
 
   });
     if (response.status != 200) {
-      throw new Error('Error fetching visits for restaurant  ${restaurantId}"');
+      throw new Error(`Error fetching visits for restaurant  ${restaurantId}`);
     }
 
     const visits = await response.json();
     return visits.items;
+  } catch (e) {
+    console.log(e);
+    
+  }
+};
+
+// Fonction pour envoyer une évaluation d'un restaurant
+export const postRestaurantVisit = async (user_id, restaurant_id, rating, date, comment) => {
+  try {
+    const response = await fetch(`${baseURL}/unsecure/users/${user_id}/restaurants/visits`,{
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        "restaurant_id": restaurant_id,
+        "comment": comment,
+        "rating": rating,
+        "date": date
+      })
+
+  }).then((response) => function(){
+
+    if (response.status != 200) {
+      throw new Error(`Error sending rating for restaurant ${restaurantId}`);
+    }
+    
+    return response.json();
+  })
+
   } catch (e) {
     console.log(e);
     

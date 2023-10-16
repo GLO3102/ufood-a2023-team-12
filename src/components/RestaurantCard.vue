@@ -3,6 +3,7 @@
 
         <!--Clickable part of the card-->
         <div @click="this.$router.push('/restaurant/' + props.restaurant.id)">
+
             <!--Image-->
             <div class="restaurant_image">
                 <img :src="props.restaurant.pictures[2]" :alt="props.restaurant.name + ' Image'" />

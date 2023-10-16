@@ -1,33 +1,40 @@
 <template>
     <modale @close-modale="closeModale">
-        <div class="d-flex justify-content-center row align-items-center">
+        <div class="d-flex w-100 justify-content-center flex-column align-items-center">
+
+            <!--Title-->
             <h1 class="mt-4 text-center alt-font">Rate this restaurant</h1>
+
+            <!--Stars-->
             <div id="starsContainer" class="d-flex justify-content-center text-warning">
+                <font-awesome-icon @mouseleave="color(0)" @mouseover="color(1)" @click="rate(1)" class="starYellow" icon="fa-solid fa-star" v-if="(rating >= 1 || currentHoveredStar >= 1)"/>
+                <font-awesome-icon @mouseleave="color(0)" @mouseover="color(1)" @click="rate(1)" class="starGrey" icon="fa-solid fa-star" v-else/>
 
-                <div>
-                    <font-awesome-icon @mouseleave="color(0)" @mouseover="color(1)" @click="rate(1)" class="starYellow" icon="fa-solid fa-star" v-if="(rating >= 1 || hover >= 1)"/>
-                    <font-awesome-icon @mouseleave="color(0)" @mouseover="color(1)" @click="rate(1)" class="starGrey" icon="fa-solid fa-star" v-else/>
+                <font-awesome-icon @mouseleave="color(0)" @mouseover="color(2)" @click="rate(2)" class="starYellow" icon="fa-solid fa-star" v-if="(rating >= 2 || currentHoveredStar >= 2)"/>
+                <font-awesome-icon @mouseleave="color(0)" @mouseover="color(2)" @click="rate(2)" class="starGrey" icon="fa-solid fa-star" v-else />
 
-                    <font-awesome-icon @mouseleave="color(0)" @mouseover="color(2)" @click="rate(2)" class="starYellow" icon="fa-solid fa-star" v-if="(rating >= 2 || hover >= 2)"/>
-                    <font-awesome-icon @mouseleave="color(0)" @mouseover="color(2)" @click="rate(2)" class="starGrey" icon="fa-solid fa-star" v-else />
+                <font-awesome-icon @mouseleave="color(0)" @mouseover="color(3)" @click="rate(3)" class="starYellow" icon="fa-solid fa-star" v-if="(rating >= 3 || currentHoveredStar >= 3)"/>
+                <font-awesome-icon @mouseleave="color(0)" @mouseover="color(3)" @click="rate(3)" class="starGrey" icon="fa-solid fa-star" v-else/>
 
-                    <font-awesome-icon @mouseleave="color(0)" @mouseover="color(3)" @click="rate(3)" class="starYellow" icon="fa-solid fa-star" v-if="(rating >= 3 || hover >= 3)"/>
-                    <font-awesome-icon @mouseleave="color(0)" @mouseover="color(3)" @click="rate(3)" class="starGrey" icon="fa-solid fa-star" v-else/>
+                <font-awesome-icon @mouseleave="color(0)" @mouseover="color(4)" @click="rate(4)" class="starYellow" icon="fa-solid fa-star" v-if="(rating >= 4 || currentHoveredStar >= 4)"/>
+                <font-awesome-icon @mouseleave="color(0)" @mouseover="color(4)" @click="rate(4)" class="starGrey" icon="fa-solid fa-star" v-else />
 
-                    <font-awesome-icon @mouseleave="color(0)" @mouseover="color(4)" @click="rate(4)" class="starYellow" icon="fa-solid fa-star" v-if="(rating >= 4 || hover >= 4)"/>
-                    <font-awesome-icon @mouseleave="color(0)" @mouseover="color(4)" @click="rate(4)" class="starGrey" icon="fa-solid fa-star" v-else />
-
-                    <font-awesome-icon @mouseleave="color(0)" @mouseover="color(5)" @click="rate(5)" class="starYellow" icon="fa-solid fa-star" v-if="(rating >= 5 || hover >= 5)"/>
-                    <font-awesome-icon @mouseleave="color(0)" @mouseover="color(5)" @click="rate(5)" class="starGrey" icon="fa-solid fa-star" v-else/>
-                </div>
+                <font-awesome-icon @mouseleave="color(0)" @mouseover="color(5)" @click="rate(5)" class="starYellow" icon="fa-solid fa-star" v-if="(rating >= 5 || currentHoveredStar >= 5)"/>
+                <font-awesome-icon @mouseleave="color(0)" @mouseover="color(5)" @click="rate(5)" class="starGrey" icon="fa-solid fa-star" v-else/>
             </div>
 
-            <textarea class="textArea mt-3 w-50" name="ratingComment" id="ratingComment" cols="30" rows="13" placeholder="Comment..."></textarea>
-            <p>{{ props.restaurantId }}</p>
-
-            <div class="d-flex mt-4 mb-4 justify-content-center">
-                <button class="w-25 btn btn-success">Rate</button>
+            <!--Date-->
+            <div class="d-flex w-50 mt-3 flex-column justify-content-start">
+                <label class="alt-font" for="visitDate">Date de visite</label>
+                <input v-model="date" id="visitDate" class="w-50" type="date">
             </div>
+
+            <!--Comment-->
+            <textarea v-model="comment" class="textArea mt-3 w-50" name="ratingComment" id="ratingComment" cols="30" rows="13" placeholder="Comment..."></textarea>
+
+            <!--Rate button-->
+            <button @click="submitRating()" class="mt-3 mb-3 btn btn-success">Rate</button>
+
         </div>
     </modale>
 </template>
@@ -36,9 +43,13 @@
 
     import Modale from './Modale.vue';
     import { ref } from "vue";
+    import { postRestaurantVisit } from '../../api/restaurants';
+
+    const currentHoveredStar = ref(0);
 
     const rating = ref(0);
-    const hover = ref(0);
+    const date = ref("");
+    const comment = ref("");
 
     //Emits
     const emit = defineEmits([
@@ -57,10 +68,10 @@
     const color = (number) => {
 
         if(number == 0){
-            hover.value == rating.value;
+            currentHoveredStar.value == rating.value;
         }
 
-        hover.value = number;
+        currentHoveredStar.value = number;
     }
 
     function closeModale(){
@@ -68,22 +79,26 @@
         emit('closeModale');
     }
 
+    function submitRating(){
+
+        console.log("Only in livrable 3 but here's the data:")
+        console.log('Rating: ' + rating.value)
+        console.log('Date: ' + date.value)
+        console.log('Comment: ' + comment.value)
+
+        //postRestaurantVisit(0, props.restaurantId, rating.value, date.value, comment.value);
+    }
+
 </script>
 
 <style>
 .starYellow {
+    font-size: 2em;
     color: yellow;
 }
 
-#starIcon {
-    color: gray;
-}
-
-#starIcon:hover {
-    color: yellows;
-}
-
 .starGrey {
+    font-size: 2em;
     color: grey;
 }
 
@@ -95,10 +110,6 @@
     background-color: #5E503F;    
     color: #0A0908;
     width: 100px;
-}
-
-.w-25{
-    width: 25%;
 }
 
 .textArea{

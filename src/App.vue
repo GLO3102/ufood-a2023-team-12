@@ -45,7 +45,6 @@
       openRateModale(restaurant_Id){
         this.rateModaleOpened = true;
         this.rateRestaurantId = restaurant_Id;
-        console.log(restaurant_Id)
       },
       closeRateModale(){
         this.rateModaleOpened = false;
