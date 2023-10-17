@@ -1,5 +1,5 @@
 <script setup>
-import { onMounted, ref } from "vue";
+import { onMounted, ref, computed } from "vue";
 import { useRoute } from "vue-router";
 import { getRestaurantById} from "../api/restaurants.js";
 
@@ -15,6 +15,7 @@ onMounted(async () => {
     console.log(fetchedRestaurant);
     restaurant.value = fetchedRestaurant;
     console.log(restaurant.value);
+    console.log(restaurant.value.name);
   } catch (e) {
     console.error("Failed to fetch restaurants:", e);
   } finally {
@@ -32,22 +33,26 @@ const getFilterPriceName = (price) => {
       return "Expensive";
   }
 };
+
+const firstImage = computed(() => {
+  return restaurant.value.pictures && restaurant.value.pictures.length ? restaurant.value.pictures[0] : null;
+});
+
 </script>
 
 <template>
-  <div class="restaurant" v-if="restaurant.value && Object.keys(restaurant.value).length">
-    {{ console.log('Rendering restaurant') }}
+  <div class="restaurant">
     <div class="restaurant_info">
         <div class="restaurant_name">
-          <h2>{{ restaurant.value.name }}</h2>
+          <h2>{{ restaurant.name }}</h2>
         </div>
         <div class="mosaic" id="mosaic">
           <div class="big_img">
-            <img :src="restaurant.value.pictures[0]" alt="" />
+            <img :src="firstImage" alt="" />
           </div>
           <div class="small_img">
             <img
-              v-for="(image, index) in restaurant.value.pictures.slice(1)"
+              v-for="(image, index) in restaurant.pictures"
               :key="index"
               :src="image"
               alt=""
@@ -56,16 +61,16 @@ const getFilterPriceName = (price) => {
         </div>
         <div class="restaurant_flex_container">
           <div class="restaurant_details">
-            <h3>Genre: {{ restaurant.value.genres.join(', ') }}</h3>
-            <h3>Price Range: {{ getFilterPriceName(restaurant.value.price_range) }}</h3>
+            <h3>Genre: {{ restaurant.genres}}</h3>
+            <h3>Price Range: {{ getFilterPriceName(restaurant.price_range) }}</h3>
             <div class="restaurant_reviews">
               <h3>Reviews:</h3>
             </div>
-            <h3>Address: {{ restaurant.value.address }}</h3>
-            <h3>Phone: {{ restaurant.value.tel }}</h3>
-            <h3>Hours: {{ restaurant.value.opening_hours.monday }}</h3> 
+            <h3>Address: {{ restaurant.address }}</h3>
+            <h3>Phone: {{ restaurant.tel }}</h3>
+            <h3>Hours: {{ restaurant.opening_hours }}</h3> 
             <iframe 
-              :src="`https://www.google.com/maps?q=${restaurant.value.location.coordinates[1]},${restaurant.value.location.coordinates[0]}&hl=es;z=14&amp;output=embed`"
+              :src="`https://www.google.com/maps?q=${restaurant.location},${restaurant.location}&hl=es;z=14&amp;output=embed`"
               style="border:0;"
               loading="lazy"
               referrerpolicy="no-referrer-when-downgrade">
