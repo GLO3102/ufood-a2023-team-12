@@ -50,6 +50,11 @@
         this.rateModaleOpened = false;
         this.rateRestaurantId = null;
       }
+    },
+    updated() {
+        if(this.rateModaleOpened){
+            document.getElementById("modaleContainer").showModal();
+        }
     }
   };
 </script>

@@ -3,7 +3,7 @@
         <div class="d-flex w-100 justify-content-center flex-column align-items-center">
 
             <!--Title-->
-            <h1 class="mt-4 text-center alt-font">Rate this restaurant</h1>
+            <h1 class="mt-3 text-center alt-font">Rate this restaurant</h1>
 
             <!--Stars-->
             <div id="starsContainer" class="d-flex justify-content-center text-warning">
@@ -26,11 +26,11 @@
             <!--Date-->
             <div class="d-flex w-50 mt-3 flex-column justify-content-start">
                 <label class="alt-font" for="visitDate">Date de visite</label>
-                <input v-model="date" id="visitDate" class="w-50" type="date">
+                <input v-model="date" id="visitDate" class="w-100 rounded date" type="date">
             </div>
 
             <!--Comment-->
-            <textarea v-model="comment" class="textArea mt-3 w-50" name="ratingComment" id="ratingComment" cols="30" rows="13" placeholder="Comment..."></textarea>
+            <textarea v-model="comment" class="rounded textArea mt-3 w-50" name="ratingComment" id="ratingComment" cols="30" rows="10" placeholder="Comment..."></textarea>
 
             <!--Rate button-->
             <button @click="submitRating()" class="mt-3 mb-3 btn btn-success">Rate</button>
@@ -113,10 +113,15 @@
 }
 
 .textArea{
+    padding: 10px;
     resize: none;
     border: none;
     outline: none !important;
-    border-radius: 10px;
+}
+
+.date{
+    border: none;
+    outline: none !important;
 }
 
 h1{
