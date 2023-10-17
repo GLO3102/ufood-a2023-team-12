@@ -1,5 +1,5 @@
 <template>
-    <div id="modaleContainer">
+    <dialog id="modaleContainer">
         <div id="modaleHeader">
             <button type="button" class="btn btn-danger m-2" @click="closeModale">
                 <font-awesome-icon icon="fa-solid fa-xmark" />
@@ -8,7 +8,7 @@
         <div id="modaleContent" class="d-flex justify-content-center">
             <slot/>
         </div>
-    </div>
+    </dialog>
 </template>
 
 <script setup>
@@ -30,21 +30,19 @@ function closeModale() {
 <style>
 
     #modaleContainer{
-
+        
         /*Variables*/
         --modale-width: 60%;
-        --modale-height: auto;
+        --modale-height: fit-content;
         --modale-left-margin-offset: calc(var(--modale-width) / -2);
         --modale-top-margin-offset: calc(var(--modale-height) / -2);
 
         /*--------*/
-
-        /*--------*/
         position: fixed;
-        top: 15%;
         left: 50%;
         z-index: 100;
         margin-left: var(--modale-left-margin-offset);
+        padding: 0;
 
         /*--------*/
         width: var(--modale-width);
@@ -52,6 +50,7 @@ function closeModale() {
 
         /*--------*/
         background-color: #C6AC8F;
+        border: none;
         border-radius: 10px;
 
         animation: fadeIn 0.5s;
@@ -63,12 +62,23 @@ function closeModale() {
         justify-content: flex-end;
         background-color: #22333B;
         height: auto;
-        border-radius: 10px 10px 0px 0px;
     }
 
     @keyframes fadeIn {
         0% { opacity: 0; }
         100% { opacity: 1; }
     }
+
+    @media (width < 990px) {
+        #modaleContainer{
+        
+        /*Variables*/
+        --modale-width: 90%;
+
+        /*--------*/
+        width: var(--modale-width);
+    }
+    }
+
 
 </style>

@@ -15,7 +15,6 @@ onMounted(async () => {
     console.log(fetchedRestaurant);
     restaurant.value = fetchedRestaurant;
     console.log(restaurant.value);
-    console.log(restaurant.value.name);
   } catch (e) {
     console.error("Failed to fetch restaurants:", e);
   } finally {
