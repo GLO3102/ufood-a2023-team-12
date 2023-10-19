@@ -64,7 +64,7 @@
 <script setup>
 
 import { ref } from "vue";
-import RateRestaurantModale from "./Modales/RateRestaurantModale.vue";
+import RateRestaurantModale from "../components/Modales/RateRestaurantModale.vue";
 
 const isModaleOpen = ref(false);
 

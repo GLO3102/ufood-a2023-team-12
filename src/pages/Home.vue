@@ -6,7 +6,7 @@ import {
   getVisitsByRestaurantId,
 } from "../api/restaurants.js";
 import { getAllFilterTypes } from "../api/filters.js";
-import RestaurantCard from "./RestaurantCard.vue";
+import RestaurantCard from "../components/RestaurantCard.vue";
 
 const restaurants = ref([]);
 const filtered_restaurants = ref([]);

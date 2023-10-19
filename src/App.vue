@@ -2,7 +2,7 @@
   <div id="app">
 
     <!--Naviguation Bar-->
-    <navigation :is-logged-in="isLoggedIn" 
+    <navigation-bar :is-logged-in="isLoggedIn" 
       @as-logged-out="isLoggedIn = false"
       />
 
@@ -25,13 +25,13 @@
   import "bootstrap";
   import "bootstrap/dist/css/bootstrap.min.css";
   import RateRestaurantModale from "./components/Modales/RateRestaurantModale.vue";
-  import Navigation from "./components/Navigation.vue";
+  import NavigationBar from "./components/NavigationBar.vue";
   import "./stylesheets/home.css";
 
   export default {
     name: "app",
     components: {
-      Navigation,
+      NavigationBar,
       RateRestaurantModale
     },
     data() {

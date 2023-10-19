@@ -1,7 +1,7 @@
 <script>
 
   export default{
-    name: "Navigation",
+    name: "NavigationBar",
     props: {
         isLoggedIn: Boolean,
     },
