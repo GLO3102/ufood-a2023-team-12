@@ -37,6 +37,26 @@ const firstImage = computed(() => {
   return restaurant.value.pictures && restaurant.value.pictures.length ? restaurant.value.pictures[0] : null;
 });
 
+const otherImages = computed(() => {
+  return restaurant.value.pictures ? restaurant.value.pictures.slice(1) : [];
+});
+
+const genres = computed(() => {
+  return restaurant.value.genres ? restaurant.value.genres.join(", ") : "";
+});
+
+const hours = computed(() => {
+  if (!restaurant.value || typeof restaurant.value.opening_hours !== 'object') {
+    return "";
+  }
+
+  const hoursArray = Object.entries(restaurant.value.opening_hours)
+    .map(([day, time]) => `${day}: ${time}`);
+
+  return hoursArray.join("<br>");
+});
+
+
 </script>
 
 <template>
@@ -51,8 +71,8 @@ const firstImage = computed(() => {
           </div>
           <div class="small_img">
             <img
-              v-for="(image, index) in restaurant.pictures"
-              :key="index"
+              v-for="(image, index) in otherImages"
+              :key="index+1"
               :src="image"
               alt=""
             />
@@ -60,15 +80,15 @@ const firstImage = computed(() => {
         </div>
         <div class="restaurant_flex_container">
           <div class="restaurant_details">
-            <h3>Genre: {{ restaurant.genres}}</h3>
-            <h3>Price Range: {{ getFilterPriceName(restaurant.price_range) }}</h3>
+            <div>Genre: {{ genres}}</div>
+            <div>Price Range: {{ getFilterPriceName(restaurant.price_range) }}</div>
             <div class="restaurant_reviews">
-              <h3>Reviews:</h3>
+              <div>Reviews:</div>
             </div>
-            <h3>Address: {{ restaurant.address }}</h3>
-            <h3>Phone: {{ restaurant.tel }}</h3>
-            <h3>Hours: {{ restaurant.opening_hours }}</h3> 
-            <iframe 
+            <div>Address: {{ restaurant.address }}</div>
+            <div>Phone: {{ restaurant.tel }}</div>
+            <div v-html="hours"></div>
+            <iframe
               :src="`https://www.google.com/maps?q=${restaurant.location},${restaurant.location}&hl=es;z=14&amp;output=embed`"
               style="border:0;"
               loading="lazy"
@@ -96,7 +116,7 @@ const firstImage = computed(() => {
 }
 
 .restaurant_name  {
-  white-space: nowrap; 
+  white-space: nowrap;
   width: 100%;
 }
 
@@ -113,20 +133,20 @@ const firstImage = computed(() => {
 }
 
 .big_img {
-  flex: 1 1 50%; 
+  flex: 1 1 50%;
   height: 400px;
   margin-top: 2px;
 }
 
 .small_img {
-  flex: 1 1 50%; 
+  flex: 1 1 50%;
   height: 400px;
   display: flex;
   flex-wrap: wrap;
 }
 
 .small_img img {
-  height: 50%; 
+  height: 50%;
   object-fit: cover;
   flex-grow: 1;
   margin: 2px;
@@ -148,7 +168,7 @@ const firstImage = computed(() => {
 
 .restaurant_details {
   flex: 1;
-  padding: 20px; 
+  padding: 20px;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -169,18 +189,18 @@ const firstImage = computed(() => {
 }
 
 iframe {
-    width: 70%;       
-    height: 600px;     
+    width: 70%;
+    height: 600px;
     margin-top:30px;
 }
 
 @media (max-width: 820px) {
     .restaurant_info {
-        margin: 0 20px; 
+        margin: 0 20px;
     }
 
     iframe {
-        height: 400px;  
+        height: 400px;
     }
   }
 
@@ -196,11 +216,11 @@ iframe {
   .big_img{
     height:200px;
   }
-    
+
   .restaurant_info {
-        margin: 0 20px; 
+        margin: 0 20px;
     }
-  
+
     iframe{
       height:300px;
       width: 90%;
