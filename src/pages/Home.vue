@@ -195,10 +195,8 @@ function generateStarRating(rating) {
           </div>
           <h2>Loading restaurants...</h2>
         </div>
-        <div class="restaurant_box" v-else-if="filtered_restaurants && filtered_restaurants.length">
-          <div v-for="restaurant in filtered_restaurants" :key="restaurant.id">
-            <restaurant-card @open-rate-modale="(e) => {emit('openRateModale', e)}" :restaurant="restaurant"></restaurant-card>
-          </div>
+        <div class="restaurant_box pt-5" v-else-if="filtered_restaurants && filtered_restaurants.length">
+          <restaurant-card v-for="restaurant in filtered_restaurants" :key="restaurant.id" @open-rate-modale="(e) => {emit('openRateModale', e)}" :restaurant="restaurant"></restaurant-card>
         </div>
         <div class="text-center pt-5" v-else>
           <h2>No result</h2>

@@ -41,7 +41,7 @@
 
 <template>
 <div>
-<nav class="navbar navbar-expand-lg fixed-top navbar-dark bg-dark px-3">
+<nav class="navbar navbar-expand-lg navbar-dark px-3" style="background-color: #0A0908;">
   <router-link class="navbar-brand" to="/">UFood</router-link>
 
   <form v-if="innerWidth <= navCollapseValue" class="form-inline col justify-content-center me-1">

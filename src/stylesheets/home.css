@@ -1,6 +1,6 @@
 body {
-  background-color: #fff;
-  background-image: url("https://images.unsplash.com/photo-1678924587662-d8c63e57eb11?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80");
+  background-color: #22333B;
+  /*background-image: url("https://images.unsplash.com/photo-1678924587662-d8c63e57eb11?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80");*/
   background-size: cover;
 }
 
@@ -35,22 +35,18 @@ body {
   flex-wrap: wrap;
   align-items: center;
   justify-content: center;
-
-  padding: 10px 10px;
 }
 
 .restaurant_card {
   width: 325px;
   height: 500px;
-  padding-top: 20px;
-  margin-right: 30px;
+  margin-right: 20px;
   margin-bottom: 20px;
-  box-shadow: 0px 10px 10px rgba(0, 0, 0, 0.2);
-  border-radius: 20px;
+  border-radius: 20px 20px 0px 0px;
 }
 
-.restaurant_card:hover{
-  transform: scale(1.01);
+.restaurant_card_clickable:hover{
+  transform: scale(1.02, 1.02);
 }
 
 .restaurant_image {
@@ -69,11 +65,6 @@ body {
   border-radius: 20px;
 }
 
-.restaurant_info {
-  margin: -10px 20px;
-  overflow: hidden;
-  object-position: center;
-}
 .highlight{
   font-weight: bold;
   font-size: 1.2em;
@@ -81,8 +72,6 @@ body {
 
 .restaurant_box .small_card .fa-heart {
   position: relative;
-  top: -200px;
-  right: -270px;
   font-size: larger;
   color: rgb(136, 128, 128);
   display: flex;
@@ -92,27 +81,6 @@ body {
 
 .restaurant_box .small_card:hover .fa-heart {
   color: #da4b0a;
-}
-
-.restaurant_info h2 {
-  width: 60%;
-  text-align: center;
-  margin: 10px auto 10px auto;
-  font-size: 22px;
-  color: #f9bd26;
-}
-
-.restaurant_info p {
-  text-align: center;
-  margin-top: 8px;
-  line-height: 21px;
-  font-size: 15px;
-}
-
-.restaurant_info h3 {
-  text-align: center;
-  margin-top: 10px;
-  font-size: 15px;
 }
 
 .restaurant_star {
@@ -127,34 +95,15 @@ body {
   }
 
   .restaurant_box {
+    padding-top: 0px !important;
     flex-direction: column;
-    padding: 10px auto;
-    align-items: center;
   }
 
   .restaurant_card {
     width: 90%;
-    margin-right: 0px;
-    height: auto;
+    margin-right: 0px !important;
   }
 
-  .restaurant_image {
-    width: 95%;
-    height: auto;
-    margin: auto;
-  }
-
-  .restaurant_info h2 {
-    font-size: 17px;
-  }
-
-  .restaurant_info p {
-    font-size: 14px;
-  }
-
-  .restaurant_info h3 {
-    font-size: 15px;
-  }
 }
 
 .header-container {
