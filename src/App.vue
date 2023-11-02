@@ -12,7 +12,7 @@
       :restaurant-id="rateRestaurantId"
       />
 
-    <!--I don't know what that is but it works...-->
+    <!--Router View-->
     <router-view 
       @as-logged-in="isLoggedIn = true"
       @open-rate-modale="openRateModale" 
