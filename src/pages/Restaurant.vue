@@ -1,4 +1,14 @@
 <script setup>
+import L from 'leaflet';
+import 'leaflet/dist/leaflet.css';
+import 'leaflet-routing-machine';
+import 'leaflet-routing-machine/dist/leaflet-routing-machine.css';
+
+
+import { Swiper, SwiperSlide } from 'swiper/vue';
+import 'swiper/swiper-bundle.css';
+
+
 import { onMounted, ref, computed } from "vue";
 import { useRoute } from "vue-router";
 import { getRestaurantById} from "../api/restaurants.js";
@@ -8,6 +18,9 @@ const restaurantId = ref(route.params.id);
 const restaurant = ref({});
 const isLoading = ref(true);
 console.log(route.params.id);
+//
+const map = ref(null);
+//
 
 onMounted(async () => {
   try {
@@ -15,6 +28,20 @@ onMounted(async () => {
     console.log(fetchedRestaurant);
     restaurant.value = fetchedRestaurant;
     console.log(restaurant.value);
+    initMap(restaurant.value.location.coordinates);
+
+    navigator.geolocation.getCurrentPosition(
+      (position) => {
+        const origin = `${position.coords.latitude},${position.coords.longitude}`;
+        const destination = `${restaurant.value.location.coordinates[1]},${restaurant.value.location.coordinates[0]}`;
+
+      },
+      (error) => {
+        console.error("Geolocation error:", error);
+      },
+      { enableHighAccuracy: true }
+    );
+
   } catch (e) {
     console.error("Failed to fetch restaurants:", e);
   } finally {
@@ -22,6 +49,32 @@ onMounted(async () => {
   }
 });
 
+
+// Fonction pour initialiser la carte Leaflet
+function initMap(coordinates) {
+  map.value = L.map('map').setView([coordinates[1], coordinates[0]], 13);
+
+  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    attribution: '© OpenStreetMap contributors'
+  }).addTo(map.value);
+
+  // Routage de la map
+  navigator.geolocation.getCurrentPosition(
+    (position) => {
+      L.Routing.control({
+        waypoints: [
+          L.latLng(position.coords.latitude, position.coords.longitude),
+          L.latLng(coordinates[1], coordinates[0])
+        ],
+        routeWhileDragging: true
+      }).addTo(map.value);
+    },
+    (error) => {
+      console.error("Geolocation error:", error);
+    },
+    { enableHighAccuracy: true }
+  );
+}
 const getFilterPriceName = (price) => {
   switch (price) {
     case 1:
@@ -33,13 +86,22 @@ const getFilterPriceName = (price) => {
   }
 };
 
-const firstImage = computed(() => {
-  return restaurant.value.pictures && restaurant.value.pictures.length ? restaurant.value.pictures[0] : null;
+//Rating
+const ratingFloored = computed(() => {
+  const floored = Math.floor(restaurant.value.rating);
+  return Number.isInteger(floored) ? floored : 0; // Ensures it's always an integer
 });
 
-const otherImages = computed(() => {
-  return restaurant.value.pictures ? restaurant.value.pictures.slice(1) : [];
+const hasHalfStar = computed(() => {
+  // Check if the decimal part of the rating is greater than 0.5 to determine if we need a half star
+  return restaurant.value.rating % 1 > 0.5;
 });
+
+const images = computed(() => {
+  return restaurant.value.pictures && restaurant.value.pictures.length ? restaurant.value.pictures : [];
+});
+
+
 
 const genres = computed(() => {
   return restaurant.value.genres ? restaurant.value.genres.join(", ") : "";
@@ -65,42 +127,67 @@ const hours = computed(() => {
         <div class="restaurant_name">
           <h2>{{ restaurant.name }}</h2>
         </div>
-        <div class="mosaic" id="mosaic">
-          <div class="big_img">
-            <img :src="firstImage" alt="" />
-          </div>
-          <div class="small_img">
-            <img
-              v-for="(image, index) in otherImages"
-              :key="index+1"
-              :src="image"
-              alt=""
-            />
-          </div>
-        </div>
+      <Swiper
+        :modules="modules"
+        :slides-per-view="2"
+        :space-between="50"
+        :navigation="true"
+        :loop="true"
+        :pagination="{ clickable: true }"
+
+        @swiper="onSwiper"
+        @slideChange="onSlideChange"
+      >
+        <!-- Utilisez v-for pour créer un SwiperSlide pour chaque image de allImages -->
+        <SwiperSlide v-for="(image, index) in images" :key="index">
+          <img :src="image" :alt="'image ' + (index + 1)" />
+        </SwiperSlide>
+      </Swiper>
         <div class="restaurant_flex_container">
           <div class="restaurant_details">
             <div>Genre: {{ genres}}</div>
             <div>Price Range: {{ getFilterPriceName(restaurant.price_range) }}</div>
             <div class="restaurant_reviews">
-              <div>Reviews:</div>
+
+              <span>Reviews:&nbsp; </span>
+              <div class="cardStars d-flex justify-content-center flex-row">
+                <font-awesome-icon
+                  icon="fa-solid fa-star"
+                  v-for="star in ratingFloored"
+                  :key="star"
+                />
+                <font-awesome-icon
+                  icon="fa-solid fa-star-half-stroke"
+                  v-if="hasHalfStar"
+                />
+
+              </div>
             </div>
             <div>Address: {{ restaurant.address }}</div>
             <div>Phone: {{ restaurant.tel }}</div>
             <div v-html="hours"></div>
-            <iframe
-              :src="`https://www.google.com/maps?q=${restaurant.location},${restaurant.location}&hl=es;z=14&amp;output=embed`"
-              style="border:0;"
-              loading="lazy"
-              referrerpolicy="no-referrer-when-downgrade">
-            </iframe>
+
           </div>
       </div>
     </div>
+    <div id="map" class="map"></div>
   </div>
 </template>
 
 <style scoped>
+.map {
+  height: 600px;
+  width: 85%;
+  margin: 0 auto;
+}
+
+
+::v-deep .leaflet-routing-container {
+   font-size: 10px;
+   max-height: 250px;
+  overflow-y: auto;
+
+ }
 
 .restaurant {
   background-image: url("https://images.unsplash.com/photo-1678924587662-d8c63e57eb11?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80");
@@ -123,37 +210,18 @@ const hours = computed(() => {
   font-size: 4vw;
 }
 
-.mosaic {
-  display: flex;
-  flex-wrap: wrap;
+.swiper {
+
   height: 400px;
-  overflow: hidden;
   margin-bottom: 20px;
+  width: 85%
 }
 
-.big_img {
-  flex: 1 1 50%;
-  height: 400px;
-  margin-top: 2px;
-}
 
-.small_img {
-  flex: 1 1 50%;
-  height: 400px;
-  display: flex;
-  flex-wrap: wrap;
-}
-
-.small_img img {
-  height: 50%;
-  object-fit: cover;
-  flex-grow: 1;
-  margin: 2px;
-}
-
-.big_img img {
+.swiper-slide img {
+  display: block;
   width: 100%;
-  height: 100%;
+  height: auto;
   object-fit: cover;
 }
 
@@ -176,6 +244,7 @@ const hours = computed(() => {
   background-color: #f9f9f9;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
   background-color: rgba(255,255,255,0.5);
+  gap: 10px;
 }
 
 .restaurant_reviews {
@@ -183,9 +252,6 @@ const hours = computed(() => {
   align-items: center;
 }
 
-.restaurant_reviews span{
-  color: #fac031;
-}
 
 iframe {
     width: 70%;
@@ -208,13 +274,7 @@ iframe {
     font-size: 5vw;
     }
 
-  .mosaic{
-    height:200px;
-  }
 
-  .big_img{
-    height:200px;
-  }
 
   .restaurant_info {
         margin: 0 20px;
