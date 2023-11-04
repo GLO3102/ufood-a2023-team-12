@@ -17,10 +17,8 @@ const route = useRoute();
 const restaurantId = ref(route.params.id);
 const restaurant = ref({});
 const isLoading = ref(true);
-console.log(route.params.id);
-//
 const map = ref(null);
-//
+
 
 onMounted(async () => {
   try {
@@ -50,7 +48,6 @@ onMounted(async () => {
 });
 
 
-// Fonction pour initialiser la carte Leaflet
 function initMap(coordinates) {
   map.value = L.map('map').setView([coordinates[1], coordinates[0]], 13);
 
@@ -58,7 +55,6 @@ function initMap(coordinates) {
     attribution: '© OpenStreetMap contributors'
   }).addTo(map.value);
 
-  // Routage de la map
   navigator.geolocation.getCurrentPosition(
     (position) => {
       L.Routing.control({
@@ -86,14 +82,12 @@ const getFilterPriceName = (price) => {
   }
 };
 
-//Rating
 const ratingFloored = computed(() => {
   const floored = Math.floor(restaurant.value.rating);
-  return Number.isInteger(floored) ? floored : 0; // Ensures it's always an integer
+  return Number.isInteger(floored) ? floored : 0; 
 });
 
 const hasHalfStar = computed(() => {
-  // Check if the decimal part of the rating is greater than 0.5 to determine if we need a half star
   return restaurant.value.rating % 1 > 0.5;
 });
 
@@ -101,19 +95,17 @@ const images = computed(() => {
   return restaurant.value.pictures && restaurant.value.pictures.length ? restaurant.value.pictures : [];
 });
 
-
-
 const genres = computed(() => {
   return restaurant.value.genres ? restaurant.value.genres.join(", ") : "";
 });
 
 const hours = computed(() => {
   if (!restaurant.value || typeof restaurant.value.opening_hours !== 'object') {
-    return "";
+    return "Closed";
   }
 
   const hoursArray = Object.entries(restaurant.value.opening_hours)
-    .map(([day, time]) => `${day}: ${time}`);
+    .map(([day, time]) => `${day}: ${time ? time : 'Closed'}`);
 
   return hoursArray.join("<br>");
 });
@@ -127,18 +119,17 @@ const hours = computed(() => {
         <div class="restaurant_name">
           <h2>{{ restaurant.name }}</h2>
         </div>
-      <Swiper
-        :modules="modules"
-        :slides-per-view="2"
-        :space-between="50"
-        :navigation="true"
-        :loop="true"
-        :pagination="{ clickable: true }"
-
-        @swiper="onSwiper"
-        @slideChange="onSlideChange"
+          <Swiper
+          :modules="modules"
+          :slides-per-view="2"
+          :space-between="10"
+          :centered-slides="true"
+          :navigation="true"
+          :loop="true"
+          :pagination="{ clickable: true }"
+          @swiper="onSwiper"
+          @slideChange="onSlideChange"
       >
-        <!-- Utilisez v-for pour créer un SwiperSlide pour chaque image de allImages -->
         <SwiperSlide v-for="(image, index) in images" :key="index">
           <img :src="image" :alt="'image ' + (index + 1)" />
         </SwiperSlide>
@@ -177,16 +168,15 @@ const hours = computed(() => {
 <style scoped>
 .map {
   height: 600px;
-  width: 85%;
+  width: 70%;
   margin: 0 auto;
 }
 
 
 ::v-deep .leaflet-routing-container {
-   font-size: 10px;
-   max-height: 250px;
+  font-size: 10px;
+  max-height: 250px;
   overflow-y: auto;
-
  }
 
 .restaurant {
@@ -198,12 +188,11 @@ const hours = computed(() => {
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin: 0 200px;
 }
 
 .restaurant_name  {
   white-space: nowrap;
-  width: 100%;
+  width: 70%;
 }
 
 .restaurant_name h2{
@@ -211,25 +200,29 @@ const hours = computed(() => {
 }
 
 .swiper {
-
   height: 400px;
   margin-bottom: 20px;
-  width: 85%
+  width: 70%
 }
-
+.swiper-slide {
+  width:100%;
+  display: flex; 
+  justify-content: center; 
+  align-items: center; 
+}
 
 .swiper-slide img {
   display: block;
   width: 100%;
-  height: auto;
-  object-fit: cover;
+  height: 100%;
+  
 }
 
 .restaurant_flex_container {
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
-  width: 100%;
+  width: 70%;
   margin-bottom: 20px;
 }
 
@@ -252,38 +245,40 @@ const hours = computed(() => {
   align-items: center;
 }
 
-
-iframe {
-    width: 70%;
-    height: 600px;
-    margin-top:30px;
-}
-
 @media (max-width: 820px) {
-    .restaurant_info {
-        margin: 0 20px;
+   
+    
+    .restaurant_name{
+        width:90%
+    }
+    .restaurant_flex_container{
+        width:90%;
     }
 
-    iframe {
-        height: 400px;
+    .swiper {
+        width: 90%;
+    }
+    .map {
+        width: 90%;
     }
   }
 
 @media (max-width: 480px) {
   .restaurant_name h2{
-    font-size: 5vw;
+        font-size: 5vw;
     }
 
-
-
-  .restaurant_info {
-        margin: 0 20px;
+    .swiper {
+        height: 200px;
     }
 
-    iframe{
-      height:300px;
-      width: 90%;
+    .map {
+        height:400px;
     }
+    ::v-deep .leaflet-routing-container {
+        max-height: 150px;
+    }
+
 }
 
 </style>
