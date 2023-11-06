@@ -1,7 +1,7 @@
 <template>
   <div class="user-section container">
-    <h1>John Doe</h1>
-    <p>john.doe@gmail.com</p>
+    <h1>{{ user.name }}</h1>
+    <p>{{ user.email }}</p>
     <hr />
     <h4>Score</h4>
     <div>
@@ -24,7 +24,7 @@
       </select>
     </div>
 
-    <div v-if="selectedValue == '0'">
+    <div v-if="selectedValue === '0'">
       <p class="pt-2">No restaurant recently visited</p>
       <router-link class="nav-link" to="/">
         <button class="back-button">See all restaurants</button>
@@ -32,7 +32,9 @@
     </div>
     <div v-else>
       <div class="restaurant_card text-center">
-        <span class="badge rounded-pill text-bg-dark">7 visits in the last month</span>
+        <span class="badge rounded-pill text-bg-dark"
+          >7 visits in the last month</span
+        >
         <div class="restaurant_image">
           <router-link class="nav-link" to="/restaurant">
             <img
@@ -57,14 +59,21 @@
         <button class="btn btn-primary" @click="openModale">Rate</button>
       </div>
     </div>
-    <rate-restaurant-modale @close-modale="closeModale" :is-opened="isModaleOpen"/>
+    <rate-restaurant-modale
+      @close-modale="closeModale"
+      :is-opened="isModaleOpen"
+    />
+    <hr />
+    <section>
+      <CreateFavoritesList />
+    </section>
   </div>
 </template>
 
 <script setup>
-
-import { ref } from "vue";
+import { ref, computed } from "vue";
 import RateRestaurantModale from "../components/Modales/RateRestaurantModale.vue";
+import CreateFavoritesList from "../components/favorites/CreateFavoritesList.vue";
 
 const isModaleOpen = ref(false);
 
@@ -76,11 +85,16 @@ function closeModale() {
   isModaleOpen.value = false;
 }
 
+const user = computed(() => {
+  const userData = localStorage.getItem("userData");
+  return userData ? JSON.parse(userData) : null;
+});
 </script>
 
 <style>
 .user-section {
   margin-top: 100px;
+  color: #fff;
 }
 
 .select-box {

@@ -2,7 +2,7 @@
   <div
     class="d-flex flex-column h-75 justify-content-center align-items-center"
   >
-    <h2 class="text-dark">Login</h2>
+    <h2 class="text-light">Login</h2>
     <form class="p-5 border border-dark rounded bg-dark">
       <div class="form-group">
         <label for="exampleInputEmail1" class="text-light">Email address</label>
@@ -29,6 +29,14 @@
 
       <button @click="submit" class="btn btn-light mt-4">Login</button>
     </form>
+    <router-link class="nav-link text-light" to="/signUp">
+      <p>
+        Don't have an account?
+        <span style="text-decoration: underline; font-weight: 600"
+          >Sign Up</span
+        >
+      </p>
+    </router-link>
   </div>
 </template>
 
