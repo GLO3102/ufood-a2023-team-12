@@ -162,7 +162,7 @@ export default {
   font-size: 20px;
 }
 .navbar {
-  height: 60px;
+  height: auto;
 }
 .nav_searchbar {
   border-radius: 45px;

@@ -31,38 +31,11 @@
       </router-link>
     </div>
     <div v-else>
-      <div class="restaurant_card text-center">
-        <span class="badge rounded-pill text-bg-dark"
-          >7 visits in the last month</span
-        >
-        <div class="restaurant_image">
-          <router-link class="nav-link" to="/restaurant">
-            <img
-              src="https://images.unsplash.com/photo-1586816001966-79b736744398?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1770&q=80"
-              alt="Restaurant A Image"
-            />
-          </router-link>
-        </div>
-
-        <div class="restaurant_info">
-          <h2>Gourmet Corner</h2>
-          <p>Address: 123 Republic Street</p>
-          <h3>Price Range: Cheap</h3>
-          <h3>Genre: Fast Food</h3>
-          <div class="restaurant_star">
-            <font-awesome-icon icon="fa-solid fa-star" />
-            <font-awesome-icon icon="fa-solid fa-star" />
-            <font-awesome-icon icon="fa-solid fa-star" />
-            <font-awesome-icon icon="fa-solid fa-star-half-stroke" />
-          </div>
-        </div>
-        <button class="btn btn-primary" @click="openModale">Rate</button>
-      </div>
+      <restaurant-card-user-page 
+      :restaurant="restaurant"
+      @open-rate-modale-read-only="(id) => viewRating(id)">
+      </restaurant-card-user-page>
     </div>
-    <rate-restaurant-modale
-      @close-modale="closeModale"
-      :is-opened="isModaleOpen"
-    />
     <hr />
     <section>
       <CreateFavoritesList />
@@ -72,13 +45,61 @@
 
 <script setup>
 import { ref, computed } from "vue";
-import RateRestaurantModale from "../components/Modales/RateRestaurantModale.vue";
 import CreateFavoritesList from "../components/favorites/CreateFavoritesList.vue";
+import RestaurantCardUserPage from "../components/RestaurantCardUserPage.vue";
 
 const isModaleOpen = ref(false);
 
-function openModale() {
-  isModaleOpen.value = true;
+const emit = defineEmits([
+    'openRateModaleReadOnly'
+])
+
+//Juste un restaurant hardcodé
+const restaurant = {
+  opening_hours: {
+                "sunday": "11:00-21:00",
+                "monday": "11:30-22:00",
+                "tuesday": "11:30-22:00",
+                "wednesday": "11:30-22:00",
+                "thursday": "11:30-22:00",
+                "friday": "11:30-22:00",
+                "saturday": "11:00-22:00"
+            },
+            pictures: [
+                "https://ufood.s3-us-west-2.amazonaws.com/pictures/121ad2e3-dffb-4a7b-82ef-3eea9c337750.jpg",
+                "https://ufood.s3-us-west-2.amazonaws.com/pictures/5635dd10-ac44-4042-8a10-a551f716aff3.jpg",
+                "https://ufood.s3-us-west-2.amazonaws.com/pictures/d5ee5ec5-c82c-4e38-be50-129295f05499.jpg",
+                "https://ufood.s3-us-west-2.amazonaws.com/pictures/c7a8fea4-8b3c-42bd-bd66-5a8009233758.jpg",
+                "https://ufood.s3-us-west-2.amazonaws.com/pictures/8bf92b33-66ed-4b61-b1c8-cc7e30fee54b.jpg",
+                "https://ufood.s3-us-west-2.amazonaws.com/pictures/69cef28c-31d9-4e02-8295-86855cea5611.jpg",
+                "https://ufood.s3-us-west-2.amazonaws.com/pictures/485ed792-6358-4ffe-baf4-623772b4dcb0.jpg",
+                "https://ufood.s3-us-west-2.amazonaws.com/pictures/66cf7bd7-3aa8-4a86-bc14-ae2782879104.jpg",
+                "https://ufood.s3-us-west-2.amazonaws.com/pictures/36b736ba-b98b-4cd3-8c6e-8f47d3854d53.jpg",
+                "https://ufood.s3-us-west-2.amazonaws.com/pictures/3c207c0d-db68-4e24-a5f3-ed1fa919ccdd.jpg"
+            ],
+            name: "Queues de Castor",
+            tel: "(418) 694-1444",
+            address: "28 Boulevard Champlain, Québec, QC G1K 4H7, Canada",
+            price_range: 1,
+            rating: 3.703021631226677,
+            genres: [
+                "desserts"
+            ],
+            id: "5f31fc6155d7790550c08afe"       
+}
+
+function viewRating(id) {
+
+  //Ici normalement on va GET le review.
+  const review ={
+    id: "12345",
+    restaurant_id: "5f31fc6155d7790550c08afe",
+    comment: "very good restaurant",
+    rating: 5,
+    date: "2020-08-11"
+  }
+
+  emit('openRateModaleReadOnly', review)
 }
 
 function closeModale() {

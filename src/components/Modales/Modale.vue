@@ -1,7 +1,7 @@
 <template>
     <dialog id="modaleContainer">
         <div id="modaleHeader">
-            <button type="button" class="btn btn-danger m-2" @click="closeModale">
+            <button type="button" class="btn btn-danger m-2" @click="emit('closeModale')">
                 <font-awesome-icon icon="fa-solid fa-xmark" />
             </button>
         </div>
@@ -16,14 +16,6 @@
 const emit = defineEmits([
     'closeModale',
 ])
-
-const props = defineProps({
-    isOpened: Boolean,
-});
-
-function closeModale() {
-    emit('closeModale');
-}
 
 </script>
 
