@@ -1,9 +1,9 @@
-const baseURL ="https://ufoodapi.herokuapp.com";
+import { BASE_URL } from './restaurantApiURL';
 
 // Fonction pour récupérer la liste des restaurants
 export const getRestaurants = async () => {
   try {
-    const response = await fetch(`${baseURL}/unsecure/restaurants`,{
+    const response = await fetch(`${BASE_URL}/restaurants`,{
       method: "GET",
       headers : {
           "Content-Type": "application/json",
@@ -28,7 +28,7 @@ export const getRestaurants = async () => {
 
 export const getRestaurantById = async (restaurantId) => {
   try {
-    const response = await fetch(`${baseURL}/unsecure/restaurants/${restaurantId}`,{
+    const response = await fetch(`${BASE_URL}/restaurants/${restaurantId}`,{
       method: "GET",
       headers : {
           "Content-Type": "application/json",
@@ -51,7 +51,7 @@ export const getRestaurantById = async (restaurantId) => {
 // Fonction pour récupérer les visites d'un restaurant par son ID
 export const getVisitsByRestaurantId = async (restaurantId) => {
   try {
-    const response = await fetch(`${baseURL}/restaurants/${restaurantId}/visits`,{
+    const response = await fetch(`${BASE_URL}/restaurants/${restaurantId}/visits`,{
       method: "GET",
       headers : {
           "Content-Type": "application/json",
@@ -73,7 +73,7 @@ export const getVisitsByRestaurantId = async (restaurantId) => {
 // Fonction pour envoyer une évaluation d'un restaurant
 export const postRestaurantVisit = async (user_id, restaurant_id, rating, date, comment) => {
   try {
-    const response = await fetch(`${baseURL}/unsecure/users/${user_id}/restaurants/visits`,{
+    const response = await fetch(`${BASE_URL}/unsecure/users/${user_id}/restaurants/visits`,{
       method: "POST",
       headers: {
         "Content-Type": "application/json",

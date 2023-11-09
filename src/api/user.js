@@ -1,4 +1,5 @@
-const BASE_URL = "https://ufoodapi.herokuapp.com";
+// const BASE_URL = "https://ufoodapi.herokuapp.com";
+import { BASE_URL } from './restaurantApiURL';
 
 export const createNewUser = async (data) => {
   const formData = new URLSearchParams(data).toString();

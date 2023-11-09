@@ -1,4 +1,4 @@
-const BASE_URL = "https://ufoodapi.herokuapp.com/unsecure";
+import { BASE_URL } from './restaurantApiURL';	
 
 export async function createFavoritesList(name, owner) {
   const url = `${BASE_URL}/favorites`; // Replace with your actual API endpoint
