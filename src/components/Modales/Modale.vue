@@ -12,10 +12,17 @@
 </template>
 
 <script setup>
+import { onMounted, onUpdated } from "vue";
+
 
 const emit = defineEmits([
     'closeModale',
-])
+]);
+
+onMounted(() => {
+    document.getElementById("modaleContainer").showModal();
+})
+
 
 </script>
 

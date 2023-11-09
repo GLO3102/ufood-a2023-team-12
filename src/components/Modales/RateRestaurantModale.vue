@@ -1,5 +1,4 @@
 <template>
-    <modale @close-modale="closeModale">
         <div class="d-flex w-100 justify-content-center flex-column align-items-center">
 
             <!--Title-->
@@ -36,13 +35,12 @@
             <button @click="submitRating()" class="mt-3 mb-3 btn btn-success">Rate</button>
 
         </div>
-    </modale>
 </template>
 
 <script setup>
 
     import Modale from './Modale.vue';
-    import { ref } from "vue";
+    import { onMounted, ref } from "vue";
     import { postRestaurantVisit } from '../../api/restaurants';
 
     const currentHoveredStar = ref(0);
@@ -72,11 +70,6 @@
         }
 
         currentHoveredStar.value = number;
-    }
-
-    function closeModale(){
-        rating.value = 0;
-        emit('closeModale');
     }
 
     function submitRating(){

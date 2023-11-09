@@ -47,18 +47,11 @@
     </div>
 
     <div class="button_section">
-      <!--Visited button-->
-      <button @click="setVisited" class="visitedBtn btn btn-success" v-if="!visited">
-        Mark as visited
-      </button>
-
-      <!--TODO: Rate button-->
       <button
         @click="emit('openRateModale', props.restaurant.id)"
         class="rateBtn btn btn-success"
-        v-if="visited"
       >
-        Rate
+      Mark as visited
       </button>
     </div>
   </div>
