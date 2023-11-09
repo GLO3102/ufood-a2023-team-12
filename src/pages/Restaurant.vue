@@ -18,7 +18,20 @@ const restaurantId = ref(route.params.id);
 const restaurant = ref({});
 const isLoading = ref(true);
 const map = ref(null);
+const visited = ref(false);
+const showDropdown = ref(false);
 
+const emit = defineEmits([
+    'openRateModale'
+])
+
+function setVisited() {
+    visited.value = true;
+}
+
+function toggleDropdown() {
+  showDropdown.value = !showDropdown.value;
+}
 
 onMounted(async () => {
   try {
@@ -157,10 +170,23 @@ const hours = computed(() => {
             <div>Address: {{ restaurant.address }}</div>
             <div>Phone: {{ restaurant.tel }}</div>
             <div v-html="hours"></div>
+                      <!--Visited button-->
+          <button @click="setVisited" class="visitedBtn btn btn-success" v-if="!visited">Mark as visited</button>
+            
+            <!--TODO: Rate button-->
+            <button @click="emit('openRateModale', restaurant.id)" class="rateBtn btn btn-success"
+            v-if="visited">Rate</button>
+
+            <button class="btn btn-primary" @click="toggleDropdown">Ajouter aux favoris</button>
+            <select v-show="showDropdown" v-model="selectedList" @change="addToFavorites">
+              <option value="" disabled>Sélectionnez une liste</option>
+              
+            </select>
 
           </div>
       </div>
     </div>
+
     <div id="map" class="map"></div>
   </div>
 </template>
