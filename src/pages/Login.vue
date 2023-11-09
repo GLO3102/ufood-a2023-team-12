@@ -1,57 +1,80 @@
+<!-- components/SignupForm.vue -->
+
 <template>
   <div
     class="d-flex flex-column h-75 justify-content-center align-items-center"
   >
-    <h2 class="text-light">Login</h2>
-    <form class="p-5 border border-dark rounded bg-dark">
-      <div class="form-group">
-        <label for="exampleInputEmail1" class="text-light">Email address</label>
-        <input
-          type="email"
-          class="form-control"
-          id="exampleInputEmail1"
-          aria-describedby="emailHelp"
-          placeholder="Enter email"
-        />
-        <small id="emailHelp" class="form-text text-muted"
-          >We'll never share your email with anyone else.</small
-        >
-      </div>
-      <div class="form-group">
-        <label for="exampleInputPassword1" class="text-light">Password</label>
-        <input
-          type="password"
-          class="form-control"
-          id="exampleInputPassword1"
-          placeholder="Password"
-        />
-      </div>
+    <div>
+      <h2 class="text-light">Login</h2>
+      <form
+        @submit.prevent="handleSubmit"
+        class="p-5 border border-dark rounded bg-dark d-flex flex-column"
+        style="gap: 1rem; min-width: 350px"
+      >
+        <div class="form-group">
+          <label for="email" class="text-light">Email</label>
+          <input type="email" id="email" v-model="email" class="form-control" />
+        </div>
 
-      <button @click="submit" class="btn btn-light mt-4">Login</button>
-    </form>
-    <router-link class="nav-link text-light" to="/signUp">
-      <p>
-        Don't have an account?
-        <span style="text-decoration: underline; font-weight: 600"
-          >Sign Up</span
-        >
-      </p>
-    </router-link>
+        <div class="form-group">
+          <label for="password" class="text-light">Password</label>
+          <input
+            type="password"
+            id="password"
+            v-model="password"
+            class="form-control"
+          />
+        </div>
+
+        <button type="submit" class="btn button-yellow mt-3">Login</button>
+      </form>
+      <router-link class="nav-link text-light" to="/signUp">
+        <p>
+          Don't have an account?
+          <span style="text-decoration: underline; font-weight: 600"
+            >Sign Up</span
+          >
+        </p>
+      </router-link>
+    </div>
   </div>
 </template>
 
 <script>
+import { ref } from "vue";
+import { useRouter } from "vue-router";
+
 export default {
-  data() {
-    return {};
-  },
-  methods: {
-    submit() {
-      this.$emit("asLoggedIn", {
-        isLoggedIn: true,
-      }),
-        this.$router.push("/");
-    },
+  name: "LoginForm",
+  setup(props, { emit }) {
+    const email = ref("");
+    const password = ref("");
+    const router = useRouter();
+
+    const handleSubmit = async () => {
+      const userData = {
+        name: "John Doe",
+        email: email.value,
+        password: password.value,
+      };
+      try {
+        // const result = await createNewUser(userData);
+        const result = userData;
+        localStorage.setItem("userData", JSON.stringify(result));
+        router.push("/");
+        emit("asLoggedIn", {
+          isLoggedIn: true,
+        });
+      } catch (error) {
+        console.error("Error creating user:", error.message);
+      }
+    };
+
+    return {
+      email,
+      password,
+      handleSubmit,
+    };
   },
 };
 </script>
@@ -59,5 +82,10 @@ export default {
 <style>
 .h-75 {
   margin-top: 200px;
+}
+
+.btn.button-yellow {
+  background-color: #daa00f;
+  color: #fff;
 }
 </style>

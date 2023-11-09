@@ -7,24 +7,30 @@
     <h2 class="text-light">Sign Up</h2>
     <form
       @submit.prevent="handleSubmit"
-      class="p-5 border border-dark rounded bg-dark"
+      class="p-5 border border-dark rounded bg-dark d-flex flex-column"
+      style="gap: 1rem; min-width: 350px"
     >
-      <div>
+      <div class="form-group">
         <label for="name" class="text-light">Name</label>
-        <input type="text" id="name" v-model="name" />
+        <input type="text" id="name" v-model="name" class="form-control" />
       </div>
 
-      <div class="mt-3">
+      <div class="form-group">
         <label for="email" class="text-light">Email</label>
-        <input type="email" id="email" v-model="email" />
+        <input type="email" id="email" v-model="email" class="form-control" />
       </div>
 
-      <div class="mt-3">
-        <label for="password" class="text-light">Password</label>
-        <input type="password" id="password" v-model="password" />
+      <div class="form-group">
+        <label for="password" class="text-light">New Password</label>
+        <input
+          type="password"
+          id="password"
+          v-model="password"
+          class="form-control"
+        />
       </div>
 
-      <button type="submit">Sign Up</button>
+      <button type="submit" class="btn button-yellow mt-3">Sign Up</button>
     </form>
   </div>
 </template>
@@ -70,3 +76,13 @@ export default {
   },
 };
 </script>
+<style>
+.h-75 {
+  margin-top: 200px;
+}
+
+.btn.button-yellow {
+  background-color: #daa00f;
+  color: #fff;
+}
+</style>
