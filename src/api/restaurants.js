@@ -46,3 +46,63 @@ export const getRestaurantById = async (restaurantId) => {
     
   }
 };
+
+
+export const postRestaurantVisit = async (
+  user_id,
+  restaurant_id,
+  rating,
+  date,
+  comment,
+) => {
+  try {
+    const response = await fetch(
+      `${BASE_URL}/users/${user_id}/restaurants/visits`,
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          restaurant_id: restaurant_id,
+          comment: comment,
+          rating: rating,
+          date: date,
+        }),
+      },
+    ).then(
+      (response) =>
+        function () {
+          if (response.status != 200) {
+            throw new Error(
+              `Error sending rating for restaurant ${restaurantId}`,
+            );
+          }
+          return response.json();
+        },
+    );
+  } catch (e) {
+    console.log(e);
+  }
+};
+
+export const getVisitsByRestaurantId = async (restaurantId) => {
+  try {
+    const response = await fetch(
+      `${BASE_URL}/restaurants/${restaurantId}/visits`,
+      {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      },
+    );
+    if (response.status != 200) {
+      throw new Error(`Error fetching visits for restaurant  ${restaurantId}`);
+    }
+    const visits = await response.json();
+    return visits.items;
+  } catch (e) {
+    console.log(e);
+  }
+};
