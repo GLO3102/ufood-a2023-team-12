@@ -50,6 +50,7 @@ import CreateFavoritesList from "../components/favorites/CreateFavoritesList.vue
 import RestaurantCardUserPage from "../components/RestaurantCardUserPage.vue";
 
 const isModaleOpen = ref(false);
+const selectedValue = ref("1");
 
 const emit = defineEmits(["openRateModaleReadOnly"]);
 
