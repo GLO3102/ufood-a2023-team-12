@@ -13,18 +13,12 @@ const route = useRoute();
 const restaurantId = ref(route.params.id);
 const restaurant = ref({});
 const isLoading = ref(true);
-const map = ref(null);
-const visited = ref(false);
 const showDropdown = ref(false);
 const selectedList = ref("");
 const allLists = ref([]);
 
 const emit = defineEmits(["openRateModale"]);
 const userData = JSON.parse(localStorage.getItem("user"));
-
-function setVisited() {
-  visited.value = true;
-}
 
 function toggleDropdown() {
   showDropdown.value = !showDropdown.value;
@@ -139,20 +133,11 @@ const addToFavorites = async () => {
           <div>Address: {{ restaurant.address }}</div>
           <div>Phone: {{ restaurant.tel }}</div>
           <div v-html="hours"></div>
-          <!--Visited button-->
-          <button
-            @click="setVisited"
-            class="visitedBtn btn btn-success"
-            v-if="!visited"
-          >
-            Mark as visited
-          </button>
 
-          <!--TODO: Rate button-->
           <button
             @click="emit('openRateModale', restaurant.id)"
             class="rateBtn btn btn-success"
-            v-if="visited"
+   
           >
             Rate
           </button>
