@@ -7,7 +7,7 @@ import {
   computed,
   watch,
 } from "vue";
-import { onBeforeRouteUpdate } from 'vue-router';
+import { onBeforeRouteUpdate } from "vue-router";
 
 export default {
   name: "NavigationBar",
@@ -22,7 +22,7 @@ export default {
     });
 
     const user = computed(() => {
-      const userData = localStorage.getItem("userData");
+      const userData = localStorage.getItem("user");
       return userData ? JSON.parse(userData) : null;
     });
 
@@ -42,7 +42,7 @@ export default {
 
     // Methods
     const logout = () => {
-      localStorage.removeItem("userData");
+      localStorage.removeItem("user");
       state.loggedIn = false;
       emit("asLoggedOut", {
         isLoggedIn: false,

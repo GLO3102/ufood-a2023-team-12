@@ -28,51 +28,34 @@
 
         <button type="submit" class="btn button-yellow mt-3">Login</button>
       </form>
-      <router-link class="nav-link text-light" to="/signUp">
+      <!-- <router-link class="nav-link text-light" to="/signUp">
         <p>
           Don't have an account?
           <span style="text-decoration: underline; font-weight: 600"
             >Sign Up</span
           >
         </p>
-      </router-link>
+      </router-link> -->
     </div>
   </div>
 </template>
 
 <script>
-import { ref } from "vue";
 import { useRouter } from "vue-router";
 
 export default {
   name: "LoginForm",
   setup(props, { emit }) {
-    const email = ref("");
-    const password = ref("");
     const router = useRouter();
 
-    const handleSubmit = async () => {
-      const userData = {
-        name: "John Doe",
-        email: email.value,
-        password: password.value,
-      };
-      try {
-        // const result = await createNewUser(userData);
-        const result = userData;
-        localStorage.setItem("userData", JSON.stringify(result));
-        router.push("/");
-        emit("asLoggedIn", {
-          isLoggedIn: true,
-        });
-      } catch (error) {
-        console.error("Error creating user:", error.message);
-      }
+    const handleSubmit = () => {
+      router.push("/");
+      emit("asLoggedIn", {
+        isLoggedIn: true,
+      });
     };
 
     return {
-      email,
-      password,
       handleSubmit,
     };
   },
