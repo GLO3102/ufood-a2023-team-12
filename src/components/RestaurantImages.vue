@@ -1,3 +1,5 @@
+
+
 <template>
   <div class="swiper-container">
     <Swiper
@@ -17,21 +19,17 @@
 </template>
 
 <script setup>
-import { Swiper, SwiperSlide } from "swiper/vue";
-import "swiper/swiper-bundle.css";
-import { defineProps } from "vue";
+import { Swiper, SwiperSlide } from 'swiper/vue';
+import 'swiper/swiper-bundle.css';
+import {Pagination} from 'swiper/modules';
+import 'swiper/css/pagination'
+import { defineProps } from 'vue';
 
 const props = defineProps({
-  images: Array,
+  images: Array
 });
 
-function onSwiper(swiper) {
-  console.log("Swiper instance:", swiper);
-}
-
-function onSlideChange() {
-  console.log("Slide changed");
-}
+const modules = [Pagination];
 </script>
 
 <style scoped>
