@@ -1,11 +1,13 @@
 <script setup>
-import { getFilterPriceName} from '../components/Utils.js';
-import RestaurantImages from '../components/RestaurantImages.vue';
-import Map from '../components/Map.vue';
+import { getFilterPriceName } from "../components/Utils.js";
+import RestaurantImages from "../components/RestaurantImages.vue";
+import Map from "../components/Map.vue";
 
 import { onMounted, ref, computed } from "vue";
 import { useRoute } from "vue-router";
-import { getRestaurantById} from "../api/restaurants.js";
+import { getRestaurantById } from "../api/restaurants.js";
+import { getFavoriteLists } from "../api/user.js";
+import { addRestaurantToFavoritesList } from "../api/favorites.js";
 
 const route = useRoute();
 const restaurantId = ref(route.params.id);
@@ -14,13 +16,14 @@ const isLoading = ref(true);
 const map = ref(null);
 const visited = ref(false);
 const showDropdown = ref(false);
+const selectedList = ref("");
+const allLists = ref([]);
 
-const emit = defineEmits([
-    'openRateModale'
-])
+const emit = defineEmits(["openRateModale"]);
+const userData = JSON.parse(localStorage.getItem("user"));
 
 function setVisited() {
-    visited.value = true;
+  visited.value = true;
 }
 
 function toggleDropdown() {
@@ -38,7 +41,6 @@ onMounted(async () => {
   }
 });
 
-
 const ratingFloored = computed(() => {
   const floored = Math.floor(restaurant.value.rating);
   return Number.isInteger(floored) ? floored : 0;
@@ -49,7 +51,9 @@ const hasHalfStar = computed(() => {
 });
 
 const images = computed(() => {
-  return restaurant.value.pictures && restaurant.value.pictures.length ? restaurant.value.pictures : [];
+  return restaurant.value.pictures && restaurant.value.pictures.length
+    ? restaurant.value.pictures
+    : [];
 });
 
 const genres = computed(() => {
@@ -57,81 +61,124 @@ const genres = computed(() => {
 });
 
 const hours = computed(() => {
-  if (!restaurant.value || typeof restaurant.value.opening_hours !== 'object') {
+  if (!restaurant.value || typeof restaurant.value.opening_hours !== "object") {
     return "Closed";
   }
 
-  const hoursArray = Object.entries(restaurant.value.opening_hours)
-    .map(([day, time]) => `${day}: ${time ? time : 'Closed'}`);
+  const hoursArray = Object.entries(restaurant.value.opening_hours).map(
+    ([day, time]) => `${day}: ${time ? time : "Closed"}`,
+  );
 
   return hoursArray.join("<br>");
 });
 
 const restaurantCoordinates = computed(() => {
-  if (restaurant.value && restaurant.value.location && restaurant.value.location.coordinates) {
+  if (
+    restaurant.value &&
+    restaurant.value.location &&
+    restaurant.value.location.coordinates
+  ) {
     return restaurant.value.location.coordinates;
   }
   return null;
 });
 
+const getFavoritesList = async () => {
+  const response = await getFavoriteLists(userData.id);
+  allLists.value = response.items; // Assuming response.items contains your lists
+};
 
+onMounted(() => {
+  getFavoritesList();
+});
+
+const addToFavorites = async () => {
+  if (!selectedList.value) return;
+
+  try {
+    // Implement the logic to add the restaurant to the selected list
+    await addRestaurantToFavoritesList(selectedList.value, restaurantId.value);
+    // Optional: Clear selection or provide feedback
+    // selectedList.value = "";
+  } catch (error) {
+    // errorMessage.value = error.message || "An unexpected error occurred.";
+    console.log(error);
+  }
+};
 </script>
 
 <template>
   <div class="restaurant">
     <div class="restaurant_info">
-        <div class="restaurant_name">
-          <h2>{{ restaurant.name }}</h2>
-        </div>
+      <div class="restaurant_name">
+        <h2>{{ restaurant.name }}</h2>
+      </div>
 
       <RestaurantImages :images="images" />
 
-        <div class="restaurant_flex_container">
-          <div class="restaurant_details">
-            <div>Genre: {{ genres}}</div>
-            <div>Price Range: {{ getFilterPriceName(restaurant.price_range) }}</div>
-            <div class="restaurant_reviews">
-
-              <span>Reviews:&nbsp; </span>
-              <div class="cardStars d-flex justify-content-center flex-row">
-                <font-awesome-icon
-                  icon="fa-solid fa-star"
-                  v-for="star in ratingFloored"
-                  :key="star"
-                />
-                <font-awesome-icon
-                  icon="fa-solid fa-star-half-stroke"
-                  v-if="hasHalfStar"
-                />
-
-              </div>
-            </div>
-            <div>Address: {{ restaurant.address }}</div>
-            <div>Phone: {{ restaurant.tel }}</div>
-            <div v-html="hours"></div>
-                      <!--Visited button-->
-          <button @click="setVisited" class="visitedBtn btn btn-success" v-if="!visited">Mark as visited</button>
-
-            <!--TODO: Rate button-->
-            <button @click="emit('openRateModale', restaurant.id)" class="rateBtn btn btn-success"
-            v-if="visited">Rate</button>
-
-            <button class="btn btn-primary" @click="toggleDropdown">Ajouter aux favoris</button>
-            <select v-show="showDropdown" v-model="selectedList" @change="addToFavorites">
-              <option value="" disabled>Sélectionnez une liste</option>
-
-            </select>
-
+      <div class="restaurant_flex_container">
+        <div class="restaurant_details">
+          <div>Genre: {{ genres }}</div>
+          <div>
+            Price Range: {{ getFilterPriceName(restaurant.price_range) }}
           </div>
+          <div class="restaurant_reviews">
+            <span>Reviews:&nbsp; </span>
+            <div class="cardStars d-flex justify-content-center flex-row">
+              <font-awesome-icon
+                icon="fa-solid fa-star"
+                v-for="star in ratingFloored"
+                :key="star"
+              />
+              <font-awesome-icon
+                icon="fa-solid fa-star-half-stroke"
+                v-if="hasHalfStar"
+              />
+            </div>
+          </div>
+          <div>Address: {{ restaurant.address }}</div>
+          <div>Phone: {{ restaurant.tel }}</div>
+          <div v-html="hours"></div>
+          <!--Visited button-->
+          <button
+            @click="setVisited"
+            class="visitedBtn btn btn-success"
+            v-if="!visited"
+          >
+            Mark as visited
+          </button>
+
+          <!--TODO: Rate button-->
+          <button
+            @click="emit('openRateModale', restaurant.id)"
+            class="rateBtn btn btn-success"
+            v-if="visited"
+          >
+            Rate
+          </button>
+
+          <button class="btn btn-primary" @click="toggleDropdown">
+            Ajouter aux favoris
+          </button>
+          <select
+            v-show="showDropdown"
+            v-model="selectedList"
+            @change="addToFavorites"
+          >
+            <option value="" disabled>Sélectionnez une liste</option>
+            <option v-for="list in allLists" :value="list.id" :key="list.id">
+              {{ list.name }}
+            </option>
+          </select>
+        </div>
       </div>
     </div>
 
-    <div> <Map :coordinates="restaurantCoordinates" /> </div>
+    <div><Map :coordinates="restaurantCoordinates" /></div>
   </div>
 </template>
 
 <style scoped>
-
 .restaurant {
   background-image: url("https://images.unsplash.com/photo-1678924587662-d8c63e57eb11?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80");
   background-size: cover;
@@ -143,16 +190,15 @@ const restaurantCoordinates = computed(() => {
   align-items: center;
 }
 
-.restaurant_name  {
+.restaurant_name {
   white-space: nowrap;
   width: 70%;
   margin-top: 20px;
 }
 
-.restaurant_name h2{
+.restaurant_name h2 {
   font-size: 4vw;
 }
-
 
 .restaurant_flex_container {
   display: flex;
@@ -172,7 +218,7 @@ const restaurantCoordinates = computed(() => {
   border-radius: 10px;
   background-color: #f9f9f9;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-  background-color: rgba(255,255,255,0.5);
+  background-color: rgba(255, 255, 255, 0.5);
   gap: 10px;
 }
 
@@ -182,24 +228,17 @@ const restaurantCoordinates = computed(() => {
 }
 
 @media (max-width: 820px) {
-
-
-    .restaurant_name{
-        width:90%
-    }
-    .restaurant_flex_container{
-        width:90%;
-    }
-
+  .restaurant_name {
+    width: 90%;
   }
-
-@media (max-width: 480px) {
-  .restaurant_name h2{
-        font-size: 5vw;
-    }
-
-
+  .restaurant_flex_container {
+    width: 90%;
+  }
 }
 
+@media (max-width: 480px) {
+  .restaurant_name h2 {
+    font-size: 5vw;
+  }
+}
 </style>
-

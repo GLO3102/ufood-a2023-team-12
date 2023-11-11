@@ -68,3 +68,29 @@ export async function deleteFavoriteList(listId) {
     throw error;
   }
 }
+
+export async function addRestaurantToFavoritesList(listId, restaurantId) {
+  const url = `${BASE_URL}/favorites/${listId}/restaurants`;
+  const headers = {
+    "Content-Type": "application/json",
+  };
+  const body = JSON.stringify({ restaurantId });
+
+  try {
+    const response = await fetch(url, {
+      method: 'POST',
+      headers: headers,
+      body: body,
+    });
+
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.error('Error creating favorites list:', error);
+    throw error;
+  }
+}
