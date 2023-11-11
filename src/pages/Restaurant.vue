@@ -4,9 +4,7 @@ import 'leaflet/dist/leaflet.css';
 import 'leaflet-routing-machine';
 import 'leaflet-routing-machine/dist/leaflet-routing-machine.css';
 
-
-import { Swiper, SwiperSlide } from 'swiper/vue';
-import 'swiper/swiper-bundle.css';
+import RestaurantImages from '../components/RestaurantImages.vue';
 
 
 import { onMounted, ref, computed } from "vue";
@@ -97,7 +95,7 @@ const getFilterPriceName = (price) => {
 
 const ratingFloored = computed(() => {
   const floored = Math.floor(restaurant.value.rating);
-  return Number.isInteger(floored) ? floored : 0; 
+  return Number.isInteger(floored) ? floored : 0;
 });
 
 const hasHalfStar = computed(() => {
@@ -132,21 +130,9 @@ const hours = computed(() => {
         <div class="restaurant_name">
           <h2>{{ restaurant.name }}</h2>
         </div>
-          <Swiper
-          :modules="modules"
-          :slides-per-view="2"
-          :space-between="10"
-          :centered-slides="true"
-          :navigation="true"
-          :loop="true"
-          :pagination="{ clickable: true }"
-          @swiper="onSwiper"
-          @slideChange="onSlideChange"
-      >
-        <SwiperSlide v-for="(image, index) in images" :key="index">
-          <img :src="image" :alt="'image ' + (index + 1)" />
-        </SwiperSlide>
-      </Swiper>
+
+      <RestaurantImages :images="images" />
+
         <div class="restaurant_flex_container">
           <div class="restaurant_details">
             <div>Genre: {{ genres}}</div>
@@ -172,7 +158,7 @@ const hours = computed(() => {
             <div v-html="hours"></div>
                       <!--Visited button-->
           <button @click="setVisited" class="visitedBtn btn btn-success" v-if="!visited">Mark as visited</button>
-            
+
             <!--TODO: Rate button-->
             <button @click="emit('openRateModale', restaurant.id)" class="rateBtn btn btn-success"
             v-if="visited">Rate</button>
@@ -180,7 +166,7 @@ const hours = computed(() => {
             <button class="btn btn-primary" @click="toggleDropdown">Ajouter aux favoris</button>
             <select v-show="showDropdown" v-model="selectedList" @change="addToFavorites">
               <option value="" disabled>Sélectionnez une liste</option>
-              
+
             </select>
 
           </div>
@@ -225,24 +211,6 @@ const hours = computed(() => {
   font-size: 4vw;
 }
 
-.swiper {
-  height: 400px;
-  margin-bottom: 20px;
-  width: 70%
-}
-.swiper-slide {
-  width:100%;
-  display: flex; 
-  justify-content: center; 
-  align-items: center; 
-}
-
-.swiper-slide img {
-  display: block;
-  width: 100%;
-  height: 100%;
-  
-}
 
 .restaurant_flex_container {
   display: flex;
@@ -272,8 +240,8 @@ const hours = computed(() => {
 }
 
 @media (max-width: 820px) {
-   
-    
+
+
     .restaurant_name{
         width:90%
     }
@@ -281,12 +249,6 @@ const hours = computed(() => {
         width:90%;
     }
 
-    .swiper {
-        width: 90%;
-    }
-    .map {
-        width: 90%;
-    }
   }
 
 @media (max-width: 480px) {
@@ -294,9 +256,6 @@ const hours = computed(() => {
         font-size: 5vw;
     }
 
-    .swiper {
-        height: 200px;
-    }
 
     .map {
         height:400px;
