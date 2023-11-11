@@ -52,8 +52,8 @@ const submitFavoritesList = async () => {
   errorMessage.value = "";
   try {
     validateTextInput(listName.value);
-    const userDataEmail = "test@gmail.com";
-    const newList = await createFavoritesList(listName.value, userDataEmail);
+    const userData = JSON.parse(localStorage.getItem("user"));
+    const newList = await createFavoritesList(listName.value, userData.email);
     console.log("List created successfully:", newList);
     createdList.value = newList;
     listName.value = "";

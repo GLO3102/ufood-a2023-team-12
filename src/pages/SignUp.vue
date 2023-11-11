@@ -57,7 +57,7 @@ export default {
       try {
         // const result = await createNewUser(userData);
         const result = userData;
-        localStorage.setItem("userData", JSON.stringify(result));
+        localStorage.setItem("user", JSON.stringify(result));
         router.push("/");
         emit("asLoggedIn", {
           isLoggedIn: true,

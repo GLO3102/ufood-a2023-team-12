@@ -7,7 +7,7 @@ import {
   computed,
   watch,
 } from "vue";
-import { onBeforeRouteUpdate } from 'vue-router';
+import { onBeforeRouteUpdate } from "vue-router";
 
 export default {
   name: "NavigationBar",
@@ -22,8 +22,8 @@ export default {
     });
 
     const user = computed(() => {
-      const userData = localStorage.getItem("userData");
-      return userData ? JSON.parse(userData) : null;
+      const userData = JSON.parse(localStorage.getItem("user"));
+      return userData;
     });
 
     watch(
@@ -42,7 +42,7 @@ export default {
 
     // Methods
     const logout = () => {
-      localStorage.removeItem("userData");
+      localStorage.removeItem("user");
       state.loggedIn = false;
       emit("asLoggedOut", {
         isLoggedIn: false,
