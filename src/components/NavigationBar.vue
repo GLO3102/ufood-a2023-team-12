@@ -7,6 +7,7 @@ import {
   computed,
   watch,
 } from "vue";
+import { onBeforeRouteUpdate } from 'vue-router';
 
 export default {
   name: "NavigationBar",

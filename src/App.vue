@@ -6,23 +6,22 @@
       @as-logged-out="isLoggedIn = false"
       />
 
-    <!--Restaurant Rating Modale-->
-    <rate-restaurant-modale v-if="rateModaleOpened"
-      @close-modale="rateModaleOpened = false"
+    <!--Restaurant Rating Modales-->
+    <modale @close-modale="closeRateModale" v-if="rateModaleOpened || rateModaleReadOnlyOpened">
+      <rate-restaurant-modale v-if="rateModaleOpened"
       :restaurant-id="rateRestaurantId"
       />
-
-    <rate-restaurant-modale-read-only v-if="rateModaleReadOnlyOpened"
-    @close-modale="rateModaleReadOnlyOpened = false"
-    :review="review"
-    />
+      <rate-restaurant-modale-read-only v-if="rateModaleReadOnlyOpened"
+      @close-modale="closeRateModale"
+      :review="review"
+      />
+    </modale>
 
     <!--Router View-->
     <router-view 
       @as-logged-in="isLoggedIn = true"
-      @open-rate-modale="openRateModale" 
+      @open-rate-modale="(restaurant_id) => openRateModale(restaurant_id)" 
       @open-rate-modale-read-only="(review) => openRateModaleReadOnly(review)"
-      @close-rate-modale="closeRateModale" 
       />
   </div>
 </template>
@@ -30,6 +29,7 @@
 <script>
   import "bootstrap";
   import "bootstrap/dist/css/bootstrap.min.css";
+  import Modale from "./components/Modales/Modale.vue";
   import RateRestaurantModale from "./components/Modales/RateRestaurantModale.vue";
   import RateRestaurantModaleReadOnly from "./components/Modales/RateRestaurantModaleReadOnly.vue";
   import NavigationBar from "./components/NavigationBar.vue";
@@ -39,6 +39,7 @@
     name: "app",
     components: {
       NavigationBar,
+      Modale,
       RateRestaurantModale,
       RateRestaurantModaleReadOnly
     },
@@ -48,18 +49,13 @@
         rateModaleOpened: false,
         rateModaleReadOnlyOpened: false,
         rateRestaurantId: null,
-        review: {
-          id: "12345",
-          restaurant_id: "5f31fc6155d7790550c08afe",
-          comment: "very good restaurant",
-          rating: 5,
-          date: "2020-08-11T00:17:58Z"}
-        };
+        review: {}
+      }
     },
     methods: {
       openRateModale(restaurant_Id){
-        this.rateModaleOpened = true;
         this.rateRestaurantId = restaurant_Id;
+        this.rateModaleOpened = true;
       },
       openRateModaleReadOnly(review){
         this.review = review;
@@ -69,13 +65,22 @@
         this.rateModaleOpened = false;
         this.rateModaleReadOnlyOpened = false;
         this.rateRestaurantId = null;
+      },
+      handleDocumentClick(event){
+
+        //Un-collapse the navbar if clicking out of it
+        const navbar = document.querySelector('.navbar-collapse');
+        if (navbar) {
+          navbar.classList.remove("show");
+        }
       }
     },
-    updated() {
-
-      if(this.rateModaleOpened || this.rateModaleReadOnlyOpened)
-        document.getElementById("modaleContainer").showModal();
-    }
+    mounted() {
+      document.addEventListener('click', this.handleDocumentClick);
+    },
+    beforeUnmount() {
+      document.removeEventListener('click', this.handleDocumentClick);
+    },
   };
 </script>
 

@@ -1,5 +1,4 @@
 <template>
-    <modale @close-modale="closeModale">
         <div class="d-flex w-100 mb-5 justify-content-center flex-column align-items-center">
 
             <!--Title-->
@@ -26,33 +25,21 @@
             <!--Date-->
             <div class="d-flex w-50 mt-3 flex-column justify-content-start">
                 <label class="alt-font" for="visitDate">Date de visite</label>
-                <input :value="props.review.date" id="visitDate" class="w-100 rounded date" type="date">
+                <input :value="props.review.date" id="visitDate" class="w-100 rounded date" type="date" readonly>
             </div>
 
             <!--Comment-->
-            <textarea :value="props.review.comment" class="rounded textArea mt-3 w-50" name="ratingComment" id="ratingComment" cols="30" rows="10" placeholder="Comment..."></textarea>
+            <textarea :value="props.review.comment" class="rounded textArea mt-3 w-50" name="ratingComment" id="ratingComment" cols="30" rows="10" placeholder="Comment..." readonly></textarea>
             
         </div>
-    </modale>
 </template>
 
 <script setup>
-
-    import Modale from './Modale.vue';
-
-    //Emits
-    const emit = defineEmits([
-        'closeModale',
-    ])
 
     //Props
     const props = defineProps({
         review: Object
     })
-
-    function closeModale(){
-        emit('closeModale');
-    }
 
 </script>
 
