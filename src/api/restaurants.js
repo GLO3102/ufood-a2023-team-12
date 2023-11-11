@@ -1,6 +1,6 @@
 import { BASE_URL } from './restaurantApiURL';
 
-// Fonction pour récupérer la liste des restaurants
+
 export const getRestaurants = async () => {
   try {
     const response = await fetch(`${BASE_URL}/restaurants`,{
@@ -24,7 +24,7 @@ export const getRestaurants = async () => {
 };
 
 
-// Fonction pour récupérer un restaurant spécifique par son ID
+
 
 export const getRestaurantById = async (restaurantId) => {
   try {
@@ -41,59 +41,6 @@ export const getRestaurantById = async (restaurantId) => {
 
     const restaurant = await response.json();
     return restaurant;
-  } catch (e) {
-    console.log(e);
-    
-  }
-};
-
-
-// Fonction pour récupérer les visites d'un restaurant par son ID
-export const getVisitsByRestaurantId = async (restaurantId) => {
-  try {
-    const response = await fetch(`${BASE_URL}/restaurants/${restaurantId}/visits`,{
-      method: "GET",
-      headers : {
-          "Content-Type": "application/json",
-      }
-
-  });
-    if (response.status != 200) {
-      throw new Error(`Error fetching visits for restaurant  ${restaurantId}`);
-    }
-
-    const visits = await response.json();
-    return visits.items;
-  } catch (e) {
-    console.log(e);
-    
-  }
-};
-
-// Fonction pour envoyer une évaluation d'un restaurant
-export const postRestaurantVisit = async (user_id, restaurant_id, rating, date, comment) => {
-  try {
-    const response = await fetch(`${BASE_URL}/unsecure/users/${user_id}/restaurants/visits`,{
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        "restaurant_id": restaurant_id,
-        "comment": comment,
-        "rating": rating,
-        "date": date
-      })
-
-  }).then((response) => function(){
-
-    if (response.status != 200) {
-      throw new Error(`Error sending rating for restaurant ${restaurantId}`);
-    }
-    
-    return response.json();
-  })
-
   } catch (e) {
     console.log(e);
     

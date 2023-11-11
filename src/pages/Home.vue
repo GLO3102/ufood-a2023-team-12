@@ -1,10 +1,131 @@
+<template>
+  <div class="main-container">
+    <div class="header-container">
+      <div class="header-content">
+        <h1 class="header-title alt-font">Taste the World. One Restaurant at a Time.</h1>
+        <input
+          type="search"
+          class="form-control searchbar mt-3"
+          placeholder="Search..."
+        />
+      </div>
+    </div>
+
+    <div class="home">
+      <div class="filters p-5">
+        <div class="accordion" id="accordionFilters">
+          <div class="accordion-item">
+            <h2 class="accordion-header">
+              <button
+                class="accordion-button"
+                type="button"
+                data-bs-toggle="collapse"
+                data-bs-target="#collapseOne"
+                aria-expanded="true"
+                aria-controls="collapseOne"
+              >
+                <h6 class="mb-0">Filters</h6>
+              </button>
+            </h2>
+            <div
+              id="collapseOne"
+              class="accordion-collapse collapse show"
+              data-bs-parent="#accordionFilters"
+            >
+              <div class="accordion-body">
+                <div class="pb-3">
+                  <button class="clear-filters" @click="clearFilters">
+                    <font-awesome-icon icon="fa-solid fa-xmark" /> Clear Filters
+                  </button>
+                </div>
+                <h6>Price</h6>
+                <div v-for="price in filterPrices" :key="price" class="form-check">
+                  <input
+                    class="form-check-input"
+                    type="checkbox"
+                    :value="price"
+                    :id="`filterPrices${price}`"
+                    v-model="selectedPrices[price]"
+                  />
+                  <label :for="`filterPrices${price}`" class="form-check-label">
+                    {{ getFilterPriceName(price) }}
+                  </label>
+                </div>
+
+                <hr />
+                <h6>Cuisine / Food Types</h6>
+
+                <div v-for="(type, index) in filterTypes" :key="index" class="form-check">
+                  <input
+                    class="form-check-input"
+                    type="checkbox"
+                    :value="type"
+                    :id="`filterTypes${index + 1}`"
+                    v-model="selectedTypes[type]"
+                  />
+                  <label :for="`filterTypes${index + 1}`" class="form-check-label">
+                    {{ type }}
+                  </label>
+                </div>
+
+                <hr />
+                <h6>Ratings</h6>
+
+                <div v-for="rating in filterRatings" :key="rating" class="form-check">
+                  <input
+                    class="form-check-input"
+                    type="checkbox"
+                    :value="rating"
+                    :id="`filterRatings${rating}`"
+                    v-model="selectedRatings[rating]"
+                  />
+                  <label :for="`filterRatings${rating}`" class="form-check-label">
+                    <font-awesome-icon
+                      v-for="n in rating"
+                      :key="n"
+                      icon="fa-solid fa-star"
+                    />
+                  </label>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <section class="restaurant" id="restaurant">
+        <div class="text-center pt-5" v-if="isLoading">
+          <div class="spinner-border text-warning" role="status">
+            <span class="sr-only">Loading...</span>
+          </div>
+          <h2>Loading restaurants...</h2>
+        </div>
+        <div
+          class="restaurant_box pt-5"
+          v-else-if="filtered_restaurants && filtered_restaurants.length"
+        >
+          <restaurant-card
+            v-for="restaurant in filtered_restaurants"
+            :key="restaurant.id"
+            @open-rate-modale="
+              (e) => {
+                emit('openRateModale', e);
+              }
+            "
+            :restaurant="restaurant"
+          ></restaurant-card>
+        </div>
+        <div class="text-center pt-5" v-else>
+          <h2>No result</h2>
+        </div>
+      </section>
+    </div>
+  </div>
+</template>
+
 <script setup>
 import { onMounted, ref, reactive, watch } from "vue";
-import {
-  getRestaurants,
-  getRestaurantById,
-  getVisitsByRestaurantId,
-} from "../api/restaurants.js";
+import { getRestaurants } from "../api/restaurants.js";
 import { getAllFilterTypes } from "../api/filters.js";
 import RestaurantCard from "../components/RestaurantCard.vue";
 
@@ -12,9 +133,7 @@ const restaurants = ref([]);
 const filtered_restaurants = ref([]);
 const isLoading = ref(true);
 
-const emit = defineEmits([
-  'openRateModale'
-])
+const emit = defineEmits(["openRateModale"]);
 
 onMounted(async () => {
   try {
@@ -28,7 +147,6 @@ onMounted(async () => {
   }
 });
 
-// Filter Price Range
 const filterPrices = ref([1, 2, 3]);
 const selectedPrices = reactive({});
 
@@ -47,7 +165,6 @@ const getFilterPriceName = (price) => {
   }
 };
 
-// Filter Genres
 const filterTypes = ref([]);
 const selectedTypes = reactive({});
 
@@ -63,7 +180,6 @@ onMounted(async () => {
   }
 });
 
-// Filter Ratings
 const filterRatings = ref([5, 4, 3, 2, 1]);
 const selectedRatings = reactive({});
 
@@ -91,117 +207,18 @@ watch(
       return selectedKeys.length > 0 ? selectedKeys : defaultValue;
     };
 
-    const priceFilterList = getSelectedKeys(newValPrice, ["1", "2", "3"]).map(
-      Number,
-    );
+    const priceFilterList = getSelectedKeys(newValPrice, ["1", "2", "3"]).map(Number);
     const typeFilterList = getSelectedKeys(newValType, filterTypes.value);
-    const ratingFilterList = getSelectedKeys(
-      newValRating,
-      filterRatings.value,
-    ).map(Number);
+    const ratingFilterList = getSelectedKeys(newValRating, filterRatings.value).map(
+      Number
+    );
 
     filtered_restaurants.value = restaurants.value.filter(
       (restaurant) =>
         priceFilterList.includes(restaurant.price_range) &&
         typeFilterList.some((el) => restaurant.genres.includes(el)) &&
-        ratingFilterList.includes(Math.floor(restaurant.rating)),
+        ratingFilterList.includes(Math.floor(restaurant.rating))
     );
-  },
-);
-
-function generateStarRating(rating) {
-  const fullStars = Math.floor(rating);
-  const hasHalfStar = rating % 1 !== 0;
-
-  const stars = Array(fullStars).fill(
-    '<font-awesome-icon icon="fa-solid fa-star" />',
-  );
-
-  if (hasHalfStar) {
-    stars.push('<font-awesome-icon icon="fa-solid fa-star-half-stroke" />');
   }
-  return stars.join("");
-}
+);
 </script>
-<template>
-  <div class="main-container">
-    <div class="header-container">
-      <div class="header-content">
-        <h1 class="header-title alt-font">
-          Taste the World. One Restaurant at a Time.
-        </h1>
-        <input type="search" class="form-control searchbar mt-3" placeholder="Search..." />
-      </div>
-    </div>
-
-    <div class="home">
-      <div class="filters p-5">
-        <div class="accordion" id="accordionFilters">
-          <div class="accordion-item">
-            <h2 class="accordion-header">
-              <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne"
-                aria-expanded="true" aria-controls="collapseOne">
-                <h6 class="mb-0">Filters</h6>
-              </button>
-            </h2>
-            <div id="collapseOne" class="accordion-collapse collapse show" data-bs-parent="#accordionFilters">
-              <div class="accordion-body">
-                <div class="pb-3">
-                  <button class="clear-filters" @click="clearFilters">
-                    <font-awesome-icon icon="fa-solid fa-xmark" /> Clear Filters
-                  </button>
-                </div>
-                <h6>Price</h6>
-                <div v-for="price in filterPrices" :key="price" class="form-check">
-                  <input class="form-check-input" type="checkbox" :value="price" :id="`filterPrices${price}`"
-                    v-model="selectedPrices[price]" />
-                  <label :for="`filterPrices${price}`" class="form-check-label">
-                    {{ getFilterPriceName(price) }}
-                  </label>
-                </div>
-
-                <hr />
-                <h6>Cuisine / Food Types</h6>
-                <!-- Cuisine / Type Filters -->
-                <div v-for="(type, index) in filterTypes" :key="index" class="form-check">
-                  <input class="form-check-input" type="checkbox" :value="type" :id="`filterTypes${index + 1}`"
-                    v-model="selectedTypes[type]" />
-                  <label :for="`filterTypes${index + 1}`" class="form-check-label">
-                    {{ type }}
-                  </label>
-                </div>
-
-                <hr />
-                <h6>Ratings</h6>
-                <!-- Ratings Filters -->
-                <div v-for="rating in filterRatings" :key="rating" class="form-check">
-                  <input class="form-check-input" type="checkbox" :value="rating" :id="`filterRatings${rating}`"
-                    v-model="selectedRatings[rating]" />
-                  <label :for="`filterRatings${rating}`" class="form-check-label">
-                    <font-awesome-icon v-for="n in rating" :key="n" icon="fa-solid fa-star" />
-                  </label>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- Restaurant -->
-      <section class="restaurant" id="restaurant">
-        <div class="text-center pt-5" v-if="isLoading">
-          <div class="spinner-border text-warning" role="status">
-            <span class="sr-only">Loading...</span>
-          </div>
-          <h2>Loading restaurants...</h2>
-        </div>
-        <div class="restaurant_box pt-5" v-else-if="filtered_restaurants && filtered_restaurants.length">
-          <restaurant-card v-for="restaurant in filtered_restaurants" :key="restaurant.id" @open-rate-modale="(e) => {emit('openRateModale', e)}" :restaurant="restaurant"></restaurant-card>
-        </div>
-        <div class="text-center pt-5" v-else>
-          <h2>No result</h2>
-        </div>
-      </section>
-    </div>
-  </div>
-</template>

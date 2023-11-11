@@ -1,3 +1,8 @@
+<template>
+  <div ref="mapContainer" class="map"></div>
+</template>
+
+
 <script setup>
 import { onMounted, ref, nextTick, watch } from 'vue';
 import L from 'leaflet';
@@ -61,9 +66,7 @@ onMounted(() => {
 });
 </script>
 
-<template>
-  <div ref="mapContainer" class="map"></div>
-</template>
+
 
 <style scoped>
 .map {

@@ -1,4 +1,3 @@
-// const BASE_URL = "https://ufoodapi.herokuapp.com";
 import { BASE_URL } from "./restaurantApiURL";
 
 export const createNewUser = async (data) => {
