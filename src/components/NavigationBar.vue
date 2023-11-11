@@ -22,8 +22,8 @@ export default {
     });
 
     const user = computed(() => {
-      const userData = localStorage.getItem("user");
-      return userData ? JSON.parse(userData) : null;
+      const userData = JSON.parse(localStorage.getItem("user"));
+      return userData;
     });
 
     watch(

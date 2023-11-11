@@ -24,9 +24,9 @@ app.component("font-awesome-icon", FontAwesomeIcon);
 app.mount("#app");
 
 const user = {
-  email: 'john.doe@gmail.com',
-  name: 'John Doe',
-  id: '6b063a71f1e74928bf6ad5bdfdd302e9',
-  password: 'test',
-};
+  "id": "64160258442a95fe2735419d",
+  "name": "John Doe",
+  "email": "john@mail.com",
+  "rating": 0
+}
 localStorage.setItem('user', JSON.stringify(user));

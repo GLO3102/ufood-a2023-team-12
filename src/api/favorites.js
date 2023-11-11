@@ -1,14 +1,11 @@
 import { BASE_URL } from './restaurantApiURL';	
 
 export async function createFavoritesList(name, owner) {
-  const url = `${BASE_URL}/favorites`; // Replace with your actual API endpoint
+  const url = `${BASE_URL}/favorites`;
   const headers = {
     "Content-Type": "application/json",
   };
   const body = JSON.stringify({ name, owner });
-  console.log("name", name);
-  console.log("owner", owner);
-  console.log("body", body);
 
   try {
     const response = await fetch(url, {
