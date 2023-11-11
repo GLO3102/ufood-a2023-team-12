@@ -7,16 +7,43 @@ export const createNewUser = async (data) => {
     headers: {
       "Content-Type": "application/x-www-form-urlencoded",
     },
-    body: formData,
+    body: JSON.stringify({
+      name: data.name,
+      email: data.email,
+      password: data.password,
+    }),
   });
 
-  if (response.status != 200) {
+  if (response.status != 201) {
     throw new Error("An error occurred");
   }
+  console.log(data)
 
   const result = await response.json();
   return result;
 };
+
+export const login = async (email, password) => {
+  const response = await fetch(`${BASE_URL}/login`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/x-www-form-urlencoded",
+    },
+    body: JSON.stringify({
+      email: email,
+      password: password,
+    }),
+  });
+
+  if (response.status != 201) {
+    throw new Error("An error occurred");
+  }
+  console.log(data)
+
+  const result = await response.json();
+  return result;
+};
+
 
 export const getFavoriteLists = async (ownerId) => {
   const url = `${BASE_URL}/users/${ownerId}/favorites`;

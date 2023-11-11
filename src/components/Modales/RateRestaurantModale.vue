@@ -123,7 +123,6 @@
 </template>
 
 <script setup>
-import Modale from "./Modale.vue";
 import { onMounted, ref } from "vue";
 import { postRestaurantVisit } from "../../api/restaurants";
 
@@ -154,12 +153,7 @@ const color = (number) => {
 };
 
 function submitRating() {
-  console.log("Only in livrable 3 but here's the data:");
-  console.log("Rating: " + rating.value);
-  console.log("Date: " + date.value);
-  console.log("Comment: " + comment.value);
-
-  //postRestaurantVisit(0, props.restaurantId, rating.value, date.value, comment.value);
+  postRestaurantVisit(props.restaurantId, rating.value, date.value, comment.value);
 }
 </script>
 

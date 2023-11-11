@@ -35,6 +35,7 @@
 <script setup>
 import { ref, defineEmits } from "vue";
 import { useRouter } from "vue-router";
+import { login } from "../api/user";
 
 const email = ref("");
 const password = ref("");
@@ -42,6 +43,15 @@ const router = useRouter();
 const emit = defineEmits(["asLoggedIn"]);
 
 const handleSubmit = () => {
+
+  const user = {
+  id: "654ff1f65d5104359a2cf011",
+  name: "John Doe",
+  email: "john@mail.com",
+  rating: 0,
+  };
+
+  localStorage.setItem("user", JSON.stringify(user));
   emit("asLoggedIn", { isLoggedIn: true });
   router.push("/");
 };

@@ -56,7 +56,7 @@
 </template>
 
 <script setup>
-import { ref } from "vue";
+import { onMounted, ref } from "vue";
 import { getFilterPriceName } from "./Utils.js";
 
 //Rating
@@ -76,29 +76,35 @@ const props = defineProps({
 });
 
 function viewReview() {
-  emit("openRateModaleReadOnly", props.restaurant.id);
+  emit("openRateModaleReadOnly");
 }
+
+onMounted(() => {
+  console.log(props.restaurant)
+})
 </script>
 
 <style scoped>
 .cardStars {
-  color: rgba(51, 92, 28, 0.514);
+  color: rgba(51, 92, 28, 0.514) !important;
 }
 
 #cardRouterLink {
   text-decoration: none;
-  color: black;
+  color: black !important;
 }
 
 .restaurant_card_clickable:hover {
+  background-color: #cfb8a6;
   cursor: pointer;
 }
-
 .restaurant_card_clickable {
-  box-shadow: 1px 1px 1px 1px black;
-  border-radius: 20px;
+  color: #000 !important;
+  border: 1px solid #000;
+  border-radius: 0.5rem;
+  gap: 1rem;
   background-color: #cec6be;
-  margin-bottom: 10px;
+  margin-bottom: 7px;
 }
 
 .visitedBtn {
@@ -120,7 +126,7 @@ function viewReview() {
 
 .restaurant_info h2 {
   font-size: 22px;
-  color: #5e503f;
+  color: #5e503f !important;
 }
 
 .button_section {
@@ -129,7 +135,7 @@ function viewReview() {
 }
 
 .button_section > .btn {
-  box-shadow: 1px 1px 1px 1px black;
-  border-radius: 20px;
+  border: 1px solid #000;
+  border-radius: 0.5rem;
 }
 </style>

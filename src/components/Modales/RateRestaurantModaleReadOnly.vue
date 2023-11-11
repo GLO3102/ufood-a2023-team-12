@@ -10,35 +10,35 @@
       <font-awesome-icon
         class="starYellow"
         icon="fa-solid fa-star"
-        v-if="props.review.rating >= 1"
+        v-if="props.visit.rating >= 1"
       />
       <font-awesome-icon class="starGrey" icon="fa-solid fa-star" v-else />
 
       <font-awesome-icon
         class="starYellow"
         icon="fa-solid fa-star"
-        v-if="props.review.rating >= 2"
+        v-if="props.visit.rating >= 2"
       />
       <font-awesome-icon class="starGrey" icon="fa-solid fa-star" v-else />
 
       <font-awesome-icon
         class="starYellow"
         icon="fa-solid fa-star"
-        v-if="props.review.rating >= 3"
+        v-if="props.visit.rating >= 3"
       />
       <font-awesome-icon class="starGrey" icon="fa-solid fa-star" v-else />
 
       <font-awesome-icon
         class="starYellow"
         icon="fa-solid fa-star"
-        v-if="props.review.rating >= 4"
+        v-if="props.visit.rating >= 4"
       />
       <font-awesome-icon class="starGrey" icon="fa-solid fa-star" v-else />
 
       <font-awesome-icon
         class="starYellow"
         icon="fa-solid fa-star"
-        v-if="props.review.rating >= 5"
+        v-if="props.visit.rating >= 5"
       />
       <font-awesome-icon class="starGrey" icon="fa-solid fa-star" v-else />
     </div>
@@ -47,7 +47,7 @@
     <div class="d-flex w-50 mt-3 flex-column justify-content-start">
       <label class="alt-font" for="visitDate">Date de visite</label>
       <input
-        :value="props.review.date"
+        :value="props.visit.date"
         id="visitDate"
         class="w-100 rounded date"
         type="date"
@@ -57,7 +57,7 @@
 
     <!--Comment-->
     <textarea
-      :value="props.review.comment"
+      :value="props.visit.comment"
       class="rounded textArea mt-3 w-50"
       name="ratingComment"
       id="ratingComment"
@@ -72,7 +72,7 @@
 <script setup>
 //Props
 const props = defineProps({
-  review: Object,
+  visit: Object,
 });
 </script>
 

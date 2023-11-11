@@ -38,7 +38,7 @@
 <script>
 import { ref } from "vue";
 import { useRouter } from "vue-router";
-// import { createNewUser } from "../api/user.js";
+import { createNewUser } from "../api/user.js";
 
 export default {
   name: "SignupForm",
@@ -55,13 +55,13 @@ export default {
         password: password.value,
       };
       try {
-        // const result = await createNewUser(userData);
-        const result = userData;
+        const result = await createNewUser(userData);
+        console.log(result)
         localStorage.setItem("user", JSON.stringify(result));
-        router.push("/");
         emit("asLoggedIn", {
           isLoggedIn: true,
         });
+        router.push("/");
       } catch (error) {
         console.error("Error creating user:", error.message);
       }

@@ -1,5 +1,7 @@
 import { BASE_URL } from "./restaurantApiURL";
 
+const getUserId = () => JSON.parse(localStorage.getItem('user')).id;
+
 export const getRestaurants = async () => {
   try {
     const response = await fetch(`${BASE_URL}/restaurants`, {
@@ -34,6 +36,7 @@ export const getRestaurantById = async (restaurantId) => {
     }
 
     const restaurant = await response.json();
+    console.log(restaurant)
     return restaurant;
   } catch (e) {
     console.log(e);
@@ -41,7 +44,6 @@ export const getRestaurantById = async (restaurantId) => {
 };
 
 export const postRestaurantVisit = async (
-  user_id,
   restaurant_id,
   rating,
   date,
@@ -49,7 +51,7 @@ export const postRestaurantVisit = async (
 ) => {
   try {
     const response = await fetch(
-      `${BASE_URL}/users/${user_id}/restaurants/visits`,
+      `${BASE_URL}/users/${getUserId()}/restaurants/visits`,
       {
         method: "POST",
         headers: {
@@ -61,18 +63,11 @@ export const postRestaurantVisit = async (
           rating: rating,
           date: date,
         }),
-      },
-    ).then(
-      (response) =>
-        function () {
-          if (response.status != 200) {
-            throw new Error(
-              `Error sending rating for restaurant ${restaurantId}`,
-            );
-          }
-          return response.json();
-        },
-    );
+      });
+
+      await response.json();
+      console.log("good")
+      return response;
   } catch (e) {
     console.log(e);
   }
@@ -93,6 +88,28 @@ export const getVisitsByRestaurantId = async (restaurantId) => {
       throw new Error(`Error fetching visits for restaurant  ${restaurantId}`);
     }
     const visits = await response.json();
+    return visits.items;
+  } catch (e) {
+    console.log(e);
+  }
+};
+
+export const getUserVisits = async () => {
+  try {
+    const response = await fetch(
+      `${BASE_URL}/users/${getUserId()}/restaurants/visits`,
+      {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      },
+    );
+    if (response.status != 200) {
+      throw new Error(`Error fetching user's visits  ${restaurantId}`);
+    }
+    const visits = await response.json();
+    console.log(visits.items)
     return visits.items;
   } catch (e) {
     console.log(e);

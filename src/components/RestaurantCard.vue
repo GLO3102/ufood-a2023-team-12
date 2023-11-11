@@ -41,11 +41,12 @@
 </template>
 
 <script setup>
-import { ref } from "vue";
+import { onMounted, onUpdated, ref, watch } from "vue";
 import { getFilterPriceName } from "./Utils.js";
 import RatingStars from "./RatingStars.vue";
 
 const visited = ref(false);
+const localStoragePopulated = ref(false);
 const isRatingModaleOpened = ref(false);
 const emit = defineEmits(["openRateModale"]);
 const props = defineProps({
@@ -55,6 +56,7 @@ const props = defineProps({
 function setVisited() {
   visited.value = true;
 }
+
 </script>
 
 <style scoped>
@@ -66,13 +68,15 @@ function setVisited() {
   color: black;
 }
 .restaurant_card_clickable:hover {
+  background-color: #cfb8a6;
   cursor: pointer;
 }
 .restaurant_card_clickable {
-  box-shadow: 1px 1px 1px 1px black;
-  border-radius: 20px;
+  border: 1px solid #000;
+  border-radius: 0.5rem;
+  gap: 1rem;
   background-color: #cec6be;
-  margin-bottom: 10px;
+  margin-bottom: 7px;
 }
 .visitedBtn {
   width: fit-content;
@@ -96,7 +100,7 @@ function setVisited() {
   height: 100%;
 }
 .button_section > .btn {
-  box-shadow: 1px 1px 1px 1px black;
-  border-radius: 20px;
+  border: 1px solid #000;
+  border-radius: 0.5rem;
 }
 </style>

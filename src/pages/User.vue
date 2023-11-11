@@ -30,13 +30,18 @@
         <button class="back-button">See all restaurants</button>
       </router-link>
     </div>
-    <div v-else>
-      <restaurant-card-user-page
-        :restaurant="restaurant"
-        @open-rate-modale-read-only="(id) => viewRating(id)"
+      <section v-else class="restaurant" id="restaurant">
+        <div
+          class="restaurant_box pt-5"
+        >
+        <restaurant-card-user-page v-for="(visit, index) in visits" :key="visit.id"
+        :restaurant="restaurants[index]"
+        @open-rate-modale-read-only="viewRating(visit)"
       >
       </restaurant-card-user-page>
-    </div>
+        </div>
+      </section>
+      
     <hr />
     <section>
       <CreateFavoritesList />
@@ -45,12 +50,15 @@
 </template>
 
 <script setup>
-import { ref, computed } from "vue";
+import { ref, computed, onMounted, onUpdated } from "vue";
+import * as api from "../api/restaurants";
 import CreateFavoritesList from "../components/favorites/CreateFavoritesList.vue";
 import RestaurantCardUserPage from "../components/RestaurantCardUserPage.vue";
 
 const isModaleOpen = ref(false);
 const selectedValue = ref("1");
+let visits = [];
+let restaurants = [];
 
 const emit = defineEmits(["openRateModaleReadOnly"]);
 
@@ -85,18 +93,31 @@ const restaurant = {
   genres: ["desserts"],
   id: "5f31fc6155d7790550c08afe",
 };
+onMounted(() => {
+  getVisits();
+})
 
-function viewRating(id) {
-  //Ici normalement on va GET le review.
-  const review = {
-    id: "12345",
-    restaurant_id: "5f31fc6155d7790550c08afe",
-    comment: "very good restaurant",
-    rating: 5,
-    date: "2020-08-11",
-  };
+function getVisits() {
+  api.getUserVisits().then((data)=> {
+    visits = data;
+    
+    visits.forEach(visit => {
+      api.getRestaurantById(visit.restaurant_id).then((data) => {
+        restaurants.push(data);
+      })
+      
+    });
+  })
+}
 
-  emit("openRateModaleReadOnly", review);
+function getRestaurant(visit) {
+  api.getRestaurantById(visit.restaurant_id).then((data) => {
+    return data;
+  })
+}
+
+function viewRating(visit) {
+  emit("openRateModaleReadOnly", visit);
 }
 
 function closeModale() {

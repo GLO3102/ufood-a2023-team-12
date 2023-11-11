@@ -18,7 +18,7 @@
       <rate-restaurant-modale-read-only
         v-if="rateModaleReadOnlyOpened"
         @close-modale="closeRateModale"
-        :review="review"
+        :visit="visit"
       />
     </modale>
 
@@ -26,7 +26,7 @@
     <router-view
       @as-logged-in="isLoggedIn = true"
       @open-rate-modale="(restaurant_id) => openRateModale(restaurant_id)"
-      @open-rate-modale-read-only="(review) => openRateModaleReadOnly(review)"
+      @open-rate-modale-read-only="(visit) => openRateModaleReadOnly(visit)"
     />
   </div>
 </template>
@@ -54,7 +54,7 @@ export default {
       rateModaleOpened: false,
       rateModaleReadOnlyOpened: false,
       rateRestaurantId: null,
-      review: {},
+      visit: {},
     };
   },
   methods: {
@@ -62,8 +62,8 @@ export default {
       this.rateRestaurantId = restaurant_Id;
       this.rateModaleOpened = true;
     },
-    openRateModaleReadOnly(review) {
-      this.review = review;
+    openRateModaleReadOnly(visit) {
+      this.visit = visit;
       this.rateModaleReadOnlyOpened = true;
     },
     closeRateModale() {
