@@ -1,82 +1,115 @@
 <template>
-        <div class="d-flex w-100 mb-5 justify-content-center flex-column align-items-center">
+  <div
+    class="d-flex w-100 mb-5 justify-content-center flex-column align-items-center"
+  >
+    <!--Title-->
+    <h1 class="mt-3 text-center alt-font">Review</h1>
 
-            <!--Title-->
-            <h1 class="mt-3 text-center alt-font">Review</h1>
+    <!--Stars-->
+    <div id="starsContainer" class="d-flex justify-content-center text-warning">
+      <font-awesome-icon
+        class="starYellow"
+        icon="fa-solid fa-star"
+        v-if="props.review.rating >= 1"
+      />
+      <font-awesome-icon class="starGrey" icon="fa-solid fa-star" v-else />
 
-            <!--Stars-->
-            <div id="starsContainer" class="d-flex justify-content-center text-warning">
-                <font-awesome-icon class="starYellow" icon="fa-solid fa-star" v-if="(props.review.rating >= 1)"/>
-                <font-awesome-icon class="starGrey" icon="fa-solid fa-star" v-else/>
+      <font-awesome-icon
+        class="starYellow"
+        icon="fa-solid fa-star"
+        v-if="props.review.rating >= 2"
+      />
+      <font-awesome-icon class="starGrey" icon="fa-solid fa-star" v-else />
 
-                <font-awesome-icon class="starYellow" icon="fa-solid fa-star" v-if="(props.review.rating >= 2)"/>
-                <font-awesome-icon class="starGrey" icon="fa-solid fa-star" v-else />
+      <font-awesome-icon
+        class="starYellow"
+        icon="fa-solid fa-star"
+        v-if="props.review.rating >= 3"
+      />
+      <font-awesome-icon class="starGrey" icon="fa-solid fa-star" v-else />
 
-                <font-awesome-icon class="starYellow" icon="fa-solid fa-star" v-if="(props.review.rating >= 3)"/>
-                <font-awesome-icon class="starGrey" icon="fa-solid fa-star" v-else/>
+      <font-awesome-icon
+        class="starYellow"
+        icon="fa-solid fa-star"
+        v-if="props.review.rating >= 4"
+      />
+      <font-awesome-icon class="starGrey" icon="fa-solid fa-star" v-else />
 
-                <font-awesome-icon class="starYellow" icon="fa-solid fa-star" v-if="(props.review.rating >= 4)"/>
-                <font-awesome-icon class="starGrey" icon="fa-solid fa-star" v-else />
+      <font-awesome-icon
+        class="starYellow"
+        icon="fa-solid fa-star"
+        v-if="props.review.rating >= 5"
+      />
+      <font-awesome-icon class="starGrey" icon="fa-solid fa-star" v-else />
+    </div>
 
-                <font-awesome-icon class="starYellow" icon="fa-solid fa-star" v-if="(props.review.rating >= 5)"/>
-                <font-awesome-icon class="starGrey" icon="fa-solid fa-star" v-else/>
-            </div>
+    <!--Date-->
+    <div class="d-flex w-50 mt-3 flex-column justify-content-start">
+      <label class="alt-font" for="visitDate">Date de visite</label>
+      <input
+        :value="props.review.date"
+        id="visitDate"
+        class="w-100 rounded date"
+        type="date"
+        readonly
+      />
+    </div>
 
-            <!--Date-->
-            <div class="d-flex w-50 mt-3 flex-column justify-content-start">
-                <label class="alt-font" for="visitDate">Date de visite</label>
-                <input :value="props.review.date" id="visitDate" class="w-100 rounded date" type="date" readonly>
-            </div>
-
-            <!--Comment-->
-            <textarea :value="props.review.comment" class="rounded textArea mt-3 w-50" name="ratingComment" id="ratingComment" cols="30" rows="10" placeholder="Comment..." readonly></textarea>
-            
-        </div>
+    <!--Comment-->
+    <textarea
+      :value="props.review.comment"
+      class="rounded textArea mt-3 w-50"
+      name="ratingComment"
+      id="ratingComment"
+      cols="30"
+      rows="10"
+      placeholder="Comment..."
+      readonly
+    ></textarea>
+  </div>
 </template>
 
 <script setup>
-
-    //Props
-    const props = defineProps({
-        review: Object
-    })
-
+//Props
+const props = defineProps({
+  review: Object,
+});
 </script>
 
 <style>
 .starYellow {
-    font-size: 2em;
-    color: yellow;
+  font-size: 2em;
+  color: yellow;
 }
 
 .starGrey {
-    font-size: 2em;
-    color: grey;
+  font-size: 2em;
+  color: grey;
 }
 
 #restaurantRating {
-    appearance: none;
+  appearance: none;
 }
 
-.sendBtn{
-    background-color: #5E503F;    
-    color: #0A0908;
-    width: 100px;
+.sendBtn {
+  background-color: #5e503f;
+  color: #0a0908;
+  width: 100px;
 }
 
-.textArea{
-    padding: 10px;
-    resize: none;
-    border: none;
-    outline: none !important;
+.textArea {
+  padding: 10px;
+  resize: none;
+  border: none;
+  outline: none !important;
 }
 
-.date{
-    border: none;
-    outline: none !important;
+.date {
+  border: none;
+  outline: none !important;
 }
 
-h1{
-    color: #0A0908;
+h1 {
+  color: #0a0908;
 }
 </style>

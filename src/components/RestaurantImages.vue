@@ -1,3 +1,21 @@
+<script setup>
+import { Swiper, SwiperSlide } from "swiper/vue";
+import "swiper/swiper-bundle.css";
+import { defineProps } from "vue";
+
+const props = defineProps({
+  images: Array,
+});
+
+function onSwiper(swiper) {
+  console.log("Swiper instance:", swiper);
+}
+
+function onSlideChange() {
+  console.log("Slide changed");
+}
+</script>
+
 <template>
   <div class="swiper-container">
     <Swiper
@@ -9,7 +27,6 @@
       @swiper="onSwiper"
       @slideChange="onSlideChange"
     >
-
       <SwiperSlide v-for="(image, index) in images" :key="index">
         <img :src="image" :alt="'image ' + (index + 1)" />
       </SwiperSlide>

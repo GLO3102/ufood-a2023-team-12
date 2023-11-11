@@ -1,5 +1,5 @@
 body {
-  background-color: #22333B;
+  background-color: #22333b;
   /*background-image: url("https://images.unsplash.com/photo-1678924587662-d8c63e57eb11?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80");*/
   background-size: cover;
 
@@ -32,7 +32,8 @@ body {
   font-family: mv boli;
 }
 
-.restaurant_box ,.restaurant_loop {
+.restaurant_box,
+.restaurant_loop {
   margin: 0 auto;
   display: flex;
   flex-wrap: wrap;
@@ -48,7 +49,7 @@ body {
   border-radius: 20px 20px 0px 0px;
 }
 
-.restaurant_card_clickable:hover{
+.restaurant_card_clickable:hover {
   transform: scale(1.02, 1.02);
 }
 
@@ -68,7 +69,7 @@ body {
   border-radius: 20px;
 }
 
-.highlight{
+.highlight {
   font-weight: bold;
   font-size: 1.2em;
 }
@@ -106,7 +107,6 @@ body {
     width: 90%;
     margin-right: 0px !important;
   }
-
 }
 
 .header-container {
@@ -166,7 +166,8 @@ body {
   min-width: 250px;
 }
 
-.accordion-button, .accordion-button:not(.collapsed) {
+.accordion-button,
+.accordion-button:not(.collapsed) {
   background-color: #daa00f;
   color: #fff;
 }

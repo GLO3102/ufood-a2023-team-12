@@ -38,16 +38,15 @@ export const router = createRouter({
   routes,
 });
 
-router.beforeEach((to,from,next) => {
-
+router.beforeEach((to, from, next) => {
   //Un-collapse the navbar on page change
   const navbar = document.querySelector(".navbar-collapse");
   if (navbar) {
-    navbar.classList.remove('show');
+    navbar.classList.remove("show");
   }
 
   //Set scroll all the way up
   window.scrollTo(0, 0);
 
   next();
-})
+});

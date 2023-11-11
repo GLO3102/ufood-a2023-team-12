@@ -1,83 +1,80 @@
 <template>
-    <dialog id="modaleContainer">
-        <div id="modaleHeader">
-            <button type="button" class="btn btn-danger m-2" @click="emit('closeModale')">
-                <font-awesome-icon icon="fa-solid fa-xmark" />
-            </button>
-        </div>
-        <div id="modaleContent" class="d-flex justify-content-center">
-            <slot/>
-        </div>
-    </dialog>
+  <dialog id="modaleContainer">
+    <div id="modaleHeader">
+      <button
+        type="button"
+        class="btn btn-danger m-2"
+        @click="emit('closeModale')"
+      >
+        <font-awesome-icon icon="fa-solid fa-xmark" />
+      </button>
+    </div>
+    <div id="modaleContent" class="d-flex justify-content-center">
+      <slot />
+    </div>
+  </dialog>
 </template>
 
 <script setup>
 import { onMounted, onUpdated } from "vue";
 
-
-const emit = defineEmits([
-    'closeModale',
-]);
+const emit = defineEmits(["closeModale"]);
 
 onMounted(() => {
-    document.getElementById("modaleContainer").showModal();
-})
-
-
+  document.getElementById("modaleContainer").showModal();
+});
 </script>
 
 <style>
+#modaleContainer {
+  /*Variables*/
+  --modale-width: 60%;
+  --modale-height: fit-content;
+  --modale-left-margin-offset: calc(var(--modale-width) / -2);
+  --modale-top-margin-offset: calc(var(--modale-height) / -2);
 
-    #modaleContainer{
-        
-        /*Variables*/
-        --modale-width: 60%;
-        --modale-height: fit-content;
-        --modale-left-margin-offset: calc(var(--modale-width) / -2);
-        --modale-top-margin-offset: calc(var(--modale-height) / -2);
+  /*--------*/
+  position: fixed;
+  left: 50%;
+  z-index: 100;
+  margin-left: var(--modale-left-margin-offset);
+  padding: 0;
 
-        /*--------*/
-        position: fixed;
-        left: 50%;
-        z-index: 100;
-        margin-left: var(--modale-left-margin-offset);
-        padding: 0;
+  /*--------*/
+  width: var(--modale-width);
+  height: var(--modale-height);
 
-        /*--------*/
-        width: var(--modale-width);
-        height: var(--modale-height);
+  /*--------*/
+  background-color: #c6ac8f;
+  border: none;
+  border-radius: 10px;
 
-        /*--------*/
-        background-color: #C6AC8F;
-        border: none;
-        border-radius: 10px;
+  animation: fadeIn 0.5s;
+}
 
-        animation: fadeIn 0.5s;
-    }
+#modaleHeader {
+  display: flex;
+  justify-content: flex-end;
+  background-color: #22333b;
+  height: auto;
+}
 
-    #modaleHeader{
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
 
-        display: flex;
-        justify-content: flex-end;
-        background-color: #22333B;
-        height: auto;
-    }
+@media (width < 990px) {
+  #modaleContainer {
+    /*Variables*/
+    --modale-width: 90%;
 
-    @keyframes fadeIn {
-        0% { opacity: 0; }
-        100% { opacity: 1; }
-    }
-
-    @media (width < 990px) {
-        #modaleContainer{
-        
-        /*Variables*/
-        --modale-width: 90%;
-
-        /*--------*/
-        width: var(--modale-width);
-    }
-    }
-
-
+    /*--------*/
+    width: var(--modale-width);
+  }
+}
 </style>
