@@ -2,7 +2,9 @@
   <div class="main-container">
     <div class="header-container">
       <div class="header-content">
-        <h1 class="header-title alt-font">Taste the World. One Restaurant at a Time.</h1>
+        <h1 class="header-title alt-font">
+          Taste the World. One Restaurant at a Time.
+        </h1>
         <input
           type="search"
           class="form-control searchbar mt-3"
@@ -39,7 +41,11 @@
                   </button>
                 </div>
                 <h6>Price</h6>
-                <div v-for="price in filterPrices" :key="price" class="form-check">
+                <div
+                  v-for="price in filterPrices"
+                  :key="price"
+                  class="form-check"
+                >
                   <input
                     class="form-check-input"
                     type="checkbox"
@@ -55,7 +61,11 @@
                 <hr />
                 <h6>Cuisine / Food Types</h6>
 
-                <div v-for="(type, index) in filterTypes" :key="index" class="form-check">
+                <div
+                  v-for="(type, index) in filterTypes"
+                  :key="index"
+                  class="form-check"
+                >
                   <input
                     class="form-check-input"
                     type="checkbox"
@@ -63,7 +73,10 @@
                     :id="`filterTypes${index + 1}`"
                     v-model="selectedTypes[type]"
                   />
-                  <label :for="`filterTypes${index + 1}`" class="form-check-label">
+                  <label
+                    :for="`filterTypes${index + 1}`"
+                    class="form-check-label"
+                  >
                     {{ type }}
                   </label>
                 </div>
@@ -71,7 +84,11 @@
                 <hr />
                 <h6>Ratings</h6>
 
-                <div v-for="rating in filterRatings" :key="rating" class="form-check">
+                <div
+                  v-for="rating in filterRatings"
+                  :key="rating"
+                  class="form-check"
+                >
                   <input
                     class="form-check-input"
                     type="checkbox"
@@ -79,7 +96,10 @@
                     :id="`filterRatings${rating}`"
                     v-model="selectedRatings[rating]"
                   />
-                  <label :for="`filterRatings${rating}`" class="form-check-label">
+                  <label
+                    :for="`filterRatings${rating}`"
+                    class="form-check-label"
+                  >
                     <font-awesome-icon
                       v-for="n in rating"
                       :key="n"
@@ -207,18 +227,21 @@ watch(
       return selectedKeys.length > 0 ? selectedKeys : defaultValue;
     };
 
-    const priceFilterList = getSelectedKeys(newValPrice, ["1", "2", "3"]).map(Number);
-    const typeFilterList = getSelectedKeys(newValType, filterTypes.value);
-    const ratingFilterList = getSelectedKeys(newValRating, filterRatings.value).map(
-      Number
+    const priceFilterList = getSelectedKeys(newValPrice, ["1", "2", "3"]).map(
+      Number,
     );
+    const typeFilterList = getSelectedKeys(newValType, filterTypes.value);
+    const ratingFilterList = getSelectedKeys(
+      newValRating,
+      filterRatings.value,
+    ).map(Number);
 
     filtered_restaurants.value = restaurants.value.filter(
       (restaurant) =>
         priceFilterList.includes(restaurant.price_range) &&
         typeFilterList.some((el) => restaurant.genres.includes(el)) &&
-        ratingFilterList.includes(Math.floor(restaurant.rating))
+        ratingFilterList.includes(Math.floor(restaurant.rating)),
     );
-  }
+  },
 );
 </script>

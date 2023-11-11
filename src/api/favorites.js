@@ -1,4 +1,4 @@
-import { BASE_URL } from './restaurantApiURL';	
+import { BASE_URL } from "./restaurantApiURL";
 
 export async function createFavoritesList(name, owner) {
   const url = `${BASE_URL}/favorites`;
@@ -9,7 +9,7 @@ export async function createFavoritesList(name, owner) {
 
   try {
     const response = await fetch(url, {
-      method: 'POST',
+      method: "POST",
       headers: headers,
       body: body,
     });
@@ -21,7 +21,7 @@ export async function createFavoritesList(name, owner) {
     const data = await response.json();
     return data;
   } catch (error) {
-    console.error('Error creating favorites list:', error);
+    console.error("Error creating favorites list:", error);
     throw error;
   }
 }
@@ -35,7 +35,7 @@ export async function updateFavoriteListName(listId, name, owner) {
 
   try {
     const response = await fetch(url, {
-      method: 'PUT',
+      method: "PUT",
       headers: headers,
       body: body,
     });
@@ -47,7 +47,7 @@ export async function updateFavoriteListName(listId, name, owner) {
     const data = await response.json();
     return data;
   } catch (error) {
-    console.error('Error editing favorites list name:', error);
+    console.error("Error editing favorites list name:", error);
     throw error;
   }
 }
@@ -56,7 +56,7 @@ export async function deleteFavoriteList(listId) {
   const url = `${BASE_URL}/favorites/${listId}`;
   try {
     const response = await fetch(url, {
-      method: 'DELETE',
+      method: "DELETE",
     });
     if (!response.ok) {
       throw new Error(`HTTP error! status: ${response.status}`);
@@ -64,7 +64,7 @@ export async function deleteFavoriteList(listId) {
     const data = await response.json();
     return data;
   } catch (error) {
-    console.error('Error deleting favorites list:', error);
+    console.error("Error deleting favorites list:", error);
     throw error;
   }
 }
@@ -78,7 +78,7 @@ export async function addRestaurantToFavoritesList(listId, restaurantId) {
 
   try {
     const response = await fetch(url, {
-      method: 'POST',
+      method: "POST",
       headers: headers,
       body: body,
     });
@@ -90,7 +90,7 @@ export async function addRestaurantToFavoritesList(listId, restaurantId) {
     const data = await response.json();
     return data;
   } catch (error) {
-    console.error('Error creating favorites list:', error);
+    console.error("Error creating favorites list:", error);
     throw error;
   }
 }
