@@ -70,5 +70,8 @@ function onSlideChange() {
   .swiper-container {
     height: 200px;
   }
+  .swiper-slide {
+    height: 200px;
+  }
 }
 </style>

@@ -1,11 +1,7 @@
 <script setup>
-import L from 'leaflet';
-import 'leaflet/dist/leaflet.css';
-import 'leaflet-routing-machine';
-import 'leaflet-routing-machine/dist/leaflet-routing-machine.css';
-
+import { getFilterPriceName} from '../components/Utils.js';
 import RestaurantImages from '../components/RestaurantImages.vue';
-
+import Map from '../components/Map.vue';
 
 import { onMounted, ref, computed } from "vue";
 import { useRoute } from "vue-router";
@@ -34,23 +30,7 @@ function toggleDropdown() {
 onMounted(async () => {
   try {
     const fetchedRestaurant = await getRestaurantById(restaurantId.value);
-    console.log(fetchedRestaurant);
     restaurant.value = fetchedRestaurant;
-    console.log(restaurant.value);
-    initMap(restaurant.value.location.coordinates);
-
-    navigator.geolocation.getCurrentPosition(
-      (position) => {
-        const origin = `${position.coords.latitude},${position.coords.longitude}`;
-        const destination = `${restaurant.value.location.coordinates[1]},${restaurant.value.location.coordinates[0]}`;
-
-      },
-      (error) => {
-        console.error("Geolocation error:", error);
-      },
-      { enableHighAccuracy: true }
-    );
-
   } catch (e) {
     console.error("Failed to fetch restaurants:", e);
   } finally {
@@ -58,40 +38,6 @@ onMounted(async () => {
   }
 });
 
-
-function initMap(coordinates) {
-  map.value = L.map('map').setView([coordinates[1], coordinates[0]], 13);
-
-  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-    attribution: '© OpenStreetMap contributors'
-  }).addTo(map.value);
-
-  navigator.geolocation.getCurrentPosition(
-    (position) => {
-      L.Routing.control({
-        waypoints: [
-          L.latLng(position.coords.latitude, position.coords.longitude),
-          L.latLng(coordinates[1], coordinates[0])
-        ],
-        routeWhileDragging: true
-      }).addTo(map.value);
-    },
-    (error) => {
-      console.error("Geolocation error:", error);
-    },
-    { enableHighAccuracy: true }
-  );
-}
-const getFilterPriceName = (price) => {
-  switch (price) {
-    case 1:
-      return "Cheap";
-    case 2:
-      return "Moderate";
-    case 3:
-      return "Expensive";
-  }
-};
 
 const ratingFloored = computed(() => {
   const floored = Math.floor(restaurant.value.rating);
@@ -119,6 +65,13 @@ const hours = computed(() => {
     .map(([day, time]) => `${day}: ${time ? time : 'Closed'}`);
 
   return hoursArray.join("<br>");
+});
+
+const restaurantCoordinates = computed(() => {
+  if (restaurant.value && restaurant.value.location && restaurant.value.location.coordinates) {
+    return restaurant.value.location.coordinates;
+  }
+  return null;
 });
 
 
@@ -173,23 +126,11 @@ const hours = computed(() => {
       </div>
     </div>
 
-    <div id="map" class="map"></div>
+    <div> <Map :coordinates="restaurantCoordinates" /> </div>
   </div>
 </template>
 
 <style scoped>
-.map {
-  height: 600px;
-  width: 70%;
-  margin: 0 auto;
-}
-
-
-::v-deep .leaflet-routing-container {
-  font-size: 10px;
-  max-height: 250px;
-  overflow-y: auto;
- }
 
 .restaurant {
   background-image: url("https://images.unsplash.com/photo-1678924587662-d8c63e57eb11?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80");
@@ -205,6 +146,7 @@ const hours = computed(() => {
 .restaurant_name  {
   white-space: nowrap;
   width: 70%;
+  margin-top: 20px;
 }
 
 .restaurant_name h2{
@@ -256,13 +198,6 @@ const hours = computed(() => {
         font-size: 5vw;
     }
 
-
-    .map {
-        height:400px;
-    }
-    ::v-deep .leaflet-routing-container {
-        max-height: 150px;
-    }
 
 }
 
