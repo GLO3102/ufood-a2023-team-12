@@ -11,11 +11,13 @@ import {
   faStarHalfStroke,
   faSliders,
   faX,
-  faRadio
+  faRadio, 
+  faPen,
+  faTrashCan
 } from "@fortawesome/free-solid-svg-icons";
 
 /* add icons to the library */
-library.add(faXmark, faStar, faStarHalfStroke, faSliders, faX, faRadio);
+library.add(faXmark, faStar, faStarHalfStroke, faSliders, faX, faRadio, faPen, faTrashCan);
 
 const app = createApp(App);
 

@@ -13,7 +13,7 @@
     </div>
     <hr />
     <div class="select-box">
-      <h4>Recently Visited Restaurants</h4>
+      <h3>Recently Visited Restaurants</h3>
       <select
         v-model="selectedValue"
         class="form-select"

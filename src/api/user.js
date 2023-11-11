@@ -1,5 +1,5 @@
 // const BASE_URL = "https://ufoodapi.herokuapp.com";
-import { BASE_URL } from './restaurantApiURL';
+import { BASE_URL } from "./restaurantApiURL";
 
 export const createNewUser = async (data) => {
   const formData = new URLSearchParams(data).toString();
@@ -17,4 +17,21 @@ export const createNewUser = async (data) => {
 
   const result = await response.json();
   return result;
+};
+
+export const getFavoriteLists = async (ownerId) => {
+  const url = `${BASE_URL}/users/${ownerId}/favorites`;
+  try {
+    const response = await fetch(url, {
+      method: "GET",
+    });
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.error("Error creating favorites list:", error);
+    throw error;
+  }
 };
