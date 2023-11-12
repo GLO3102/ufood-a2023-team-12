@@ -35,7 +35,7 @@
             @click="emit('openRateModale', restaurant.id)"
             class="rateBtn btn btn-success"
           >
-            Rate
+            Mark as visited
           </button>
 
           <button class="btn btn-primary" @click="toggleDropdown">
