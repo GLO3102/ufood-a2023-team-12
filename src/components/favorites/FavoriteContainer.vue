@@ -77,6 +77,7 @@ const selectedList = ref(null);
 const errorMessage = ref("");
 const allLists = ref([]);
 const detailedRestaurantList = ref([]);
+const emit = defineEmits(["openRateModale"]);
 
 const userData = computed(() => {
   return JSON.parse(localStorage.getItem("user"));
@@ -151,4 +152,18 @@ const removeRestaurant = async (restaurantId) => {
 onMounted(getFavoritesList);
 </script>
 
-<style scoped></style>
+<style scoped>
+@media (max-width: 820px) { 
+  .favorite-lists .d-flex {
+    flex-direction: column;
+  }
+
+  .selected-list {
+    margin-top: 1rem;
+  }
+
+  .restaurant-container {
+    order: 3;
+}
+}
+</style>
