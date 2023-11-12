@@ -68,7 +68,7 @@
   </div>
 </template>
 
-<script>
+<script setup>
 import {
   reactive,
   toRefs,
@@ -76,67 +76,65 @@ import {
   onBeforeUnmount,
   computed,
   watch,
+  ref,
 } from "vue";
 import { onBeforeRouteUpdate } from "vue-router";
 
-export default {
-  name: "NavigationBar",
-  props: {
-    isLoggedIn: Boolean,
-  },
-  setup(props, { emit }) {
-    const state = reactive({
-      loggedIn: props.isLoggedIn,
-      innerWidth: window.innerWidth,
-      navCollapseValue: 990,
-    });
+const props = defineProps({
+  isLoggedIn: Boolean,
+});
 
-    const user = computed(() => {
-      const userData = JSON.parse(localStorage.getItem("user"));
-      return userData;
-    });
+const emit = defineEmits([
+  'asLoggedOut',
+])
 
-    watch(
-      () => props.isLoggedIn,
-      (newValue) => {
-        state.loggedIn = newValue;
-      },
-    );
+const loggedIn = ref(props.isLoggedIn);
+const innerWidth = ref(window.innerWidth);
+const navCollapseValue = 990;
 
-    watch(
-      () => state.innerWidth,
-      (newValue) => {
-        state.innerWidth = newValue;
-      },
-    );
+const user = computed(() => {
+  const userData = JSON.parse(localStorage.getItem("user"));
+  return userData;
+});
 
-    const logout = () => {
-      localStorage.removeItem("user");
-      state.loggedIn = false;
-      emit("asLoggedOut", {
-        isLoggedIn: false,
-      });
-    };
+watch(
+  () => props.isLoggedIn,
+  (newValue) => {
+    loggedIn.value = newValue;
+  }
+);
 
-    const handleWindowResize = () => {
-      state.innerWidth = window.innerWidth;
-    };
+watch(
+  () => innerWidth.value,
+  (newValue) => {
+    innerWidth.value = newValue;
+  }
+);
 
-    onMounted(() => {
-      window.addEventListener("resize", handleWindowResize);
-    });
-
-    onBeforeUnmount(() => {
-      window.removeEventListener("resize", handleWindowResize);
-    });
-
-    return {
-      ...toRefs(state),
-      user,
-      logout,
-    };
-  },
+const logout = () => {
+  loggedIn.value = false;
+  emit("asLoggedOut", {
+    isLoggedIn: false,
+  });
 };
+
+const handleWindowResize = () => {
+  innerWidth.value = window.innerWidth;
+};
+
+onMounted(() => {
+
+  if(localStorage.getItem('user')){
+    loggedIn.value = true;
+  }
+
+  window.addEventListener("resize", handleWindowResize);
+});
+
+onBeforeUnmount(() => {
+  window.removeEventListener("resize", handleWindowResize);
+});
+
 </script>
 
 <style>

@@ -10,28 +10,21 @@
   </div>
 </template>
 
-<script>
+<script setup>
 let debounceTimeout;
+let searchQuery = "";
 
-export default {
-  data() {
-    return {
-      searchQuery: "",
-    };
-  },
-  methods: {
-    onInput() {
-      clearTimeout(debounceTimeout);
+function onInput() {
+  clearTimeout(debounceTimeout);
 
-      debounceTimeout = setTimeout(() => {
-        this.performSearch();
-      }, 300);
-    },
-    performSearch() {
-      console.log("Searching for:", this.searchQuery);
-    },
-  },
-};
+  debounceTimeout = setTimeout(() => {
+    this.performSearch();
+  }, 300);
+}
+
+function performSearch() {
+  console.log("Searching for:", this.searchQuery);
+}
 </script>
 
 <style scoped>
@@ -49,10 +42,9 @@ export default {
   border-radius: 4px;
   font-size: 16px;
   transition: border-color 0.3s;
-
-  &:focus {
-    border-color: #007bff;
-    outline: none;
-  }
+}
+.search-input:focus {
+  border-color: #007bff;
+  outline: none;
 }
 </style>
