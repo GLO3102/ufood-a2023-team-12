@@ -10,10 +10,9 @@
       <select
         v-model="selectedValue"
         class="form-select"
-        aria-label="Default select example"
       >
-        <option selected value="1">List with results</option>
         <option value="0">List with no results</option>
+        <option selected value="1">List with results</option>
       </select>
     </div>
 
@@ -23,9 +22,9 @@
         <button class="back-button">See all restaurants</button>
       </router-link>
     </div>
-    <section v-else class="restaurant" id="restaurant">
-      <div class="restaurant_box pt-5">
-        <restaurant-card-user-page
+    <section v-else-if="restaurants.length > 0" class="restaurant" id="restaurant">
+      <div v-if="!isLoading" class="restaurant_box pt-5">
+        <restaurant-card-user-page 
           v-for="(visit, index) in visits"
           :key="visit.id"
           :restaurant="restaurants[index]"
@@ -48,41 +47,72 @@ import * as api from "../api/restaurants";
 import FavoriteContainer from "../components/favorites/FavoriteContainer.vue";
 import RestaurantCardUserPage from "../components/RestaurantCardUserPage.vue";
 
-const isModaleOpen = ref(false);
-const selectedValue = ref("1");
-let visits = [];
-let restaurants = [];
+const selectedValue = ref('1');
+const visits = ref([]);
+const restaurants = ref([]);
+let tempRestaurants = [];
 
 const emit = defineEmits(["openRateModaleReadOnly"]);
 
-onMounted(() => {
-  getVisits();
+onMounted(async () => {
+  try	{
+    const fetchedVisits = await api.getUserVisits();
+    visits.value = fetchedVisits;
+
+    const tempRestaurants = await getRestaurantsAsync(fetchedVisits);
+    restaurants.value = tempRestaurants;
+    
+  }
+  catch{
+    console.error("Failed to fetch visits:");
+  }
+  finally{
+    selectedValue.value = '1';
+  }
 });
 
-function getVisits() {
+function getVisitsAsync() {
   api.getUserVisits().then((data) => {
-    visits = data;
-
-    visits.forEach((visit) => {
-      api.getRestaurantById(visit.restaurant_id).then((data) => {
-        restaurants.push(data);
-      });
-    });
+    return data;
   });
 }
 
-function getRestaurant(visit) {
-  api.getRestaurantById(visit.restaurant_id).then((data) => {
-    return data;
+async function getRestaurantsAsync(visits) {
+  let tempRestaurants = [];
+
+  const apiPromises = visits.map(visit => {
+    return api.getRestaurantById(visit.restaurant_id).then(data => {
+      return data;
+    });
+  });
+
+  try {
+    tempRestaurants = await Promise.all(apiPromises);
+  } catch (error) {
+    console.error('Error fetching restaurants', error);
+  }
+
+  return tempRestaurants;
+}
+
+
+function getVisits() {
+  api.getUserVisits().then((data) => {
+    visits.value = data;
+
+    visits.value.forEach((visit) => {
+      api.getRestaurantById(visit.restaurant_id).then((data) => {
+        tempRestaurants.push(data);
+      });
+    });
+
+    restaurants.value = tempRestaurants;
+    
   });
 }
 
 function viewRating(visit) {
   emit("openRateModaleReadOnly", visit);
-}
-
-function closeModale() {
-  isModaleOpen.value = false;
 }
 
 const user = computed(() => {
