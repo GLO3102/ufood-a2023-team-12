@@ -32,7 +32,7 @@ app.mount("#app");
 
 const user = {
   id: "654ff1f65d5104359a2cf011",
-  name: "John Doe",
+  name: "alex",
   email: "alex@alex.com",
   rating: 0,
 };

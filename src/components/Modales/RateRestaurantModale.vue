@@ -92,7 +92,7 @@
     </div>
 
     <div class="d-flex w-50 mt-3 flex-column justify-content-start">
-      <label class="alt-font" for="visitDate">Date de visite</label>
+      <label class="alt-font" for="visitDate">Date</label>
       <input
         v-model="date"
         id="visitDate"
