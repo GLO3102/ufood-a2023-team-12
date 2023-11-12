@@ -1,3 +1,67 @@
+<template>
+  <div class="restaurant">
+    <div class="restaurant_info">
+      <div class="restaurant_name">
+        <h2>{{ restaurant.name }}</h2>
+      </div>
+
+      <RestaurantImages :images="images" />
+
+      <div class="restaurant_flex_container">
+        <div class="restaurant_details">
+          <div>Genre: {{ genres }}</div>
+          <div>
+            Price Range: {{ getFilterPriceName(restaurant.price_range) }}
+          </div>
+          <div class="restaurant_reviews">
+            <span>Reviews:&nbsp; </span>
+            <div class="cardStars d-flex justify-content-center flex-row">
+              <font-awesome-icon
+                icon="fa-solid fa-star"
+                v-for="star in ratingFloored"
+                :key="star"
+              />
+              <font-awesome-icon
+                icon="fa-solid fa-star-half-stroke"
+                v-if="hasHalfStar"
+              />
+            </div>
+          </div>
+          <div>Address: {{ restaurant.address }}</div>
+          <div>Phone: {{ restaurant.tel }}</div>
+          <div v-html="hours"></div>
+
+          <button
+            @click="emit('openRateModale', restaurant.id)"
+            class="rateBtn btn btn-success"
+          >
+            Rate
+          </button>
+
+          <button class="btn btn-primary" @click="toggleDropdown">
+            Add to Favorites
+          </button>
+          <select
+            v-show="showDropdown"
+            v-model="selectedList"
+            @change="addToFavorites"
+          >
+            <option value="" disabled>Select a list</option>
+            <option v-for="list in allLists" :value="list.id" :key="list.id">
+              {{ list.name }}
+            </option>
+          </select>
+          <div v-if="feedbackMessage" class="feedback-message">
+            {{ feedbackMessage }}
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div><Map :coordinates="restaurantCoordinates" /></div>
+  </div>
+</template>
+
 <script setup>
 import { getFilterPriceName } from "../components/Utils.js";
 import RestaurantImages from "../components/RestaurantImages.vue";
@@ -18,6 +82,7 @@ const selectedList = ref("");
 const allLists = ref([]);
 
 const emit = defineEmits(["openRateModale"]);
+const feedbackMessage = ref("");
 const userData = JSON.parse(localStorage.getItem("user"));
 
 function toggleDropdown() {
@@ -90,78 +155,17 @@ const addToFavorites = async () => {
   if (!selectedList.value) return;
 
   try {
-    // Implement the logic to add the restaurant to the selected list
     await addRestaurantToFavoritesList(selectedList.value, restaurantId.value);
-    // Optional: Clear selection or provide feedback
-    // selectedList.value = "";
+    feedbackMessage.value = "Restaurant added to favorites!";
+    setTimeout(() => (feedbackMessage.value = ""), 3000);
+    toggleDropdown();
+    selectedList.value = "";
   } catch (error) {
-    // errorMessage.value = error.message || "An unexpected error occurred.";
-    console.log(error);
+    feedbackMessage.value = "Failed to add restaurant to favorites.";
+    setTimeout(() => (feedbackMessage.value = ""), 3000); // Reset after 3 seconds
   }
 };
 </script>
-
-<template>
-  <div class="restaurant">
-    <div class="restaurant_info">
-      <div class="restaurant_name">
-        <h2>{{ restaurant.name }}</h2>
-      </div>
-
-      <RestaurantImages :images="images" />
-
-      <div class="restaurant_flex_container">
-        <div class="restaurant_details">
-          <div>Genre: {{ genres }}</div>
-          <div>
-            Price Range: {{ getFilterPriceName(restaurant.price_range) }}
-          </div>
-          <div class="restaurant_reviews">
-            <span>Reviews:&nbsp; </span>
-            <div class="cardStars d-flex justify-content-center flex-row">
-              <font-awesome-icon
-                icon="fa-solid fa-star"
-                v-for="star in ratingFloored"
-                :key="star"
-              />
-              <font-awesome-icon
-                icon="fa-solid fa-star-half-stroke"
-                v-if="hasHalfStar"
-              />
-            </div>
-          </div>
-          <div>Address: {{ restaurant.address }}</div>
-          <div>Phone: {{ restaurant.tel }}</div>
-          <div v-html="hours"></div>
-
-          <button
-            @click="emit('openRateModale', restaurant.id)"
-            class="rateBtn btn btn-success"
-   
-          >
-            Rate
-          </button>
-
-          <button class="btn btn-primary" @click="toggleDropdown">
-            Ajouter aux favoris
-          </button>
-          <select
-            v-show="showDropdown"
-            v-model="selectedList"
-            @change="addToFavorites"
-          >
-            <option value="" disabled>Sélectionnez une liste</option>
-            <option v-for="list in allLists" :value="list.id" :key="list.id">
-              {{ list.name }}
-            </option>
-          </select>
-        </div>
-      </div>
-    </div>
-
-    <div><Map :coordinates="restaurantCoordinates" /></div>
-  </div>
-</template>
 
 <style scoped>
 .restaurant {
