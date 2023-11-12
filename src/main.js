@@ -31,7 +31,7 @@ app.component("font-awesome-icon", FontAwesomeIcon);
 app.mount("#app");
 
 const user = {
-  id: "65513eb632be12f479d4ae0d",
+  id: "654ff1f65d5104359a2cf011",
   name: "John Doe",
   email: "john@mail.com",
   rating: 0,

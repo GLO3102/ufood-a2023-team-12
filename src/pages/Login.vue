@@ -41,8 +41,8 @@ const handleSubmit = () => {
     followers: [],
     following: [],
     name: "John Doe",
-    email: "john.doe@gmail.com",
-    id: "65513eb632be12f479d4ae0d",
+    email: "alex@alex.com",
+    id: "654ff1f65d5104359a2cf011",
   };
 
   localStorage.setItem("user", JSON.stringify(user));
