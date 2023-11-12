@@ -41,7 +41,7 @@ onMounted(() => {
   width: var(--modale-width);
   height: var(--modale-height);
 
-  background: #C6AC8F;
+  background: #c6ac8f;
   border: none;
   border-radius: 10px;
 
@@ -51,7 +51,7 @@ onMounted(() => {
 #modaleHeader {
   display: flex;
   justify-content: flex-end;
-  background-color: #0A0908;
+  background-color: #0a0908;
   height: auto;
 }
 

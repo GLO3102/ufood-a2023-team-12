@@ -70,7 +70,6 @@ const props = defineProps({
 function viewReview() {
   emit("openRateModaleReadOnly");
 }
-
 </script>
 
 <style scoped>

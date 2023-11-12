@@ -151,7 +151,7 @@ function submitRating() {
       props.restaurantId,
       rating.value,
       date.value,
-      comment.value,
+      comment.value
     );
     emit("closeModale");
     emit("openPopUpModale", "Rating submited !");

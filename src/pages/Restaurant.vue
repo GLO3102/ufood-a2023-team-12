@@ -125,7 +125,7 @@ const hours = computed(() => {
   }
 
   const hoursArray = Object.entries(restaurant.value.opening_hours).map(
-    ([day, time]) => `${day}: ${time ? time : "Closed"}`,
+    ([day, time]) => `${day}: ${time ? time : "Closed"}`
   );
 
   return hoursArray.join("<br>");
@@ -186,7 +186,7 @@ const addToFavorites = async () => {
 }
 
 .restaurant_name h2 {
-  color:#0A0908;
+  color: #0a0908;
   font-size: 4vw;
 }
 
@@ -196,7 +196,7 @@ const addToFavorites = async () => {
   align-items: flex-start;
   width: 70%;
   margin-bottom: 20px;
-  color: #0A0908;
+  color: #0a0908;
 }
 
 .restaurant_details {

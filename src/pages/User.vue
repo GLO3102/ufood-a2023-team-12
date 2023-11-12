@@ -33,7 +33,7 @@
       </div>
 
       <hr />
-      <section>
+      <section class="d-flex w-100 flex-row justify-content-start">
         <FavoriteContainer />
       </section>
     </div>
