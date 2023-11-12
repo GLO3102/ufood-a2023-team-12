@@ -1,44 +1,47 @@
 <template>
-  <div class="user-section container">
-    <h1>{{ user.name }}</h1>
-    <p>{{ user.email }}</p>
-    <hr />
-    <h4><font-awesome-icon icon="fa-solid fa-star" /> {{ user.rating }}</h4>
+  <div class="d-flex justify-content-center">
+
+    <div class="user-section d-flex flex-column align-items-center p-5">
+      <h1>{{ user.name }}</h1>
+      <p>{{ user.email }}</p>
+      <hr />
+      <h4><font-awesome-icon icon="fa-solid fa-star" /> {{ user.rating }}</h4>
     <hr />
     <div class="select-box">
       <h3>Recently Visited Restaurants</h3>
       <select
-        v-model="selectedValue"
-        class="form-select"
+      v-model="selectedValue"
+      class="form-select"
       >
-        <option value="0">List with no results</option>
-        <option selected value="1">List with results</option>
-      </select>
-    </div>
-
-    <div v-if="selectedValue === '0'">
-      <p class="pt-2">No restaurant recently visited</p>
-      <router-link class="nav-link" to="/">
-        <button class="back-button">See all restaurants</button>
-      </router-link>
-    </div>
-    <section v-else-if="restaurants.length > 0" class="restaurant" id="restaurant">
-      <div v-if="!isLoading" class="restaurant_box pt-5">
-        <restaurant-card-user-page 
-          v-for="(visit, index) in visits"
-          :key="visit.id"
-          :restaurant="restaurants[index]"
-          @open-rate-modale-read-only="viewRating(visit)"
-        >
-        </restaurant-card-user-page>
-      </div>
-    </section>
-
-    <hr />
-    <section>
-      <FavoriteContainer />
-    </section>
+      <option value="0">List with no results</option>
+      <option selected value="1">List with results</option>
+    </select>
   </div>
+  
+  <div v-if="selectedValue === '0'">
+    <p class="pt-2">No restaurant recently visited</p>
+    <router-link class="nav-link" to="/">
+      <button class="back-button">See all restaurants</button>
+    </router-link>
+  </div>
+  <div class="d-flex pt-3" v-else-if="restaurants.length > 0">
+    <div v-if="!isLoading" class="cardContainer d-flex flex-row flex-wrap">
+      <restaurant-card-user-page 
+      v-for="(visit, index) in visits"
+      :key="visit.id"
+      :restaurant="restaurants[index]"
+      @open-rate-modale-read-only="viewRating(visit)"
+      >
+    </restaurant-card-user-page>
+  </div>
+</div>
+
+<hr />
+<section>
+  <FavoriteContainer />
+</section>
+</div>
+</div>
 </template>
 
 <script setup>
@@ -71,12 +74,6 @@ onMounted(async () => {
   }
 });
 
-function getVisitsAsync() {
-  api.getUserVisits().then((data) => {
-    return data;
-  });
-}
-
 async function getRestaurantsAsync(visits) {
   let tempRestaurants = [];
 
@@ -95,22 +92,6 @@ async function getRestaurantsAsync(visits) {
   return tempRestaurants;
 }
 
-
-function getVisits() {
-  api.getUserVisits().then((data) => {
-    visits.value = data;
-
-    visits.value.forEach((visit) => {
-      api.getRestaurantById(visit.restaurant_id).then((data) => {
-        tempRestaurants.push(data);
-      });
-    });
-
-    restaurants.value = tempRestaurants;
-    
-  });
-}
-
 function viewRating(visit) {
   emit("openRateModaleReadOnly", visit);
 }
@@ -123,11 +104,15 @@ const user = computed(() => {
 
 <style>
 .user-section {
-  margin-top: 100px;
+  width: 80%;
   color: rgb(192, 68, 6);
 }
 
 .select-box {
   display: inline-block;
+}
+
+.cardContainer{
+  width: auto;
 }
 </style>

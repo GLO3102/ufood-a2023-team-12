@@ -71,9 +71,6 @@ function viewReview() {
   emit("openRateModaleReadOnly");
 }
 
-onMounted(() => {
-  console.log(props.restaurant);
-});
 </script>
 
 <style scoped>

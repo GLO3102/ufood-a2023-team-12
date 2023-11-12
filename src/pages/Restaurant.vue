@@ -1,5 +1,5 @@
 <template>
-  <div class="restaurant">
+  <div class="restaurant p-5">
     <div class="restaurant_info">
       <div class="restaurant_name">
         <h2>{{ restaurant.name }}</h2>
@@ -169,8 +169,8 @@ const addToFavorites = async () => {
 
 <style scoped>
 .restaurant {
-  background-image: url("https://images.unsplash.com/photo-1678924587662-d8c63e57eb11?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80");
-  background-size: cover;
+  /*background-image: url("https://images.unsplash.com/photo-1678924587662-d8c63e57eb11?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80");
+  background-size: cover;*/
 }
 
 .restaurant_info {
@@ -186,6 +186,7 @@ const addToFavorites = async () => {
 }
 
 .restaurant_name h2 {
+  color:#0A0908;
   font-size: 4vw;
 }
 
@@ -195,6 +196,7 @@ const addToFavorites = async () => {
   align-items: flex-start;
   width: 70%;
   margin-bottom: 20px;
+  color: #0A0908;
 }
 
 .restaurant_details {

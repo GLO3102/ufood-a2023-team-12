@@ -3,19 +3,18 @@
     class="d-flex flex-column h-75 justify-content-center align-items-center"
   >
     <div>
-      <h2 class="text-light">Login</h2>
+      <h2 class="text-light pb-2">Login</h2>
       <form @submit.prevent="handleSubmit" class="form-container">
         <div class="form-group">
-          <label for="email" class="text-light">Email</label>
-          <input type="email" id="email" v-model="email" class="form-control" />
+          <input type="email" id="email" v-model="email" placeholder="Email" class="form-control" />
         </div>
 
         <div class="form-group">
-          <label for="password" class="text-light">Password</label>
           <input
             type="password"
             id="password"
             v-model="password"
+            placeholder="Password"
             class="form-control"
           />
         </div>
@@ -43,7 +42,7 @@ const handleSubmit = () => {
     following: [],
     name: "John Doe",
     email: "john.doe@gmail.com",
-    id: "655049c55d5104359a2e6c19",
+    id: "65513eb632be12f479d4ae0d",
   };
 
   localStorage.setItem("user", JSON.stringify(user));
