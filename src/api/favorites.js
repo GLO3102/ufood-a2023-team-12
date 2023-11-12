@@ -69,12 +69,12 @@ export async function deleteFavoriteList(listId) {
   }
 }
 
-export async function addRestaurantToFavoritesList(listId, restaurantId) {
+export async function addRestaurantToFavoritesList(listId, id) {
   const url = `${BASE_URL}/favorites/${listId}/restaurants`;
   const headers = {
     "Content-Type": "application/json",
   };
-  const body = JSON.stringify({ restaurantId });
+  const body = JSON.stringify({ id });
 
   try {
     const response = await fetch(url, {
@@ -94,3 +94,22 @@ export async function addRestaurantToFavoritesList(listId, restaurantId) {
     throw error;
   }
 }
+
+export async function removeRestaurantfromList(listId, restaurantId) {
+  const url = `${BASE_URL}/favorites/${listId}/restaurants/${restaurantId}`;
+  try {
+    const response = await fetch(url, {
+      method: "DELETE",
+    });
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.error("Error deleting favorites list:", error);
+    throw error;
+  }
+}
+
+

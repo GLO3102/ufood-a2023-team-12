@@ -87,7 +87,6 @@ function closeModale() {
 
 const user = computed(() => {
   const userData = JSON.parse(localStorage.getItem("user"));
-  console.log(userData);
   return userData;
 });
 </script>
