@@ -84,9 +84,7 @@ const props = defineProps({
   isLoggedIn: Boolean,
 });
 
-const emit = defineEmits([
-  'asLoggedOut',
-])
+const emit = defineEmits(["asLoggedOut"]);
 
 const loggedIn = ref(props.isLoggedIn);
 const innerWidth = ref(window.innerWidth);
@@ -123,8 +121,7 @@ const handleWindowResize = () => {
 };
 
 onMounted(() => {
-
-  if(localStorage.getItem('user')){
+  if (localStorage.getItem("user")) {
     loggedIn.value = true;
   }
 
@@ -134,7 +131,6 @@ onMounted(() => {
 onBeforeUnmount(() => {
   window.removeEventListener("resize", handleWindowResize);
 });
-
 </script>
 
 <style>

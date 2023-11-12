@@ -126,6 +126,7 @@
         >
           <restaurant-card
             v-for="restaurant in filtered_restaurants"
+            :read-only="false"
             :key="restaurant.id"
             @open-rate-modale="
               (e) => {
@@ -228,20 +229,20 @@ watch(
     };
 
     const priceFilterList = getSelectedKeys(newValPrice, ["1", "2", "3"]).map(
-      Number,
+      Number
     );
     const typeFilterList = getSelectedKeys(newValType, filterTypes.value);
     const ratingFilterList = getSelectedKeys(
       newValRating,
-      filterRatings.value,
+      filterRatings.value
     ).map(Number);
 
     filtered_restaurants.value = restaurants.value.filter(
       (restaurant) =>
         priceFilterList.includes(restaurant.price_range) &&
         typeFilterList.some((el) => restaurant.genres.includes(el)) &&
-        ratingFilterList.includes(Math.floor(restaurant.rating)),
+        ratingFilterList.includes(Math.floor(restaurant.rating))
     );
-  },
+  }
 );
 </script>

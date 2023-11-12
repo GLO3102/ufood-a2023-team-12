@@ -35,13 +35,14 @@
           </h4>
           <div
             v-if="detailedRestaurantList.length > 0"
-            class="d-flex restaurant-container"
+            class="d-flex restaurant-container flex-wrap"
           >
             <div
               v-for="restaurant in detailedRestaurantList"
               :key="restaurant.id"
             >
               <RestaurantCard
+                :read-only="true"
                 @open-rate-modale="
                   (e) => {
                     emit('openRateModale', e);
@@ -89,7 +90,7 @@ const submitFavoritesList = async () => {
     validateTextInput(listName.value);
     const newList = await createFavoritesList(
       listName.value,
-      userData.value.email,
+      userData.value.email
     );
     allLists.value.push(newList);
     listName.value = "";
@@ -133,7 +134,7 @@ const selectList = async (list) => {
   detailedRestaurantList.value = [];
   if (list.restaurants && list.restaurants.length > 0) {
     detailedRestaurantList.value = await Promise.all(
-      list.restaurants.map((restaurant) => getRestaurantById(restaurant.id)),
+      list.restaurants.map((restaurant) => getRestaurantById(restaurant.id))
     );
   }
 };
@@ -142,7 +143,7 @@ const removeRestaurant = async (restaurantId) => {
   try {
     await removeRestaurantfromList(selectedList.value.id, restaurantId);
     detailedRestaurantList.value = detailedRestaurantList.value.filter(
-      (list) => list.id !== restaurantId,
+      (list) => list.id !== restaurantId
     );
   } catch (error) {
     errorMessage.value = error.message || "An unexpected error occurred.";
@@ -153,7 +154,7 @@ onMounted(getFavoritesList);
 </script>
 
 <style scoped>
-@media (max-width: 820px) { 
+@media (max-width: 820px) {
   .favorite-lists .d-flex {
     flex-direction: column;
   }
@@ -164,6 +165,6 @@ onMounted(getFavoritesList);
 
   .restaurant-container {
     order: 3;
-}
+  }
 }
 </style>

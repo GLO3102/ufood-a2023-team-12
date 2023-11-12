@@ -29,7 +29,7 @@
         <RatingStars :rating="props.restaurant.rating" />
       </div>
     </div>
-    <div class="button_section">
+    <div v-if="!readOnly" class="button_section">
       <button
         @click="emit('openRateModale', props.restaurant.id)"
         class="rateBtn btn btn-success"
@@ -50,6 +50,7 @@ const localStoragePopulated = ref(false);
 const isRatingModaleOpened = ref(false);
 const emit = defineEmits(["openRateModale"]);
 const props = defineProps({
+  readOnly: Boolean,
   restaurant: Object,
 });
 

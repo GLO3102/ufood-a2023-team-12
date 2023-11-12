@@ -6,7 +6,13 @@
       <h2 class="text-light pb-2">Login</h2>
       <form @submit.prevent="handleSubmit" class="form-container">
         <div class="form-group">
-          <input type="email" id="email" v-model="email" placeholder="Email" class="form-control" />
+          <input
+            type="email"
+            id="email"
+            v-model="email"
+            placeholder="Email"
+            class="form-control"
+          />
         </div>
 
         <div class="form-group">
@@ -44,7 +50,6 @@ const handleSubmit = () => {
     email: "alex@alex.com",
     id: "654ff1f65d5104359a2cf011",
   };
-
 
   emit("asLoggedIn", { isLoggedIn: true });
   router.push("/");

@@ -76,6 +76,10 @@ const deleteList = () => {
   width: 18rem;
 }
 
+.card-body:hover{
+  background-color: #9e9797;
+}
+
 .selected-card .card {
   background-color: green;
   color: #ffffff;
