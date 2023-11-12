@@ -43,12 +43,13 @@ const router = useRouter();
 const emit = defineEmits(["asLoggedIn"]);
 
 const handleSubmit = () => {
-
   const user = {
-  id: "654ff1f65d5104359a2cf011",
-  name: "John Doe",
-  email: "john@mail.com",
-  rating: 0,
+    rating: 0,
+    followers: [],
+    following: [],
+    name: "John Doe",
+    email: "john.doe@gmail.com",
+    id: "655049c55d5104359a2e6c19",
   };
 
   localStorage.setItem("user", JSON.stringify(user));

@@ -56,7 +56,6 @@ export default {
       };
       try {
         const result = await createNewUser(userData);
-        console.log(result)
         localStorage.setItem("user", JSON.stringify(result));
         emit("asLoggedIn", {
           isLoggedIn: true,

@@ -36,7 +36,6 @@ export const getRestaurantById = async (restaurantId) => {
     }
 
     const restaurant = await response.json();
-    console.log(restaurant)
     return restaurant;
   } catch (e) {
     console.log(e);
@@ -66,7 +65,6 @@ export const postRestaurantVisit = async (
       });
 
       await response.json();
-      console.log("good")
       return response;
   } catch (e) {
     console.log(e);
@@ -109,7 +107,6 @@ export const getUserVisits = async () => {
       throw new Error(`Error fetching user's visits  ${restaurantId}`);
     }
     const visits = await response.json();
-    console.log(visits.items)
     return visits.items;
   } catch (e) {
     console.log(e);

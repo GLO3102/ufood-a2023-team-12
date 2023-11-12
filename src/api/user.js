@@ -17,7 +17,6 @@ export const createNewUser = async (data) => {
   if (response.status != 201) {
     throw new Error("An error occurred");
   }
-  console.log(data)
 
   const result = await response.json();
   return result;
@@ -38,7 +37,6 @@ export const login = async (email, password) => {
   if (response.status != 201) {
     throw new Error("An error occurred");
   }
-  console.log(data)
 
   const result = await response.json();
   return result;
