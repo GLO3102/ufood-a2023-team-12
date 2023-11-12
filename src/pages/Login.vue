@@ -45,7 +45,7 @@ const handleSubmit = () => {
     id: "654ff1f65d5104359a2cf011",
   };
 
-  localStorage.setItem("user", JSON.stringify(user));
+
   emit("asLoggedIn", { isLoggedIn: true });
   router.push("/");
 };

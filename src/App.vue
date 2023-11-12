@@ -97,9 +97,6 @@ export default {
     },
   },
   mounted() {
-    if(!this.isLoggedIn){
-      localStorage.removeItem('user');
-    }
     document.addEventListener("click", this.handleDocumentClick);
   },
   beforeUnmount() {
