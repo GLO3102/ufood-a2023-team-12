@@ -50,7 +50,7 @@
         :value="props.visit.date"
         id="visitDate"
         class="w-100 rounded date"
-        type="date"
+        type="text"
         readonly
       />
     </div>

@@ -133,7 +133,10 @@ const date = ref("");
 const comment = ref("");
 
 //Emits
-const emit = defineEmits(["closeModale"]);
+const emit = defineEmits([
+  "closeModale",
+  "openPopUpModale"
+]);
 
 //Props
 const props = defineProps({
@@ -153,7 +156,15 @@ const color = (number) => {
 };
 
 function submitRating() {
-  postRestaurantVisit(props.restaurantId, rating.value, date.value, comment.value);
+
+  try{
+    postRestaurantVisit(props.restaurantId, rating.value, date.value, comment.value);
+    emit('closeModale')
+    emit('openPopUpModale', "Rating submited !")
+  }
+  catch{
+    emit('openPopUpModale', "An error has occured.")
+  }
 }
 </script>
 

@@ -1,34 +1,42 @@
 <template>
-  <dialog id="modaleContainer">
-    <div id="modaleHeader">
+  <dialog id="popUpContainer">
+    <div id="popUpHeader">
       <button
         type="button"
-        class="btn btn-danger m-2"
-        @click="emit('closeModale')"
+        class="btn btn-danger btn-sm m-1"
+        @click="emit('closePopUp')"
       >
         <font-awesome-icon icon="fa-solid fa-xmark" />
       </button>
     </div>
-    <div id="modaleContent" class="d-flex justify-content-center">
-      <slot />
+    <div id="popUpContent" class="d-flex alt-font justify-content-center">
+      {{ props.message }}
     </div>
   </dialog>
 </template>
 
 <script setup>
-import { onMounted } from "vue";
 
-const emit = defineEmits(["closeModale"]);
+import { defineEmits, defineProps, onMounted } from 'vue';
+
+const emit = defineEmits([
+    "closePopUp"
+])
+
+const props = defineProps({
+    "message": String
+})
 
 onMounted(() => {
-  document.getElementById("modaleContainer").showModal();
+  document.getElementById("popUpContainer").showModal();
 });
+
 </script>
 
-<style>
-#modaleContainer {
+<style scoped>
+#popUpContainer {
   /*Variables*/
-  --modale-width: 60%;
+  --modale-width: 17%;
   --modale-height: fit-content;
   --modale-left-margin-offset: calc(var(--modale-width) / -2);
   --modale-top-margin-offset: calc(var(--modale-height) / -2);
@@ -52,11 +60,17 @@ onMounted(() => {
   animation: fadeIn 0.5s;
 }
 
-#modaleHeader {
+#popUpHeader {
   display: flex;
   justify-content: flex-end;
   background-color: #22333b;
   height: auto;
+}
+
+#popUpContent {
+    font-size: 1.5rem;
+    padding: 1rem;
+    color: rgb(255, 255, 255);
 }
 
 @keyframes fadeIn {
@@ -69,7 +83,7 @@ onMounted(() => {
 }
 
 @media (width < 990px) {
-  #modaleContainer {
+  #popUpContainer {
     /*Variables*/
     --modale-width: 90%;
 

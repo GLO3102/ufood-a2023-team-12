@@ -8,19 +8,26 @@
 
     <!--Restaurant Rating Modales-->
     <modale
-      @close-modale="closeRateModale"
+      @close-modale="closeModale"
       v-if="rateModaleOpened || rateModaleReadOnlyOpened"
     >
       <rate-restaurant-modale
         v-if="rateModaleOpened"
+        @open-pop-up-modale="(message) => openPopUp(message)"
+        @close-modale="closeModale"
+        @close-rating-modale="closeRatingModale"
         :restaurant-id="rateRestaurantId"
       />
       <rate-restaurant-modale-read-only
-        v-if="rateModaleReadOnlyOpened"
-        @close-modale="closeRateModale"
+        v-if="rateModaleReadOnlyOpened"      
         :visit="visit"
       />
     </modale>
+    <pop-up-modale
+    v-if="popUpOpened"
+      @close-pop-up="closePopUp"
+        :message="popUpMessage"
+      />
 
     <!--Router View-->
     <router-view
@@ -35,6 +42,7 @@
 import "bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
 import Modale from "./components/Modales/Modale.vue";
+import PopUpModale from "./components/Modales/PopUpModale.vue";
 import RateRestaurantModale from "./components/Modales/RateRestaurantModale.vue";
 import RateRestaurantModaleReadOnly from "./components/Modales/RateRestaurantModaleReadOnly.vue";
 import NavigationBar from "./components/NavigationBar.vue";
@@ -45,6 +53,7 @@ export default {
   components: {
     NavigationBar,
     Modale,
+    PopUpModale,
     RateRestaurantModale,
     RateRestaurantModaleReadOnly,
   },
@@ -55,6 +64,8 @@ export default {
       rateModaleReadOnlyOpened: false,
       rateRestaurantId: null,
       visit: {},
+      popUpMessage: "",
+      popUpOpened: false,
     };
   },
   methods: {
@@ -66,7 +77,17 @@ export default {
       this.visit = visit;
       this.rateModaleReadOnlyOpened = true;
     },
-    closeRateModale() {
+    openPopUp(message) {
+      this.popUpMessage = message;
+      this.popUpOpened = true;
+    },
+    closePopUp(){
+      this.popUpOpened = false;
+    },
+    closeRatingModale() {
+      this.rateModaleOpened = false;
+    },
+    closeModale(){
       this.rateModaleOpened = false;
       this.rateModaleReadOnlyOpened = false;
       this.rateRestaurantId = null;
