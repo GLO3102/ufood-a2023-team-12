@@ -25,10 +25,9 @@ export default {
 
       debounceTimeout = setTimeout(() => {
         this.performSearch();
-      }, 300); // waits 300ms after the last keystroke
+      }, 300);
     },
     performSearch() {
-      // Implement your search logic here
       console.log("Searching for:", this.searchQuery);
     },
   },
@@ -51,7 +50,6 @@ export default {
   font-size: 16px;
   transition: border-color 0.3s;
 
-  /* Adding a basic focus effect */
   &:focus {
     border-color: #007bff;
     outline: none;

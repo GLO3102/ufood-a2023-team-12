@@ -2,10 +2,8 @@
   <div
     class="d-flex w-100 mb-5 justify-content-center flex-column align-items-center"
   >
-    <!--Title-->
     <h1 class="mt-3 text-center alt-font">Review</h1>
 
-    <!--Stars-->
     <div id="starsContainer" class="d-flex justify-content-center text-warning">
       <font-awesome-icon
         class="starYellow"
@@ -43,7 +41,6 @@
       <font-awesome-icon class="starGrey" icon="fa-solid fa-star" v-else />
     </div>
 
-    <!--Date-->
     <div class="d-flex w-50 mt-3 flex-column justify-content-start">
       <label class="alt-font" for="visitDate">Date de visite</label>
       <input
@@ -55,7 +52,6 @@
       />
     </div>
 
-    <!--Comment-->
     <textarea
       :value="props.visit.comment"
       class="rounded textArea mt-3 w-50"
@@ -70,7 +66,6 @@
 </template>
 
 <script setup>
-//Props
 const props = defineProps({
   visit: Object,
 });

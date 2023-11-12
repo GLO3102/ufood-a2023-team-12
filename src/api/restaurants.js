@@ -1,6 +1,6 @@
 import { BASE_URL } from "./restaurantApiURL";
 
-const getUserId = () => JSON.parse(localStorage.getItem('user')).id;
+const getUserId = () => JSON.parse(localStorage.getItem("user")).id;
 
 export const getRestaurants = async () => {
   try {
@@ -62,10 +62,11 @@ export const postRestaurantVisit = async (
           rating: rating,
           date: date,
         }),
-      });
+      },
+    );
 
-      await response.json();
-      return response;
+    await response.json();
+    return response;
   } catch (e) {
     console.log(e);
   }

@@ -94,7 +94,7 @@ const user = computed(() => {
 <style>
 .user-section {
   margin-top: 100px;
-  color: #fff;
+  color: rgb(192, 68, 6);
 }
 
 .select-box {

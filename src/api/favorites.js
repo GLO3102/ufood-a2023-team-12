@@ -111,5 +111,3 @@ export async function removeRestaurantfromList(listId, restaurantId) {
     throw error;
   }
 }
-
-

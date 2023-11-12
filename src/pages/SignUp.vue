@@ -1,5 +1,3 @@
-<!-- components/SignupForm.vue -->
-
 <template>
   <div
     class="d-flex flex-column h-75 justify-content-center align-items-center"

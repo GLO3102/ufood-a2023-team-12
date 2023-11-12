@@ -56,7 +56,6 @@ const props = defineProps({
 function setVisited() {
   visited.value = true;
 }
-
 </script>
 
 <style scoped>

@@ -78,7 +78,7 @@ const deleteList = () => {
 
 .selected-card .card {
   background-color: green;
-  color: #fff;
+  color: #ffffff;
 }
 
 .disabled-card .card {

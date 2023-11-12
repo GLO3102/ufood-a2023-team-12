@@ -16,44 +16,36 @@
 </template>
 
 <script setup>
+import { defineEmits, defineProps, onMounted } from "vue";
 
-import { defineEmits, defineProps, onMounted } from 'vue';
-
-const emit = defineEmits([
-    "closePopUp"
-])
+const emit = defineEmits(["closePopUp"]);
 
 const props = defineProps({
-    "message": String
-})
+  message: String,
+});
 
 onMounted(() => {
   document.getElementById("popUpContainer").showModal();
 });
-
 </script>
 
 <style scoped>
 #popUpContainer {
-  /*Variables*/
   --modale-width: 17%;
   --modale-height: fit-content;
   --modale-left-margin-offset: calc(var(--modale-width) / -2);
   --modale-top-margin-offset: calc(var(--modale-height) / -2);
 
-  /*--------*/
   position: fixed;
   left: 50%;
   z-index: 100;
   margin-left: var(--modale-left-margin-offset);
   padding: 0;
 
-  /*--------*/
   width: var(--modale-width);
   height: var(--modale-height);
 
-  /*--------*/
-  background-color: #c6ac8f;
+  background-image: url("https://images.unsplash.com/photo-1678924587662-d8c63e57eb11?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80");
   border: none;
   border-radius: 10px;
 
@@ -63,14 +55,14 @@ onMounted(() => {
 #popUpHeader {
   display: flex;
   justify-content: flex-end;
-  background-color: #22333b;
+  background-color: #060a0b;
   height: auto;
 }
 
 #popUpContent {
-    font-size: 1.5rem;
-    padding: 1rem;
-    color: rgb(255, 255, 255);
+  font-size: 1.5rem;
+  padding: 1rem;
+  color: rgba(10, 8, 5, 0.928);
 }
 
 @keyframes fadeIn {
@@ -84,10 +76,8 @@ onMounted(() => {
 
 @media (width < 990px) {
   #popUpContainer {
-    /*Variables*/
     --modale-width: 90%;
 
-    /*--------*/
     width: var(--modale-width);
   }
 }

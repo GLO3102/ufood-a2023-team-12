@@ -1,8 +1,6 @@
 import { createApp } from "vue";
 import { router } from "./router";
 import App from "./App.vue";
-
-/* import the fontawesome core */
 import { library } from "@fortawesome/fontawesome-svg-core";
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 import {
@@ -15,8 +13,6 @@ import {
   faPen,
   faTrashCan,
 } from "@fortawesome/free-solid-svg-icons";
-
-/* add icons to the library */
 library.add(
   faXmark,
   faStar,
@@ -40,4 +36,3 @@ const user = {
   email: "john@mail.com",
   rating: 0,
 };
-//localStorage.setItem("user", JSON.stringify(user));

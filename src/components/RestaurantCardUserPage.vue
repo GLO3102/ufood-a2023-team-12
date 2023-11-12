@@ -2,12 +2,10 @@
   <div
     class="restaurant_card d-flex flex-column justify-content-start align-items-center"
   >
-    <!--Clickable part of the card-->
     <div
       class="restaurant_card_clickable d-flex flex-column align-items-center"
       @click="this.$router.push('/restaurant/' + props.restaurant.id)"
     >
-      <!--Image-->
       <div class="restaurant_image">
         <img
           :src="props.restaurant.pictures[2]"
@@ -15,7 +13,6 @@
         />
       </div>
 
-      <!--Info-->
       <div class="restaurant_info">
         <h2>{{ props.restaurant.name }}</h2>
         <div>
@@ -31,7 +28,6 @@
           {{ props.restaurant.genres.join(", ") }}
         </div>
 
-        <!--Stars-->
         <div class="cardStars d-flex justify-content-center flex-row">
           <font-awesome-icon
             icon="fa-solid fa-star"
@@ -47,7 +43,6 @@
     </div>
 
     <div class="button_section">
-      <!--Visited button-->
       <button @click="viewReview" class="visitedBtn btn btn-success">
         View review
       </button>
@@ -59,14 +54,11 @@
 import { onMounted, ref } from "vue";
 import { getFilterPriceName } from "./Utils.js";
 
-//Rating
 const ratingFloored = Math.floor(props.restaurant.rating);
 const rating = props.restaurant.rating;
 
-//Visited
 const visited = ref(false);
 
-//Modale
 const isRatingModaleOpened = ref(false);
 
 const emit = defineEmits(["openRateModaleReadOnly"]);
@@ -80,8 +72,8 @@ function viewReview() {
 }
 
 onMounted(() => {
-  console.log(props.restaurant)
-})
+  console.log(props.restaurant);
+});
 </script>
 
 <style scoped>

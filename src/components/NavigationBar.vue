@@ -1,77 +1,3 @@
-<script>
-import {
-  reactive,
-  toRefs,
-  onMounted,
-  onBeforeUnmount,
-  computed,
-  watch,
-} from "vue";
-import { onBeforeRouteUpdate } from "vue-router";
-
-export default {
-  name: "NavigationBar",
-  props: {
-    isLoggedIn: Boolean,
-  },
-  setup(props, { emit }) {
-    const state = reactive({
-      loggedIn: props.isLoggedIn,
-      innerWidth: window.innerWidth,
-      navCollapseValue: 990,
-    });
-
-    const user = computed(() => {
-      const userData = JSON.parse(localStorage.getItem("user"));
-      return userData;
-    });
-
-    watch(
-      () => props.isLoggedIn,
-      (newValue) => {
-        state.loggedIn = newValue;
-      },
-    );
-
-    watch(
-      () => state.innerWidth,
-      (newValue) => {
-        state.innerWidth = newValue;
-      },
-    );
-
-    // Methods
-    const logout = () => {
-      localStorage.removeItem("user");
-      state.loggedIn = false;
-      emit("asLoggedOut", {
-        isLoggedIn: false,
-      });
-      // Redirect to the home page or login page if needed
-    };
-
-    const handleWindowResize = () => {
-      state.innerWidth = window.innerWidth;
-    };
-
-    onMounted(() => {
-      window.addEventListener("resize", handleWindowResize);
-    });
-
-    onBeforeUnmount(() => {
-      window.removeEventListener("resize", handleWindowResize);
-    });
-
-    // Exposing state, methods, and computed properties to the template
-    return {
-      ...toRefs(state),
-      user,
-      logout,
-    };
-  },
-};
-</script>
-
 <template>
   <div>
     <nav
@@ -79,9 +5,6 @@ export default {
       style="background-color: #0a0908"
     >
       <router-link class="navbar-brand alt-font" to="/">UFood</router-link>
-      <!-- <div>
-    <nav class="navbar navbar-expand-lg fixed-top navbar-dark bg-dark px-3">
-      <router-link class="navbar-brand" to="/">UFood</router-link> -->
 
       <form
         v-if="innerWidth <= navCollapseValue"
@@ -144,6 +67,77 @@ export default {
     </nav>
   </div>
 </template>
+
+<script>
+import {
+  reactive,
+  toRefs,
+  onMounted,
+  onBeforeUnmount,
+  computed,
+  watch,
+} from "vue";
+import { onBeforeRouteUpdate } from "vue-router";
+
+export default {
+  name: "NavigationBar",
+  props: {
+    isLoggedIn: Boolean,
+  },
+  setup(props, { emit }) {
+    const state = reactive({
+      loggedIn: props.isLoggedIn,
+      innerWidth: window.innerWidth,
+      navCollapseValue: 990,
+    });
+
+    const user = computed(() => {
+      const userData = JSON.parse(localStorage.getItem("user"));
+      return userData;
+    });
+
+    watch(
+      () => props.isLoggedIn,
+      (newValue) => {
+        state.loggedIn = newValue;
+      },
+    );
+
+    watch(
+      () => state.innerWidth,
+      (newValue) => {
+        state.innerWidth = newValue;
+      },
+    );
+
+    const logout = () => {
+      localStorage.removeItem("user");
+      state.loggedIn = false;
+      emit("asLoggedOut", {
+        isLoggedIn: false,
+      });
+    };
+
+    const handleWindowResize = () => {
+      state.innerWidth = window.innerWidth;
+    };
+
+    onMounted(() => {
+      window.addEventListener("resize", handleWindowResize);
+    });
+
+    onBeforeUnmount(() => {
+      window.removeEventListener("resize", handleWindowResize);
+    });
+
+    return {
+      ...toRefs(state),
+      user,
+      logout,
+    };
+  },
+};
+</script>
 
 <style>
 .nav_searchbar {

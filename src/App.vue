@@ -1,12 +1,10 @@
 <template>
   <div id="app">
-    <!--Naviguation Bar-->
     <navigation-bar
       :is-logged-in="isLoggedIn"
       @as-logged-out="isLoggedIn = false"
     />
 
-    <!--Restaurant Rating Modales-->
     <modale
       @close-modale="closeModale"
       v-if="rateModaleOpened || rateModaleReadOnlyOpened"
@@ -19,17 +17,16 @@
         :restaurant-id="rateRestaurantId"
       />
       <rate-restaurant-modale-read-only
-        v-if="rateModaleReadOnlyOpened"      
+        v-if="rateModaleReadOnlyOpened"
         :visit="visit"
       />
     </modale>
     <pop-up-modale
-    v-if="popUpOpened"
+      v-if="popUpOpened"
       @close-pop-up="closePopUp"
-        :message="popUpMessage"
-      />
+      :message="popUpMessage"
+    />
 
-    <!--Router View-->
     <router-view
       @as-logged-in="isLoggedIn = true"
       @open-rate-modale="(restaurant_id) => openRateModale(restaurant_id)"
@@ -81,19 +78,18 @@ export default {
       this.popUpMessage = message;
       this.popUpOpened = true;
     },
-    closePopUp(){
+    closePopUp() {
       this.popUpOpened = false;
     },
     closeRatingModale() {
       this.rateModaleOpened = false;
     },
-    closeModale(){
+    closeModale() {
       this.rateModaleOpened = false;
       this.rateModaleReadOnlyOpened = false;
       this.rateRestaurantId = null;
     },
     handleDocumentClick(event) {
-      //Un-collapse the navbar if clicking out of it
       const navbar = document.querySelector(".navbar-collapse");
       if (navbar) {
         navbar.classList.remove("show");

@@ -1,5 +1,3 @@
-
-
 <template>
   <div class="swiper-container">
     <Swiper
@@ -7,7 +5,7 @@
       :slides-per-view="2"
       :space-between="10"
       :centered-slides="true"
-      :pagination="{ clickable: true } "
+      :pagination="{ clickable: true }"
       @swiper="onSwiper"
       @slideChange="onSlideChange"
     >
@@ -19,14 +17,14 @@
 </template>
 
 <script setup>
-import { Swiper, SwiperSlide } from 'swiper/vue';
-import 'swiper/swiper-bundle.css';
-import {Pagination} from 'swiper/modules';
-import 'swiper/css/pagination'
-import { defineProps } from 'vue';
+import { Swiper, SwiperSlide } from "swiper/vue";
+import "swiper/swiper-bundle.css";
+import { Pagination } from "swiper/modules";
+import "swiper/css/pagination";
+import { defineProps } from "vue";
 
 const props = defineProps({
-  images: Array
+  images: Array,
 });
 
 const modules = [Pagination];

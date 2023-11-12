@@ -42,7 +42,6 @@ export const login = async (email, password) => {
   return result;
 };
 
-
 export const getFavoriteLists = async (ownerId) => {
   const url = `${BASE_URL}/users/${ownerId}/favorites`;
   try {

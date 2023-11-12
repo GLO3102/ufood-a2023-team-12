@@ -22,12 +22,6 @@
 
         <button type="submit" class="btn button-yellow mt-3">Login</button>
       </form>
-      <!-- <router-link class="nav-link text-light" to="/signUp">
-        <p>
-          Don't have an account?
-          <span class="signup-link">Sign Up</span>
-        </p>
-      </router-link> -->
     </div>
   </div>
 </template>

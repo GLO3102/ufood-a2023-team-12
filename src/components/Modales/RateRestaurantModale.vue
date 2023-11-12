@@ -2,10 +2,8 @@
   <div
     class="d-flex w-100 justify-content-center flex-column align-items-center"
   >
-    <!--Title-->
     <h1 class="mt-3 text-center alt-font">Rate this restaurant</h1>
 
-    <!--Stars-->
     <div id="starsContainer" class="d-flex justify-content-center text-warning">
       <font-awesome-icon
         @mouseleave="color(0)"
@@ -93,7 +91,6 @@
       />
     </div>
 
-    <!--Date-->
     <div class="d-flex w-50 mt-3 flex-column justify-content-start">
       <label class="alt-font" for="visitDate">Date de visite</label>
       <input
@@ -104,7 +101,6 @@
       />
     </div>
 
-    <!--Comment-->
     <textarea
       v-model="comment"
       class="rounded textArea mt-3 w-50"
@@ -115,7 +111,6 @@
       placeholder="Comment..."
     ></textarea>
 
-    <!--Rate button-->
     <button @click="submitRating()" class="mt-3 mb-3 btn btn-success">
       Rate
     </button>
@@ -132,13 +127,8 @@ const rating = ref(0);
 const date = ref("");
 const comment = ref("");
 
-//Emits
-const emit = defineEmits([
-  "closeModale",
-  "openPopUpModale"
-]);
+const emit = defineEmits(["closeModale", "openPopUpModale"]);
 
-//Props
 const props = defineProps({
   restaurantId: String,
 });
@@ -156,14 +146,17 @@ const color = (number) => {
 };
 
 function submitRating() {
-
-  try{
-    postRestaurantVisit(props.restaurantId, rating.value, date.value, comment.value);
-    emit('closeModale')
-    emit('openPopUpModale', "Rating submited !")
-  }
-  catch{
-    emit('openPopUpModale', "An error has occured.")
+  try {
+    postRestaurantVisit(
+      props.restaurantId,
+      rating.value,
+      date.value,
+      comment.value,
+    );
+    emit("closeModale");
+    emit("openPopUpModale", "Rating submited !");
+  } catch {
+    emit("openPopUpModale", "An error has occured.");
   }
 }
 </script>
