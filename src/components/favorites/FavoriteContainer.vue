@@ -13,7 +13,7 @@
     </div>
 
     <div v-if="allLists.length > 0" class="favorite-lists mt-3">
-      <div class="d-flex justify-content-space-between">
+      <div class="d-flex favorites-section justify-content-start">
         <div>
           <favorite-list-item
             v-for="list in allLists"
@@ -154,17 +154,24 @@ onMounted(getFavoritesList);
 </script>
 
 <style scoped>
-@media (max-width: 820px) {
+@media (max-width: 990px) {
   .favorite-lists .d-flex {
     flex-direction: column;
   }
 
   .selected-list {
     margin-top: 1rem;
+    margin: 0 0 0 0 !important;
   }
 
   .restaurant-container {
     order: 3;
   }
+
+  .favorites-section{
+    padding: 0;
+    flex-direction: column;
+  }
+
 }
 </style>

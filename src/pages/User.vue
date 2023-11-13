@@ -1,6 +1,6 @@
 <template>
-  <div class="d-flex justify-content-center">
-    <div class="user-section d-flex flex-column align-items-center p-5">
+  <div class="user-container d-flex justify-content-center">
+    <div class="user-section d-flex flex-column align-items-center">
       <h1>{{ user.name }}</h1>
       <p>{{ user.email }}</p>
       <hr />
@@ -33,7 +33,7 @@
       </div>
 
       <hr />
-      <section class="d-flex w-100 flex-row justify-content-start">
+      <section class="d-flex w-100 justify-content-start">
         <FavoriteContainer />
       </section>
     </div>
@@ -96,6 +96,7 @@ const user = computed(() => {
 </script>
 
 <style>
+
 .user-section {
   width: 80%;
   color: rgb(192, 68, 6);
@@ -107,5 +108,17 @@ const user = computed(() => {
 
 .cardContainer {
   width: auto;
+}
+
+.user-section{
+    padding: 3rem !important;
+}
+
+@media (max-width: 990px) {
+
+  .user-section{
+    padding: 1rem !important;
+  }
+
 }
 </style>

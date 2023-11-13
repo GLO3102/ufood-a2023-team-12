@@ -1,7 +1,7 @@
 <template>
   <div>
     <nav
-      class="navbar navbar-expand-lg fixed-top navbar-dark px-5"
+      class="navbar navbar-expand-lg fixed-top navbar-dark px-3"
       style="background-color: #0a0908"
     >
       <router-link class="navbar-brand alt-font" to="/">UFood</router-link>
