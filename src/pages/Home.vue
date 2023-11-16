@@ -13,7 +13,7 @@
       </div>
     </div>
 
-    <div class="d-flex">
+    <div class="d-flex restaurants-section">
       <div class="p-5">
         <div class="accordion" id="accordionFilters">
           <div class="accordion-item">
@@ -302,5 +302,12 @@ watch(
 .accordion-button:not(.collapsed) {
   background-color: #5E503F;
   color: #EAE0D5;
+}
+
+@media screen and (max-width: 990px) {
+
+  .restaurants-section {
+    flex-direction: column;
+  }
 }
 </style>

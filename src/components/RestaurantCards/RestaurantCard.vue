@@ -131,10 +131,8 @@ function setVisited() {
 }
 
 @media screen and (max-width: 990px) {
-
   .restaurant_card {
-    width: 90%;
-    margin-right: 0px !important;
+  margin-left: 15px;
   }
 }
 
