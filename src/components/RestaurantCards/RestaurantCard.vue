@@ -29,7 +29,8 @@
         <RatingStars :rating="props.restaurant.rating" />
       </div>
     </div>
-    <div v-if="!readOnly" class="button_section">
+
+    <div v-if="isHomePage" class="button_section mb-3 w-100">
       <button
         @click="emit('openRateModale', props.restaurant.id)"
         class="rateBtn btn btn-success"
@@ -37,21 +38,32 @@
         Mark as visited
       </button>
     </div>
+    <div v-else-if="isUserPage" class="button_section mb-3 w-100">
+      <button @click="emit('openRateModaleReadOnly')" class="btn btn-success">
+        View review
+      </button>
+    </div>
+
   </div>
 </template>
 
 <script setup>
 import { onMounted, onUpdated, ref, watch } from "vue";
-import { getFilterPriceName } from "./Utils.js";
-import RatingStars from "./RatingStars.vue";
+import { getFilterPriceName } from "../Utils.js";
+import RatingStars from "../RatingStars.vue";
 
 const visited = ref(false);
 const localStoragePopulated = ref(false);
 const isRatingModaleOpened = ref(false);
-const emit = defineEmits(["openRateModale"]);
+const emit = defineEmits([
+  "openRateModale",
+  "openRateModaleReadOnly",
+]);
 const props = defineProps({
   readOnly: Boolean,
   restaurant: Object,
+  isUserPage: Boolean,
+  isHomePage: Boolean,
 });
 
 function setVisited() {
@@ -67,19 +79,19 @@ function setVisited() {
   text-decoration: none;
   color: black;
 }
+.restaurant_card {
+  width: 325px;
+  height: fit-content;
+  margin-right: 15px;
+}
 .restaurant_card_clickable:hover {
   background-color: #cfb8a6;
   cursor: pointer;
 }
 .restaurant_card_clickable {
   border: 1px solid #000;
-  border-radius: 0.5rem;
-  gap: 1rem;
+  border-radius: 0.5rem 0.5rem 0.5rem 0;
   background-color: #cec6be;
-  margin-bottom: 7px;
-}
-.visitedBtn {
-  width: fit-content;
 }
 .rateBtn {
   width: fit-content;
@@ -96,11 +108,11 @@ function setVisited() {
   color: #5e503f;
 }
 .button_section {
-  width: 100%;
-  height: 100%;
+  margin-bottom: 20px;
 }
 .button_section > .btn {
+  width: fit-content;
   border: 1px solid #000;
-  border-radius: 0.5rem;
+  border-radius: 0 0 0.5rem 0.5rem;
 }
 </style>

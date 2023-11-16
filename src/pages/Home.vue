@@ -126,7 +126,7 @@
         >
           <restaurant-card
             v-for="restaurant in filtered_restaurants"
-            :read-only="false"
+            :is-home-page="true"
             :key="restaurant.id"
             @open-rate-modale="
               (e) => {
@@ -148,7 +148,7 @@
 import { onMounted, ref, reactive, watch } from "vue";
 import { getRestaurants } from "../api/restaurants.js";
 import { getAllFilterTypes } from "../api/filters.js";
-import RestaurantCard from "../components/RestaurantCard.vue";
+import RestaurantCard from "../components/RestaurantCards/RestaurantCard.vue";
 
 const restaurants = ref([]);
 const filtered_restaurants = ref([]);

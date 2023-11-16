@@ -1,14 +1,16 @@
 <template>
-  <div>
+  <div class="w-100">
     <h3 class="mt-3">Favorite Restaurants</h3>
-    <div class="accordion-body">
+    <div>
       <strong>New List</strong>
       <div v-if="errorMessage" class="alert alert-danger">
         {{ errorMessage }}
       </div>
       <form @submit.prevent="submitFavoritesList">
-        <input type="text" v-model="listName" placeholder="Enter list name" />
-        <button type="submit">Create List</button>
+        <div class="form-group">
+          <input type="text" class="form-control new-list-input" v-model="listName" placeholder="Enter list name">
+        </div>
+        <button type="submit" class="btn btn-success btn-sm new-list-btn">Create List</button>
       </form>
     </div>
 
@@ -30,9 +32,6 @@
           :class="{ 'selected-list': selectedList }"
           style="flex-grow: 1; margin: 0 3rem"
         >
-          <h4 class="text-center">
-            {{ selectedList.name }}
-          </h4>
           <div
             v-if="detailedRestaurantList.length > 0"
             class="d-flex restaurant-container flex-wrap"
@@ -41,16 +40,12 @@
               v-for="restaurant in detailedRestaurantList"
               :key="restaurant.id"
             >
-              <RestaurantCard
-                :read-only="true"
-                @open-rate-modale="
-                  (e) => {
-                    emit('openRateModale', e);
-                  }
-                "
-                :restaurant="restaurant"
-              />
-              <button @click="removeRestaurant(restaurant.id)">remove</button>
+              <restaurant-card :restaurant="restaurant" />
+              <div class="favorites-btn-section mb-3 w-100">
+                <button @click="removeRestaurant(restaurant.id)" class="btn btn-success">
+                  Remove
+                </button>
+              </div>
             </div>
           </div>
         </div>
@@ -62,7 +57,7 @@
 <script setup>
 import { ref, onMounted, computed } from "vue";
 import FavoriteListItem from "./FavoriteListItem.vue";
-import RestaurantCard from "../RestaurantCard.vue";
+import RestaurantCard from "../RestaurantCards/RestaurantCard.vue";
 import {
   createFavoritesList,
   deleteFavoriteList,
@@ -168,10 +163,26 @@ onMounted(getFavoritesList);
     order: 3;
   }
 
-  .favorites-section{
+  .favorites-section {
     padding: 0;
     flex-direction: column;
   }
 
+}
+.new-list-input{
+  width: 18rem;
+  border: 1px solid black;
+  border-radius: 0.5rem 0.5rem 0.5rem 0;
+}
+.new-list-btn{
+  border: 1px solid black;
+  border-radius: 0 0 0.5rem 0.5rem;
+}
+.favorites-btn-section {
+  margin-bottom: 20px;
+}
+.favorites-btn-section > .btn {
+  border: 1px solid #000;
+  border-radius: 0 0 0.5rem 0.5rem;
 }
 </style>

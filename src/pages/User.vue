@@ -20,16 +20,18 @@
           <button class="back-button">See all restaurants</button>
         </router-link>
       </div>
-      <div class="d-flex pt-3" v-else-if="restaurants.length > 0">
-        <div v-if="!isLoading" class="cardContainer d-flex flex-row flex-wrap">
-          <restaurant-card-user-page
-            v-for="(visit, index) in visits"
-            :key="visit.id"
-            :restaurant="restaurants[index]"
-            @open-rate-modale-read-only="viewRating(visit)"
-          >
-          </restaurant-card-user-page>
-        </div>
+      <div
+        v-if="!isLoading && restaurants.length > 0"
+        class="cardContainer d-flex flex-row flex-wrap pt-3 justify-content-center"
+      >
+        <restaurant-card
+          v-for="(visit, index) in visits"
+          :key="visit.id"
+          :restaurant="restaurants[index]"
+          :is-user-page="true"
+          @open-rate-modale-read-only="viewRating(visit)"
+        >
+        </restaurant-card>
       </div>
 
       <hr />
@@ -44,7 +46,7 @@
 import { ref, computed, onMounted, onUpdated } from "vue";
 import * as api from "../api/restaurants";
 import FavoriteContainer from "../components/favorites/FavoriteContainer.vue";
-import RestaurantCardUserPage from "../components/RestaurantCardUserPage.vue";
+import RestaurantCard from "../components/RestaurantCards/RestaurantCard.vue";
 
 const selectedValue = ref("1");
 const visits = ref([]);
@@ -96,7 +98,6 @@ const user = computed(() => {
 </script>
 
 <style>
-
 .user-section {
   width: 80%;
   color: rgb(192, 68, 6);
@@ -110,15 +111,13 @@ const user = computed(() => {
   width: auto;
 }
 
-.user-section{
-    padding: 3rem !important;
+.user-section {
+  padding: 3rem !important;
 }
 
 @media (max-width: 990px) {
-
-  .user-section{
+  .user-section {
     padding: 1rem !important;
   }
-
 }
 </style>
