@@ -13,8 +13,8 @@
       </div>
     </div>
 
-    <div class="home">
-      <div class="filters p-5">
+    <div class="d-flex">
+      <div class="p-5">
         <div class="accordion" id="accordionFilters">
           <div class="accordion-item">
             <h2 class="accordion-header">
@@ -113,7 +113,7 @@
         </div>
       </div>
 
-      <section class="restaurant" id="restaurant">
+      <section class="w-100">
         <div class="text-center pt-5" v-if="isLoading">
           <div class="spinner-border text-warning" role="status">
             <span class="sr-only">Loading...</span>
@@ -121,7 +121,7 @@
           <h2>Loading restaurants...</h2>
         </div>
         <div
-          class="restaurant_box pt-5"
+          class="d-flex flex-wrap justify-content-center pt-5"
           v-else-if="filtered_restaurants && filtered_restaurants.length"
         >
           <restaurant-card
@@ -246,3 +246,61 @@ watch(
   }
 );
 </script>
+
+<style scoped>
+
+.header-container {
+  background-image: url("https://images.unsplash.com/photo-1552566626-52f8b828add9?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=3570&q=80;");
+  height: 400px;
+  width: 100%;
+
+  background-size: cover;
+  background-position: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+.header-container:before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.6);
+  z-index: 1;
+}
+.header-content {
+  z-index: 2;
+}
+.searchbar {
+  max-width: 400px;
+  margin: 0 auto;
+  border-radius: 25px;
+}
+.header-title {
+  color: #fff;
+  margin-bottom: 20px;
+}
+.form-check-label {
+  font-size: 14px;
+  color: #0A0908;
+}
+.clear-filters {
+  font-size: 14px;
+}
+.accordion {
+  border-radius: 0.5rem;
+  min-width: 250px;
+}
+.accordion-item{
+  border: 1px solid black;
+  background-color: #EAE0D5;
+}
+.accordion-button,
+.accordion-button:not(.collapsed) {
+  background-color: #5E503F;
+  color: #EAE0D5;
+}
+</style>

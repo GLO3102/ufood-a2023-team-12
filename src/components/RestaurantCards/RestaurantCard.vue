@@ -12,19 +12,19 @@
           :alt="props.restaurant.name + ' Image'"
         />
       </div>
-      <div class="restaurant_info">
+      <div class="restaurant_info alt-font">
         <h2>{{ props.restaurant.name }}</h2>
         <div>
           <span class="highlight">Address:</span>
-          {{ props.restaurant.address }}
+          <p>{{ props.restaurant.address }}</p>
         </div>
         <div>
           <span class="highlight">Price Range:</span>
-          {{ getFilterPriceName(props.restaurant.price_range) }}
+          <p>{{ getFilterPriceName(props.restaurant.price_range) }}</p>
         </div>
         <div>
           <span class="highlight">Genre:</span>
-          {{ props.restaurant.genres.join(", ") }}
+          <p>{{ props.restaurant.genres.join(", ") }}</p>
         </div>
         <RatingStars :rating="props.restaurant.rating" />
       </div>
@@ -33,7 +33,7 @@
     <div v-if="isHomePage" class="button_section mb-3 w-100">
       <button
         @click="emit('openRateModale', props.restaurant.id)"
-        class="rateBtn btn btn-success"
+        class="btn btn-success"
       >
         Mark as visited
       </button>
@@ -72,41 +72,55 @@ function setVisited() {
 </script>
 
 <style scoped>
-.cardStars {
-  color: rgba(51, 92, 28, 0.514);
-}
-#cardRouterLink {
-  text-decoration: none;
-  color: black;
-}
 .restaurant_card {
   width: 325px;
   height: fit-content;
   margin-right: 15px;
 }
-.restaurant_card_clickable:hover {
-  background-color: #cfb8a6;
-  cursor: pointer;
-}
 .restaurant_card_clickable {
   border: 1px solid #000;
   border-radius: 0.5rem 0.5rem 0.5rem 0;
-  background-color: #cec6be;
+  background-color: #EAE0D5;
 }
-.rateBtn {
-  width: fit-content;
+.restaurant_card_clickable:hover {
+  background-color: #C6AC8F;
+  cursor: pointer;
+}
+
+.restaurant_image {
+  width: 100%;
+  height: 200px;
+}
+.restaurant_image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: 0.3s;
+  border-radius: 0.5rem 0.5rem 0 0;
+}
+
+.restaurant_info{
+  margin: 1rem;
+}
+.restaurant_info p {
+  color: rgb(192, 68, 6);
 }
 .restaurant_info > h1 h2 h3 {
   overflow: hidden;
 }
 .restaurant_info > * {
   text-align: center;
-  margin: 10px auto 10px auto;
 }
 .restaurant_info h2 {
   font-size: 22px;
-  color: #5e503f;
+  color: #0A0908;
 }
+.highlight {
+  color: #0A0908;
+  font-weight: bold;
+  font-size: 1em;
+}
+
 .button_section {
   margin-bottom: 20px;
 }
@@ -115,4 +129,13 @@ function setVisited() {
   border: 1px solid #000;
   border-radius: 0 0 0.5rem 0.5rem;
 }
+
+@media screen and (max-width: 990px) {
+
+  .restaurant_card {
+    width: 90%;
+    margin-right: 0px !important;
+  }
+}
+
 </style>
