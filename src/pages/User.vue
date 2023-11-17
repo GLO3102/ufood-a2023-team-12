@@ -29,9 +29,8 @@
           :key="visit.id"
           :restaurant="restaurants[index]"
           :is-user-page="true"
-          @open-rate-modale-read-only="viewRating(visit)"
-        >
-        </restaurant-card>
+          @open-rate-modale-read-only="viewReview(visit)"
+        />
       </div>
 
       <hr />
@@ -39,6 +38,12 @@
         <FavoriteContainer />
       </section>
     </div>
+
+    <rate-restaurant-modale-read-only
+      v-if="rateModaleOpened"
+      :visit="review"
+      @close-modale="rateModaleOpened = false"
+    />
   </div>
 </template>
 
@@ -47,13 +52,13 @@ import { ref, computed, onMounted, onUpdated } from "vue";
 import * as api from "../api/restaurants";
 import FavoriteContainer from "../components/favorites/FavoriteContainer.vue";
 import RestaurantCard from "../components/RestaurantCards/RestaurantCard.vue";
+import RateRestaurantModaleReadOnly from "../components/Modales/RateRestaurantModaleReadOnly.vue";
 
 const selectedValue = ref("1");
 const visits = ref([]);
 const restaurants = ref([]);
-let tempRestaurants = [];
-
-const emit = defineEmits(["openRateModaleReadOnly"]);
+const rateModaleOpened = ref(false);
+const review = ref({});
 
 onMounted(async () => {
   try {
@@ -87,8 +92,9 @@ async function getRestaurantsAsync(visits) {
   return tempRestaurants;
 }
 
-function viewRating(visit) {
-  emit("openRateModaleReadOnly", visit);
+function viewReview(visit) {
+  review.value = visit;
+  rateModaleOpened.value = true;
 }
 
 const user = computed(() => {

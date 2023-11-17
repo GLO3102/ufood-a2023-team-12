@@ -128,11 +128,7 @@
             v-for="restaurant in filtered_restaurants"
             :is-home-page="true"
             :key="restaurant.id"
-            @open-rate-modale="
-              (e) => {
-                emit('openRateModale', e);
-              }
-            "
+            @open-rate-modale="rateModaleOpened = true"
             :restaurant="restaurant"
           ></restaurant-card>
         </div>
@@ -140,6 +136,18 @@
           <h2>No result</h2>
         </div>
       </section>
+
+      <rate-restaurant-modale
+        v-if="rateModaleOpened"
+        @close-modale="rateModaleOpened = false"
+        @open-pop-up-modale="(message) => {popUpMessage = message; popUpOpened = true}"
+        :restaurant-id="rateRestaurantId"
+      />
+      <pop-up-modale
+        v-if="popUpOpened"
+        @close-pop-up="popUpOpened = false"
+        :message="popUpMessage"
+      />
     </div>
   </div>
 </template>
@@ -149,12 +157,15 @@ import { onMounted, ref, reactive, watch } from "vue";
 import { getRestaurants } from "../api/restaurants.js";
 import { getAllFilterTypes } from "../api/filters.js";
 import RestaurantCard from "../components/RestaurantCards/RestaurantCard.vue";
+import RateRestaurantModale from "../components/Modales/RateRestaurantModale.vue";
+import PopUpModale from "../components/Modales/PopUpModale.vue";
 
 const restaurants = ref([]);
 const filtered_restaurants = ref([]);
 const isLoading = ref(true);
-
-const emit = defineEmits(["openRateModale"]);
+const rateModaleOpened = ref(false);
+const popUpOpened = ref(false);
+const popUpMessage = ref("");
 
 onMounted(async () => {
   try {
@@ -248,7 +259,6 @@ watch(
 </script>
 
 <style scoped>
-
 .header-container {
   background-image: url("https://images.unsplash.com/photo-1552566626-52f8b828add9?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=3570&q=80;");
   height: 400px;
@@ -285,7 +295,7 @@ watch(
 }
 .form-check-label {
   font-size: 14px;
-  color: #0A0908;
+  color: #0a0908;
 }
 .clear-filters {
   font-size: 14px;
@@ -294,18 +304,17 @@ watch(
   border-radius: 0.5rem;
   min-width: 250px;
 }
-.accordion-item{
+.accordion-item {
   border: 1px solid black;
-  background-color: #EAE0D5;
+  background-color: #eae0d5;
 }
 .accordion-button,
 .accordion-button:not(.collapsed) {
-  background-color: #5E503F;
-  color: #EAE0D5;
+  background-color: #5e503f;
+  color: #eae0d5;
 }
 
 @media screen and (max-width: 990px) {
-
   .restaurants-section {
     flex-direction: column;
   }

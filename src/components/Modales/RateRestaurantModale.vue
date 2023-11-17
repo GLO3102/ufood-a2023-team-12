@@ -1,125 +1,130 @@
 <template>
-  <div
-    class="d-flex w-100 justify-content-center flex-column align-items-center"
-  >
-    <h1 class="mt-3 text-center alt-font">Rate this restaurant</h1>
+  <modale @close-modale="emit('closeModale')">
+    <div
+      class="d-flex w-100 justify-content-center flex-column align-items-center"
+    >
+      <h1 class="mt-3 text-center alt-font">Rate this restaurant</h1>
+      <div
+        id="starsContainer"
+        class="d-flex justify-content-center text-warning"
+      >
+        <font-awesome-icon
+          @mouseleave="color(0)"
+          @mouseover="color(1)"
+          @click="rate(1)"
+          class="starYellow"
+          icon="fa-solid fa-star"
+          v-if="rating >= 1 || currentHoveredStar >= 1"
+        />
+        <font-awesome-icon
+          @mouseleave="color(0)"
+          @mouseover="color(1)"
+          @click="rate(1)"
+          class="starGrey"
+          icon="fa-solid fa-star"
+          v-else
+        />
 
-    <div id="starsContainer" class="d-flex justify-content-center text-warning">
-      <font-awesome-icon
-        @mouseleave="color(0)"
-        @mouseover="color(1)"
-        @click="rate(1)"
-        class="starYellow"
-        icon="fa-solid fa-star"
-        v-if="rating >= 1 || currentHoveredStar >= 1"
-      />
-      <font-awesome-icon
-        @mouseleave="color(0)"
-        @mouseover="color(1)"
-        @click="rate(1)"
-        class="starGrey"
-        icon="fa-solid fa-star"
-        v-else
-      />
+        <font-awesome-icon
+          @mouseleave="color(0)"
+          @mouseover="color(2)"
+          @click="rate(2)"
+          class="starYellow"
+          icon="fa-solid fa-star"
+          v-if="rating >= 2 || currentHoveredStar >= 2"
+        />
+        <font-awesome-icon
+          @mouseleave="color(0)"
+          @mouseover="color(2)"
+          @click="rate(2)"
+          class="starGrey"
+          icon="fa-solid fa-star"
+          v-else
+        />
 
-      <font-awesome-icon
-        @mouseleave="color(0)"
-        @mouseover="color(2)"
-        @click="rate(2)"
-        class="starYellow"
-        icon="fa-solid fa-star"
-        v-if="rating >= 2 || currentHoveredStar >= 2"
-      />
-      <font-awesome-icon
-        @mouseleave="color(0)"
-        @mouseover="color(2)"
-        @click="rate(2)"
-        class="starGrey"
-        icon="fa-solid fa-star"
-        v-else
-      />
+        <font-awesome-icon
+          @mouseleave="color(0)"
+          @mouseover="color(3)"
+          @click="rate(3)"
+          class="starYellow"
+          icon="fa-solid fa-star"
+          v-if="rating >= 3 || currentHoveredStar >= 3"
+        />
+        <font-awesome-icon
+          @mouseleave="color(0)"
+          @mouseover="color(3)"
+          @click="rate(3)"
+          class="starGrey"
+          icon="fa-solid fa-star"
+          v-else
+        />
 
-      <font-awesome-icon
-        @mouseleave="color(0)"
-        @mouseover="color(3)"
-        @click="rate(3)"
-        class="starYellow"
-        icon="fa-solid fa-star"
-        v-if="rating >= 3 || currentHoveredStar >= 3"
-      />
-      <font-awesome-icon
-        @mouseleave="color(0)"
-        @mouseover="color(3)"
-        @click="rate(3)"
-        class="starGrey"
-        icon="fa-solid fa-star"
-        v-else
-      />
+        <font-awesome-icon
+          @mouseleave="color(0)"
+          @mouseover="color(4)"
+          @click="rate(4)"
+          class="starYellow"
+          icon="fa-solid fa-star"
+          v-if="rating >= 4 || currentHoveredStar >= 4"
+        />
+        <font-awesome-icon
+          @mouseleave="color(0)"
+          @mouseover="color(4)"
+          @click="rate(4)"
+          class="starGrey"
+          icon="fa-solid fa-star"
+          v-else
+        />
 
-      <font-awesome-icon
-        @mouseleave="color(0)"
-        @mouseover="color(4)"
-        @click="rate(4)"
-        class="starYellow"
-        icon="fa-solid fa-star"
-        v-if="rating >= 4 || currentHoveredStar >= 4"
-      />
-      <font-awesome-icon
-        @mouseleave="color(0)"
-        @mouseover="color(4)"
-        @click="rate(4)"
-        class="starGrey"
-        icon="fa-solid fa-star"
-        v-else
-      />
+        <font-awesome-icon
+          @mouseleave="color(0)"
+          @mouseover="color(5)"
+          @click="rate(5)"
+          class="starYellow"
+          icon="fa-solid fa-star"
+          v-if="rating >= 5 || currentHoveredStar >= 5"
+        />
+        <font-awesome-icon
+          @mouseleave="color(0)"
+          @mouseover="color(5)"
+          @click="rate(5)"
+          class="starGrey"
+          icon="fa-solid fa-star"
+          v-else
+        />
+      </div>
 
-      <font-awesome-icon
-        @mouseleave="color(0)"
-        @mouseover="color(5)"
-        @click="rate(5)"
-        class="starYellow"
-        icon="fa-solid fa-star"
-        v-if="rating >= 5 || currentHoveredStar >= 5"
-      />
-      <font-awesome-icon
-        @mouseleave="color(0)"
-        @mouseover="color(5)"
-        @click="rate(5)"
-        class="starGrey"
-        icon="fa-solid fa-star"
-        v-else
-      />
+      <div class="d-flex w-50 mt-3 flex-column justify-content-start">
+        <label class="alt-font" for="visitDate">Date</label>
+        <input
+          v-model="date"
+          id="visitDate"
+          class="w-100 rounded date"
+          type="date"
+        />
+      </div>
+
+      <textarea
+        v-model="comment"
+        class="rounded textArea mt-3 w-50"
+        name="ratingComment"
+        id="ratingComment"
+        cols="30"
+        rows="10"
+        placeholder="Comment..."
+      ></textarea>
+
+      <button @click="submitRating()" class="mt-3 mb-3 btn btn-success">
+        Rate
+      </button>
     </div>
-
-    <div class="d-flex w-50 mt-3 flex-column justify-content-start">
-      <label class="alt-font" for="visitDate">Date</label>
-      <input
-        v-model="date"
-        id="visitDate"
-        class="w-100 rounded date"
-        type="date"
-      />
-    </div>
-
-    <textarea
-      v-model="comment"
-      class="rounded textArea mt-3 w-50"
-      name="ratingComment"
-      id="ratingComment"
-      cols="30"
-      rows="10"
-      placeholder="Comment..."
-    ></textarea>
-
-    <button @click="submitRating()" class="mt-3 mb-3 btn btn-success">
-      Rate
-    </button>
-  </div>
+  </modale>
 </template>
 
 <script setup>
 import { onMounted, ref } from "vue";
 import { postRestaurantVisit } from "../../api/restaurants";
+import Modale from "./Modale.vue";
 
 const currentHoveredStar = ref(0);
 
