@@ -1,10 +1,10 @@
-import { BASE_URL } from "./restaurantApiURL";
+import { BASE_URL_UNSECURE } from "./restaurantApiURL";
 
 const getUserId = () => JSON.parse(localStorage.getItem("user")).id;
 
 export const getRestaurants = async () => {
   try {
-    const response = await fetch(`${BASE_URL}/restaurants`, {
+    const response = await fetch(`${BASE_URL_UNSECURE}/restaurants`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
@@ -25,7 +25,7 @@ export const getRestaurants = async () => {
 
 export const getRestaurantById = async (restaurantId) => {
   try {
-    const response = await fetch(`${BASE_URL}/restaurants/${restaurantId}`, {
+    const response = await fetch(`${BASE_URL_UNSECURE}/restaurants/${restaurantId}`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
@@ -50,7 +50,7 @@ export const postRestaurantVisit = async (
 ) => {
   try {
     const response = await fetch(
-      `${BASE_URL}/users/${getUserId()}/restaurants/visits`,
+      `${BASE_URL_UNSECURE}/users/${getUserId()}/restaurants/visits`,
       {
         method: "POST",
         headers: {
@@ -75,7 +75,7 @@ export const postRestaurantVisit = async (
 export const getVisitsByRestaurantId = async (restaurantId) => {
   try {
     const response = await fetch(
-      `${BASE_URL}/restaurants/${restaurantId}/visits`,
+      `${BASE_URL_UNSECURE}/restaurants/${restaurantId}/visits`,
       {
         method: "GET",
         headers: {
@@ -96,7 +96,7 @@ export const getVisitsByRestaurantId = async (restaurantId) => {
 export const getUserVisits = async () => {
   try {
     const response = await fetch(
-      `${BASE_URL}/users/${getUserId()}/restaurants/visits`,
+      `${BASE_URL_UNSECURE}/users/${getUserId()}/restaurants/visits`,
       {
         method: "GET",
         headers: {

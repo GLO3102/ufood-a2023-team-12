@@ -1,7 +1,7 @@
-import { BASE_URL } from "./restaurantApiURL";
+import { BASE_URL_UNSECURE } from "./restaurantApiURL";
 
 export async function createFavoritesList(name, owner) {
-  const url = `${BASE_URL}/favorites`;
+  const url = `${BASE_URL_UNSECURE}/favorites`;
   const headers = {
     "Content-Type": "application/json",
   };
@@ -27,7 +27,7 @@ export async function createFavoritesList(name, owner) {
 }
 
 export async function updateFavoriteListName(listId, name, owner) {
-  const url = `${BASE_URL}/favorites/${listId}`;
+  const url = `${BASE_URL_UNSECURE}/favorites/${listId}`;
   const headers = {
     "Content-Type": "application/json",
   };
@@ -53,7 +53,7 @@ export async function updateFavoriteListName(listId, name, owner) {
 }
 
 export async function deleteFavoriteList(listId) {
-  const url = `${BASE_URL}/favorites/${listId}`;
+  const url = `${BASE_URL_UNSECURE}/favorites/${listId}`;
   try {
     const response = await fetch(url, {
       method: "DELETE",
@@ -70,7 +70,7 @@ export async function deleteFavoriteList(listId) {
 }
 
 export async function addRestaurantToFavoritesList(listId, id) {
-  const url = `${BASE_URL}/favorites/${listId}/restaurants`;
+  const url = `${BASE_URL_UNSECURE}/favorites/${listId}/restaurants`;
   const headers = {
     "Content-Type": "application/json",
   };
@@ -96,7 +96,7 @@ export async function addRestaurantToFavoritesList(listId, id) {
 }
 
 export async function removeRestaurantfromList(listId, restaurantId) {
-  const url = `${BASE_URL}/favorites/${listId}/restaurants/${restaurantId}`;
+  const url = `${BASE_URL_UNSECURE}/favorites/${listId}/restaurants/${restaurantId}`;
   try {
     const response = await fetch(url, {
       method: "DELETE",

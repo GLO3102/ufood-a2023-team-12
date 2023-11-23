@@ -6,27 +6,29 @@
       <h2 class="text-light pb-2">Login</h2>
       <form @submit.prevent="handleSubmit" class="form-container">
         <div class="form-group">
-          <input
-            type="email"
-            id="email"
-            v-model="email"
-            placeholder="Email"
-            class="form-control"
-          />
+          <label for="email" class="text-light">Email</label>
+          <input type="email" id="email" v-model="email" class="form-control" />
         </div>
 
         <div class="form-group">
+          <label for="password" class="text-light">New Password</label>
           <input
             type="password"
             id="password"
             v-model="password"
-            placeholder="Password"
             class="form-control"
           />
         </div>
+        <div v-if="errorMessage" class="error-message">{{ errorMessage }}</div>
 
         <button type="submit" class="btn button-yellow mt-3">Login</button>
       </form>
+      <router-link class="nav-link text-light mt-2" to="/signUp">
+        <p>
+          Don't have an account?
+          <span class="signup-link">Sign Up</span>
+        </p>
+      </router-link>
     </div>
   </div>
 </template>
@@ -40,19 +42,25 @@ const email = ref("");
 const password = ref("");
 const router = useRouter();
 const emit = defineEmits(["asLoggedIn"]);
+const errorMessage = ref(null);
 
-const handleSubmit = () => {
-  const user = {
-    rating: 0,
-    followers: [],
-    following: [],
-    name: "John Doe",
-    email: "alex@alex.com",
-    id: "654ff1f65d5104359a2cf011",
+const handleSubmit = async () => {
+  const userData = {
+    email: email.value,
+    password: password.value,
   };
-
-  emit("asLoggedIn", { isLoggedIn: true });
-  router.push("/");
+  try {
+    const result = await login(userData);
+    localStorage.setItem("user", JSON.stringify(result));
+    emit("asLoggedIn", {
+      isLoggedIn: true,
+    });
+    router.push("/");
+  } catch (error) {
+    email.value = "";
+    password.value = "";
+    errorMessage.value = error.message;
+  }
 };
 </script>
 
@@ -80,5 +88,9 @@ const handleSubmit = () => {
 .signup-link {
   text-decoration: underline;
   font-weight: 600;
+}
+
+.error-message {
+  color: red;
 }
 </style>

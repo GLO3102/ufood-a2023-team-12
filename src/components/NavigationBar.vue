@@ -3,7 +3,7 @@
       class="navbar navbar-expand-lg fixed-top navbar-dark px-3"
       style="background-color: #0a0908"
     >
-      <router-link class="navbar-brand alt-font m-0" to="/" v-if="innerWidth <= navCollapseValue">UF.</router-link>
+      <router-link class="navbar-brand alt-font" to="/" v-if="innerWidth <= navCollapseValue">UF.</router-link>
       <router-link class="navbar-brand alt-font" to="/" v-else>UFood.</router-link>
       <user-search :is-small="true" v-if="innerWidth <= navCollapseValue"></user-search>
       <button
@@ -46,6 +46,18 @@
 
 <script setup>
 import { onMounted, onBeforeUnmount, computed, watch, ref } from "vue";
+import UserSearch from "./UserSearch.vue";
+import {
+  reactive,
+  toRefs,
+  onMounted,
+  onBeforeUnmount,
+  computed,
+  watch,
+  ref,
+} from "vue";
+import { onBeforeRouteUpdate } from "vue-router";
+import { logout } from "../api/user";
 import UserSearch from "./UserSearch.vue";
 
 const props = defineProps({
