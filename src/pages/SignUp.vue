@@ -27,7 +27,7 @@
           class="form-control"
         />
       </div>
-
+      <div v-if="errorMessage" class="error-message">{{ errorMessage }}</div>
       <button type="submit" class="btn button-yellow mt-3">Sign Up</button>
     </form>
   </div>
@@ -45,6 +45,7 @@ export default {
     const email = ref("");
     const password = ref("");
     const router = useRouter();
+    const errorMessage = ref(null);
 
     const handleSubmit = async () => {
       const userData = {
@@ -55,12 +56,15 @@ export default {
       try {
         const result = await createNewUser(userData);
         localStorage.setItem("user", JSON.stringify(result));
-        emit("asLoggedIn", {
-          isLoggedIn: true,
-        });
-        router.push("/");
+        // emit("asLoggedIn", {
+        //   isLoggedIn: true,
+        // });
+        router.push("/login");
       } catch (error) {
-        console.error("Error creating user:", error.message);
+        name.value = "";
+        email.value = "";
+        password.value = "";
+        errorMessage.value = error.message;
       }
     };
 
@@ -69,6 +73,7 @@ export default {
       email,
       password,
       handleSubmit,
+      errorMessage,
     };
   },
 };
@@ -81,5 +86,9 @@ export default {
 .btn.button-yellow {
   background-color: #daa00f;
   color: #fff;
+}
+
+.error-message {
+  color: red;
 }
 </style>

@@ -29,11 +29,3 @@ const app = createApp(App);
 app.use(router);
 app.component("font-awesome-icon", FontAwesomeIcon);
 app.mount("#app");
-
-const user = {
-  id: "654ff1f65d5104359a2cf011",
-  name: "alex",
-  email: "alex@alex.com",
-  rating: 0,
-};
-localStorage.setItem("user", JSON.stringify(user));

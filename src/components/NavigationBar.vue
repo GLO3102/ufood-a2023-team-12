@@ -58,7 +58,7 @@
             <router-link class="nav-link" to="/login">Login</router-link>
           </li>
           <li v-if="loggedIn" class="nav-item" id="btn_logout">
-            <router-link class="nav-link" to="/" @click="logout"
+            <router-link class="nav-link" to="/" @click="logoutUser"
               >Logout</router-link
             >
           </li>
@@ -79,6 +79,7 @@ import {
   ref,
 } from "vue";
 import { onBeforeRouteUpdate } from "vue-router";
+import { logout } from "../api/user";
 
 const props = defineProps({
   isLoggedIn: Boolean,
@@ -109,7 +110,9 @@ watch(
   }
 );
 
-const logout = () => {
+const logoutUser = async () => {
+  await logout();
+  localStorage.removeItem("user");
   loggedIn.value = false;
   emit("asLoggedOut", {
     isLoggedIn: false,

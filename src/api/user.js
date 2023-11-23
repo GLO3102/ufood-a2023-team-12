@@ -1,4 +1,4 @@
-import { BASE_URL } from "./restaurantApiURL";
+import { BASE_URL, getUserToken } from "./restaurantApiURL";
 
 export const createNewUser = async (data) => {
   const formData = new URLSearchParams(data).toString();
@@ -7,14 +7,14 @@ export const createNewUser = async (data) => {
     headers: {
       "Content-Type": "application/x-www-form-urlencoded",
     },
-    body: JSON.stringify({
-      name: data.name,
-      email: data.email,
-      password: data.password,
-    }),
+    body: formData,
   });
 
-  if (response.status != 201) {
+  if (response.status === 401) {
+    throw new Error("Email account already exists.");
+  }
+
+  if (response.status != 200) {
     throw new Error("An error occurred");
   }
 
@@ -22,24 +22,41 @@ export const createNewUser = async (data) => {
   return result;
 };
 
-export const login = async (email, password) => {
+export const login = async (data) => {
+  const formData = new URLSearchParams(data).toString();
   const response = await fetch(`${BASE_URL}/login`, {
     method: "POST",
     headers: {
       "Content-Type": "application/x-www-form-urlencoded",
     },
-    body: JSON.stringify({
-      email: email,
-      password: password,
-    }),
+    body: formData,
   });
 
-  if (response.status != 201) {
+  if (response.status === 401) {
+    throw new Error("Incorrect email or password.");
+  }
+
+  if (response.status != 200) {
     throw new Error("An error occurred");
   }
 
   const result = await response.json();
   return result;
+};
+
+export const logout = async () => {
+  const response = await fetch(`${BASE_URL}/logout`, {
+    method: "POST",
+    headers: {
+      "Authorization": getUserToken(),
+    },
+  });
+
+  if (response.ok) {
+    console.log("Logout successful");
+  } else {
+    console.error("Logout failed:", response.status);
+  }
 };
 
 export const getFavoriteLists = async (ownerId) => {
@@ -47,6 +64,9 @@ export const getFavoriteLists = async (ownerId) => {
   try {
     const response = await fetch(url, {
       method: "GET",
+      headers: {
+        "Authorization": getUserToken(),
+      },
     });
     if (!response.ok) {
       throw new Error(`HTTP error! status: ${response.status}`);
