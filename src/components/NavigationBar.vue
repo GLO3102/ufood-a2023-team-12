@@ -1,4 +1,5 @@
 <template>
+  <div>
     <nav
       class="navbar navbar-expand-lg fixed-top navbar-dark px-3"
       style="background-color: #0a0908"
@@ -24,7 +25,16 @@
             <router-link class="nav-link" to="/">Home</router-link>
           </li>
         </ul>
-        <user-search :is-large="true" v-if="innerWidth >= navCollapseValue"></user-search>
+        <form v-if="innerWidth >= navCollapseValue" class="col form-inline">
+          <div class="input-group">
+            <input
+              class="form-control mr-sm-2 nav_searchbar"
+              type="search"
+              placeholder="Search"
+              aria-label="Search"
+            />
+          </div>
+        </form>
         <ul class="col justify-content-end navbar-nav">
           <li v-if="loggedIn" class="nav-item" id="username">
             <router-link class="nav-link text-warning" to="/user">{{
@@ -42,6 +52,7 @@
         </ul>
       </div>
     </nav>
+  </div>
 </template>
 
 <script setup>
@@ -132,7 +143,6 @@ onBeforeUnmount(() => {
 }
 .navbar {
   height: auto;
-  flex-wrap: nowrap;
 }
 .nav_searchbar {
   border-radius: 45px;
