@@ -4,9 +4,10 @@
       class="navbar navbar-expand-lg fixed-top navbar-dark px-3"
       style="background-color: #0a0908"
     >
-      <router-link class="navbar-brand alt-font" to="/" v-if="innerWidth <= navCollapseValue">UF.</router-link>
+      <router-link class="navbar-brand alt-font m-0" to="/" v-if="innerWidth <= navCollapseValue">UF.</router-link>
       <router-link class="navbar-brand alt-font" to="/" v-else>UFood.</router-link>
       <user-search :is-small="true" v-if="innerWidth <= navCollapseValue"></user-search>
+
       <button
         class="navbar-toggler"
         type="button"
@@ -25,16 +26,7 @@
             <router-link class="nav-link" to="/">Home</router-link>
           </li>
         </ul>
-        <form v-if="innerWidth >= navCollapseValue" class="col form-inline">
-          <div class="input-group">
-            <input
-              class="form-control mr-sm-2 nav_searchbar"
-              type="search"
-              placeholder="Search"
-              aria-label="Search"
-            />
-          </div>
-        </form>
+        <user-search :is-large="true" v-if="innerWidth >= navCollapseValue"></user-search>
         <ul class="col justify-content-end navbar-nav">
           <li v-if="loggedIn" class="nav-item" id="username">
             <router-link class="nav-link text-warning" to="/user">{{
@@ -45,7 +37,7 @@
             <router-link class="nav-link" to="/login">Login</router-link>
           </li>
           <li v-if="loggedIn" class="nav-item" id="btn_logout">
-            <router-link class="nav-link" to="/" @click="logout"
+            <router-link class="nav-link" to="/" @click="logoutUser"
               >Logout</router-link
             >
           </li>
@@ -58,18 +50,7 @@
 <script setup>
 import { onMounted, onBeforeUnmount, computed, watch, ref } from "vue";
 import UserSearch from "./UserSearch.vue";
-import {
-  reactive,
-  toRefs,
-  onMounted,
-  onBeforeUnmount,
-  computed,
-  watch,
-  ref,
-} from "vue";
-import { onBeforeRouteUpdate } from "vue-router";
 import { logout } from "../api/user";
-import UserSearch from "./UserSearch.vue";
 
 const props = defineProps({
   isLoggedIn: Boolean,
@@ -100,7 +81,9 @@ watch(
   }
 );
 
-const logout = () => {
+const logoutUser = async () => {
+  await logout();
+  localStorage.removeItem("user");
   loggedIn.value = false;
   emit("asLoggedOut", {
     isLoggedIn: false,
@@ -143,6 +126,7 @@ onBeforeUnmount(() => {
 }
 .navbar {
   height: auto;
+  flex-wrap: nowrap;
 }
 .nav_searchbar {
   border-radius: 45px;
