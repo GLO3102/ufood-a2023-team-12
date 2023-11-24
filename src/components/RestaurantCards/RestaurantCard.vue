@@ -31,10 +31,12 @@
     </div>
 
     <div v-if="isHomePage" class="button_section mb-3 w-100">
-      <button
+      <!-- <button
         @click="emit('openRateModale', props.restaurant.id)"
         class="btn btn-success"
-      >
+      > -->
+      <button @click="openRatingModale" class="btn btn-success">
+
         Mark as visited
       </button>
     </div>
@@ -44,10 +46,19 @@
       </button>
     </div>
 
+    <!-- Vérification pour afficher la modale -->
+    <RateRestaurantModale
+      v-if="isRatingModaleOpened"
+      @close-modale="isRatingModaleOpened = false"
+    />
+
   </div>
 </template>
 
 <script setup>
+import { getUserToken } from "../../api/restaurantApiURL.js";
+import RateRestaurantModale from "../Modales/RateRestaurantModale.vue";
+
 import { onMounted, onUpdated, ref, watch } from "vue";
 import { getFilterPriceName } from "../Utils.js";
 import RatingStars from "../RatingStars.vue";
@@ -69,6 +80,17 @@ const props = defineProps({
 function setVisited() {
   visited.value = true;
 }
+// Ajout de la fonction pour ouvrir la modale avec la vérification d'authentification
+function openRatingModale() {
+  const userToken = getUserToken();
+  if (userToken) {
+    isRatingModaleOpened.value = true;
+  } else {
+    window.alert('Please log in to rate this restaurant.');
+    //router.push({ name: 'Login' });
+  }
+}
+
 </script>
 
 <style scoped>
