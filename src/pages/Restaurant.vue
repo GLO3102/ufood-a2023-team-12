@@ -38,9 +38,13 @@
             Mark as visited
           </button>
 
-          <button class="btn btn-primary" @click="toggleDropdown">
+          <button  class="btn btn-primary" @click="toggleDropdown" v-if ="isUserLoggedIn">
             Add to Favorites
           </button>
+          <button class="btn btn-primary" @click="addToFavorites" v-else>
+            Add to Favorites
+          </button>
+
           <select
             v-show="showDropdown"
             v-model="selectedList"
@@ -63,6 +67,7 @@
 </template>
 
 <script setup>
+import { getUserToken } from "../api/restaurantApiURL";
 import { getFilterPriceName } from "../components/Utils.js";
 import RestaurantImages from "../components/RestaurantImages.vue";
 import Map from "../components/Map.vue";
@@ -85,9 +90,13 @@ const emit = defineEmits(["openRateModale"]);
 const feedbackMessage = ref("");
 const userData = JSON.parse(localStorage.getItem("user"));
 
-function toggleDropdown() {
-  showDropdown.value = !showDropdown.value;
-}
+const toggleDropdown = () => {
+  if (isUserLoggedIn.value) {
+    showDropdown.value = !showDropdown.value;
+  } else {
+    window.alert('Please log in before adding to favorites.');
+  }
+};
 
 onMounted(async () => {
   try {
@@ -151,8 +160,17 @@ onMounted(() => {
   getFavoritesList();
 });
 
+const isUserLoggedIn = computed(() => {
+  const userToken = getUserToken();
+  return Boolean(userToken);
+});
+
 const addToFavorites = async () => {
-  if (!selectedList.value) return;
+  const userToken = getUserToken();
+  if (!userToken) {
+    window.alert('Please log in before adding to favorites.');
+    return;
+  }
 
   try {
     await addRestaurantToFavoritesList(selectedList.value, restaurantId.value);
@@ -165,6 +183,7 @@ const addToFavorites = async () => {
     setTimeout(() => (feedbackMessage.value = ""), 3000); // Reset after 3 seconds
   }
 };
+
 </script>
 
 <style scoped>
