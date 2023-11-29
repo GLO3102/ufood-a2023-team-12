@@ -152,8 +152,18 @@ const restaurantCoordinates = computed(() => {
 });
 
 const getFavoritesList = async () => {
-  const response = await getFavoriteLists(userData.id);
-  allLists.value = response.items; // Assuming response.items contains your lists
+  try {
+    // Vérifier si userData existe et a une propriété 'id'
+    if (userData && userData.id) {
+      const response = await getFavoriteLists(userData.id);
+      allLists.value = response.items; // Supposant que response.items contient vos listes
+    } else {
+      // Gérer le cas où userData est null ou n'a pas de propriété 'id'
+      console.log("Aucun utilisateur connecté.");
+    }
+  } catch (error) {
+    console.error("Erreur lors de la récupération des listes de favoris:", error);
+  }
 };
 
 onMounted(() => {
