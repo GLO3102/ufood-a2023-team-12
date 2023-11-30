@@ -11,12 +11,17 @@
     </div>
     <div id="modaleContent" class="d-flex justify-content-center">
       <slot />
+      <!-- <div class="card">
+        <LoginModale @close-login-modale="emit('closeModale')" />
+      </div> -->
+      
     </div>
   </dialog>
 </template>
 
 <script setup>
-import { onMounted } from "vue";
+import { onMounted,defineEmits } from "vue";
+import LoginModale from "./LoginModale.vue";
 
 const emit = defineEmits(["closeModale"]);
 

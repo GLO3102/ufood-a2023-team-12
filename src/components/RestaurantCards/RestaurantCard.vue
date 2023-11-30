@@ -52,13 +52,18 @@
       @close-modale="isRatingModaleOpened = false"
     />
 
+    <LoginModale
+      v-if="isLoginModaleOpened"
+      @close-modale="isLoginModaleOpened = false"
+    />
+
   </div>
 </template>
 
 <script setup>
 import { getUserToken } from "../../api/restaurantApiURL.js";
 import RateRestaurantModale from "../Modales/RateRestaurantModale.vue";
-
+import LoginModale from "../Modales/LoginModale.vue";
 import { onMounted, onUpdated, ref, watch } from "vue";
 import { getFilterPriceName } from "../Utils.js";
 import RatingStars from "../RatingStars.vue";
@@ -66,6 +71,7 @@ import RatingStars from "../RatingStars.vue";
 const visited = ref(false);
 const localStoragePopulated = ref(false);
 const isRatingModaleOpened = ref(false);
+const isLoginModaleOpened = ref(false);
 const emit = defineEmits([
   "openRateModale",
   "openRateModaleReadOnly",
@@ -86,8 +92,9 @@ function openRatingModale() {
   if (userToken) {
     isRatingModaleOpened.value = true;
   } else {
-    window.alert('Please log in to rate this restaurant.');
+    // window.alert('Please log in to rate this restaurant.');
     //router.push({ name: 'Login' });
+    isLoginModaleOpened.value = true;
   }
 }
 
