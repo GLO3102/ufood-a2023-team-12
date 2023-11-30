@@ -44,6 +44,11 @@
           <button class="btn btn-primary" @click="addToFavorites" v-else>
             Add to Favorites
           </button>
+          <LoginModale
+            v-if="isLoginModaleOpened"
+            @close-modale="isLoginModaleOpened = false"
+          />
+          
 
           <select
             v-show="showDropdown"
@@ -77,6 +82,7 @@ import { useRoute } from "vue-router";
 import { getRestaurantById } from "../api/restaurants.js";
 import { getFavoriteLists } from "../api/user.js";
 import { addRestaurantToFavoritesList } from "../api/favorites.js";
+import LoginModale from "../components/Modales/LoginModale.vue";
 
 const route = useRoute();
 const restaurantId = ref(route.params.id);
@@ -85,6 +91,7 @@ const isLoading = ref(true);
 const showDropdown = ref(false);
 const selectedList = ref("");
 const allLists = ref([]);
+const isLoginModaleOpened = ref(false);
 
 const emit = defineEmits(["openRateModale"]);
 const feedbackMessage = ref("");
@@ -176,8 +183,9 @@ const isUserLoggedIn = computed(() => {
 const addToFavorites = async () => {
   const userToken = getUserToken();
   if (!userToken) {
-    window.alert('Please log in before adding to favorites.');
-    return;
+    // window.alert('Please log in before adding to favorites.');
+    // return;
+    isLoginModaleOpened.value = true;
   }
 
   try {
@@ -213,7 +221,7 @@ const addToFavorites = async () => {
 }
 
 .restaurant_name h2 {
-  color: #0a0908;
+  color: #f5ddc6;
   font-size: 4vw;
 }
 
