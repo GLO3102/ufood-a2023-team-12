@@ -5,11 +5,12 @@
         <h1 class="header-title alt-font">
           Taste the World. One Restaurant at a Time.
         </h1>
-        <input
+        <!-- <input
           type="search"
           class="form-control searchbar mt-3"
-          placeholder="Search..."
-        />
+          placeholder="Search Restaurants"
+        /> -->
+        <search-bar class="searchbar mt-3" />
       </div>
     </div>
 
@@ -159,6 +160,7 @@ import { getAllFilterTypes } from "../api/filters.js";
 import RestaurantCard from "../components/RestaurantCards/RestaurantCard.vue";
 import RateRestaurantModale from "../components/Modales/RateRestaurantModale.vue";
 import PopUpModale from "../components/Modales/PopUpModale.vue";
+import SearchBar from "../components/searchBar/SearchBar.vue";
 
 const restaurants = ref([]);
 const filtered_restaurants = ref([]);
@@ -256,6 +258,8 @@ watch(
     );
   }
 );
+
+
 </script>
 
 <style scoped>
