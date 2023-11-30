@@ -31,10 +31,11 @@
           <div>Phone: {{ restaurant.tel }}</div>
           <div v-html="hours"></div>
 
-          <button
+          <!-- <button
             @click="emit('openRateModale', restaurant.id)"
             class="rateBtn btn btn-success"
-          >
+          > -->
+          <button @click="openRatingModale" class="btn btn-success">
             Mark as visited
           </button>
 
@@ -92,6 +93,7 @@ const showDropdown = ref(false);
 const selectedList = ref("");
 const allLists = ref([]);
 const isLoginModaleOpened = ref(false);
+const isRatingModaleOpened = ref(false);
 
 const emit = defineEmits(["openRateModale"]);
 const feedbackMessage = ref("");
@@ -197,6 +199,18 @@ const addToFavorites = async () => {
   } catch (error) {
     feedbackMessage.value = "Failed to add restaurant to favorites.";
     setTimeout(() => (feedbackMessage.value = ""), 3000); // Reset after 3 seconds
+  }
+};
+
+// Ajout de la fonction pour ouvrir la modale avec la vérification d'authentification
+function openRatingModale() {
+  const userToken = getUserToken();
+  if (userToken) {
+    isRatingModaleOpened.value = true;
+  } else {
+    // window.alert('Please log in to rate this restaurant.');
+    //router.push({ name: 'Login' });
+    isLoginModaleOpened.value = true;
   }
 };
 
