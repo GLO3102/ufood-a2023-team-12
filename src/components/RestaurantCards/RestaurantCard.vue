@@ -102,6 +102,7 @@ function openRatingModale() {
 
 <style scoped>
 .restaurant_card {
+  position:relative;
   width: 325px;
   height: fit-content;
   margin-right: 15px;

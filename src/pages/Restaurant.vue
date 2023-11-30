@@ -260,6 +260,7 @@ function openRatingModale() {
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
   background-color: rgba(255, 255, 255, 0.5);
   gap: 10px;
+  position:relative;
 }
 
 .restaurant_reviews {

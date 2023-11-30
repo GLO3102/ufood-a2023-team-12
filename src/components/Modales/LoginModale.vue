@@ -29,13 +29,24 @@ function redirectToLogin() {
 <style scoped>
 
 .card {
+    /* background-color: #eeddca;
+    border: none;
+    border-radius: 50px;
+    padding: 20px;
+    width: 100%;
+    max-width: 100%;
+    position: relative; */
+
     background-color: #eeddca;
     border: none;
     border-radius: 50px;
     padding: 20px;
     width: 100%;
     max-width: 100%;
-    position: relative;
+    position: absolute;
+    height: 100%;
+    top: 0;
+    left: 0;
    
 }
 
