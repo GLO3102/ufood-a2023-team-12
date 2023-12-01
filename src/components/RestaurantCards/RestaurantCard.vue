@@ -31,12 +31,7 @@
     </div>
 
     <div v-if="isHomePage" class="button_section mb-3 w-100">
-      <!-- <button
-        @click="emit('openRateModale', props.restaurant.id)"
-        class="btn btn-success"
-      > -->
       <button @click="openRatingModale" class="btn btn-success">
-
         Mark as visited
       </button>
     </div>
@@ -47,11 +42,6 @@
     </div>
 
     <!-- Vérification pour afficher la modale -->
-    <RateRestaurantModale
-      v-if="isRatingModaleOpened"
-      @close-modale="isRatingModaleOpened = false"
-    />
-
     <LoginModale
       v-if="isLoginModaleOpened"
       @close-modale="isLoginModaleOpened = false"
@@ -70,7 +60,6 @@ import RatingStars from "../RatingStars.vue";
 
 const visited = ref(false);
 const localStoragePopulated = ref(false);
-const isRatingModaleOpened = ref(false);
 const isLoginModaleOpened = ref(false);
 const emit = defineEmits([
   "openRateModale",
@@ -90,7 +79,7 @@ function setVisited() {
 function openRatingModale() {
   const userToken = getUserToken();
   if (userToken) {
-    isRatingModaleOpened.value = true;
+    emit('openRateModale', props.restaurant.id)
   } else {
     // window.alert('Please log in to rate this restaurant.');
     //router.push({ name: 'Login' });

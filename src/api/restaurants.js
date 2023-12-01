@@ -93,10 +93,10 @@ export const getVisitsByRestaurantId = async (restaurantId) => {
   }
 };
 
-export const getUserVisits = async () => {
+export const getUserVisits = async (userId) => {
   try {
     const response = await fetch(
-      `${BASE_URL_UNSECURE}/users/${getUserId()}/restaurants/visits`,
+      `${BASE_URL_UNSECURE}/users/${userId}/restaurants/visits`,
       {
         method: "GET",
         headers: {

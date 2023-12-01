@@ -49,7 +49,9 @@
 
 <script setup>
 import { ref, computed, onMounted, onUpdated } from "vue";
+import { useRoute } from 'vue-router';
 import * as api from "../api/restaurants";
+import * as apiUser from "../api/user";
 import FavoriteContainer from "../components/favorites/FavoriteContainer.vue";
 import RestaurantCard from "../components/RestaurantCards/RestaurantCard.vue";
 import RateRestaurantModaleReadOnly from "../components/Modales/RateRestaurantModaleReadOnly.vue";
@@ -59,10 +61,17 @@ const visits = ref([]);
 const restaurants = ref([]);
 const rateModaleOpened = ref(false);
 const review = ref({});
+const user = ref({})
+
+const route = useRoute();
 
 onMounted(async () => {
   try {
-    const fetchedVisits = await api.getUserVisits();
+
+    user.value = await apiUser.getUserInfo(route.params.id);
+    console.log(user.value)
+
+    const fetchedVisits = await api.getUserVisits(route.params.id);
     visits.value = fetchedVisits;
 
     const tempRestaurants = await getRestaurantsAsync(fetchedVisits);
@@ -97,10 +106,6 @@ function viewReview(visit) {
   rateModaleOpened.value = true;
 }
 
-const user = computed(() => {
-  const userData = JSON.parse(localStorage.getItem("user"));
-  return userData;
-});
 </script>
 
 <style>

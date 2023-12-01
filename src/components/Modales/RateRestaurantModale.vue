@@ -152,6 +152,7 @@ const color = (number) => {
 
 function submitRating() {
   try {
+    console.log(props.restaurantId)
     postRestaurantVisit(
       props.restaurantId,
       rating.value,

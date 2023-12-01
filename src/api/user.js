@@ -78,3 +78,23 @@ export const getFavoriteLists = async (ownerId) => {
     throw error;
   }
 };
+
+export const getUserInfo = async (ownerId) => {
+  const url = `${BASE_URL}/users/${ownerId}/`;
+  try {
+    const response = await fetch(url, {
+      method: "GET",
+      headers: {
+        "Authorization": getUserToken(),
+      },
+    });
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.error("Error creating favorites list:", error);
+    throw error;
+  }
+};

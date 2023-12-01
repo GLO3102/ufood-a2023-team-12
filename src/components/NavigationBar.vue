@@ -28,10 +28,10 @@
         </ul>
         <user-search :is-large="true" v-if="innerWidth >= navCollapseValue"></user-search>
         <ul class="col justify-content-end navbar-nav">
-          <li v-if="loggedIn" class="nav-item" id="username">
-            <router-link class="nav-link text-warning" to="/user">{{
+          <li v-if="loggedIn" class="nav-item" id="username" @click="this.$router.push('/user/' + userId)">
+            <span class="nav-link text-warning" to="/user">{{
               user.name
-            }}</router-link>
+            }}</span>
           </li>
           <li v-if="!loggedIn" class="nav-item">
             <router-link class="nav-link" to="/login">Login</router-link>
@@ -59,6 +59,7 @@ const props = defineProps({
 const emit = defineEmits(["asLoggedOut"]);
 
 const loggedIn = ref(props.isLoggedIn);
+const userId = ref();
 const innerWidth = ref(window.innerWidth);
 const navCollapseValue = 990;
 
@@ -97,6 +98,7 @@ const handleWindowResize = () => {
 onMounted(() => {
   if (localStorage.getItem("user")) {
     loggedIn.value = true;
+    userId.value = JSON.parse(localStorage.getItem("user")).id;
   }
 
   window.addEventListener("resize", handleWindowResize);

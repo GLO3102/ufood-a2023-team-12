@@ -129,7 +129,7 @@
             v-for="restaurant in filtered_restaurants"
             :is-home-page="true"
             :key="restaurant.id"
-            @open-rate-modale="rateModaleOpened = true"
+            @open-rate-modale="(id) => { rateRestaurantId = id; rateModaleOpened = true}"
             :restaurant="restaurant"
           ></restaurant-card>
         </div>
@@ -163,6 +163,7 @@ import PopUpModale from "../components/Modales/PopUpModale.vue";
 import SearchBar from "../components/searchBar/SearchBar.vue";
 
 const restaurants = ref([]);
+const rateRestaurantId = ref();
 const filtered_restaurants = ref([]);
 const isLoading = ref(true);
 const rateModaleOpened = ref(false);
