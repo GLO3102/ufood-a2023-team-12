@@ -112,9 +112,10 @@
             </div>
           </div>
         </div>
+        <button @click="toggleMapView" class="toggle-map-view">Carte</button> 
       </div>
 
-      <section class="w-100">
+      <section class="w-100" v-if="!showMap">
         <div class="text-center pt-5" v-if="isLoading">
           <div class="spinner-border text-warning" role="status">
             <span class="sr-only">Loading...</span>
@@ -137,6 +138,11 @@
           <h2>No result</h2>
         </div>
       </section>
+      <section class="w-100 h-100" v-else>
+        <div class="p-5">
+          <HomeMap :coordinates="filteredRestaurantCoordinates"/>
+        </div>
+      </section>
 
       <rate-restaurant-modale
         v-if="rateModaleOpened"
@@ -154,13 +160,14 @@
 </template>
 
 <script setup>
-import { onMounted, ref, reactive, watch } from "vue";
+import { onMounted, ref, reactive, watch, computed } from "vue";
 import { getRestaurants } from "../api/restaurants.js";
 import { getAllFilterTypes } from "../api/filters.js";
 import RestaurantCard from "../components/RestaurantCards/RestaurantCard.vue";
 import RateRestaurantModale from "../components/Modales/RateRestaurantModale.vue";
 import PopUpModale from "../components/Modales/PopUpModale.vue";
 import SearchBar from "../components/searchBar/SearchBar.vue";
+import HomeMap from "../components/HomeMap.vue";
 
 const restaurants = ref([]);
 const rateRestaurantId = ref();
@@ -169,6 +176,22 @@ const isLoading = ref(true);
 const rateModaleOpened = ref(false);
 const popUpOpened = ref(false);
 const popUpMessage = ref("");
+const showMap = ref(false);
+
+const toggleMapView = () => {
+  showMap.value = !showMap.value;
+};
+
+const filteredRestaurantCoordinates = computed(() => {
+  return filtered_restaurants.value.map(restaurant => {
+    if (restaurant.location && restaurant.location.coordinates) {
+      console.log(restaurant.location.coordinates);
+
+      return restaurant.location.coordinates;
+    }
+    return null;
+  }).filter(coord => coord !== null); 
+});
 
 onMounted(async () => {
   try {

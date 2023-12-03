@@ -1,55 +1,68 @@
 <template>
-    <div></div>
+  <div ref="mapContainer" class="map-container"></div>
 </template>
-
 
 <script setup>
 import { onMounted, ref, watch } from 'vue';
 import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 
+const mapContainer = ref(null);
+
 const props = defineProps({
-  restaurants: Array, 
+  coordinates: Array,
 });
 
-const mapContainer = ref(null);
 const map = ref(null);
+const markers = ref([]);
 
-function initializeMap() {
-  if (!props.restaurants || props.restaurants.length === 0) {
-    return;
-  }
-
-  if (map.value != null) {
-    map.value.off();
-    map.value.remove();
-    map.value = null;
-  }
-
-  map.value = L.map(mapContainer.value).setView([latitudeInitiale, longitudeInitiale], 13);
-
+onMounted(() => {
+  map.value = L.map(mapContainer.value).setView([0, 0], 13);
   L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
     attribution: '© OpenStreetMap contributors'
   }).addTo(map.value);
 
-  props.restaurants.forEach(restaurant => {
-    if (restaurant.location && restaurant.location.coordinates) {
-      L.marker([restaurant.location.coordinates.latitude, restaurant.location.coordinates.longitude])
-        .addTo(map.value)
-        .bindPopup(`<b>${restaurant.name}</b><br/>${restaurant.address}`);
+  navigator.geolocation.getCurrentPosition(
+    (position) => {
+      map.value.setView(L.latLng(position.coords.latitude, position.coords.longitude), 13);
+      console.log('Map centered to geolocation.');
+    },
+    (error) => {
+      console.error("Geolocation error:", error);
+    },
+    {enableHighAccuracy: true}
+  );
+  setMarkers(props.coordinates);
+});
+
+watch(() => props.coordinates, (newCoordinates) => {
+  console.log('Coordinates updated:', newCoordinates);
+  setMarkers(newCoordinates);
+}, { deep: true });
+
+
+function setMarkers(coordinates, names) {
+  if (!map.value) return;
+
+  console.log('Removing existing markers. Current count:', markers.value.length);
+  markers.value.forEach(marker => marker.remove());
+  markers.value = [];
+
+  console.log('Setting new markers. Data length:', coordinates.length);
+  coordinates.forEach((coord, index) => {
+    if (coord && coord.length >= 2) {
+      const marker = L.marker([coord[1], coord[0]]).addTo(map.value);
+      markers.value.push(marker);
     }
   });
+  console.log('New markers set. Total count:', markers.value.length);
 }
 
-watch(() => props.restaurants, (newRestaurants) => {
-  if (newRestaurants && newRestaurants.length > 0) {
-    initializeMap();
-  }
-}, { immediate: true });
-
-onMounted(() => {
-  if (props.restaurants && props.restaurants.length > 0) {
-    initializeMap();
-  }
-});
 </script>
+
+<style scoped>
+.map-container {
+  height: 715px;
+  width: 100%;
+}
+</style>
