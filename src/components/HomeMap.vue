@@ -25,7 +25,7 @@ onMounted(() => {
   navigator.geolocation.getCurrentPosition(
     (position) => {
       map.value.setView(L.latLng(position.coords.latitude, position.coords.longitude), 13);
-      console.log('Map centered to geolocation.');
+      L.marker([position.coords.latitude, position.coords.longitude]).addTo(map.value)
     },
     (error) => {
       console.error("Geolocation error:", error);
@@ -41,21 +41,18 @@ watch(() => props.coordinates, (newCoordinates) => {
 }, { deep: true });
 
 
-function setMarkers(coordinates, names) {
+function setMarkers(coordinates) {
   if (!map.value) return;
 
-  console.log('Removing existing markers. Current count:', markers.value.length);
   markers.value.forEach(marker => marker.remove());
   markers.value = [];
 
-  console.log('Setting new markers. Data length:', coordinates.length);
-  coordinates.forEach((coord, index) => {
+  coordinates.forEach((coord) => {
     if (coord && coord.length >= 2) {
       const marker = L.marker([coord[1], coord[0]]).addTo(map.value);
       markers.value.push(marker);
     }
   });
-  console.log('New markers set. Total count:', markers.value.length);
 }
 
 </script>
