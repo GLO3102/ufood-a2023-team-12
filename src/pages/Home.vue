@@ -140,7 +140,7 @@
       </section>
       <section class="w-100 h-100" v-else>
         <div class="p-5">
-          <HomeMap :coordinates="filteredRestaurantCoordinates"/>
+          <HomeMap :coordinates="filteredRestaurantCoordinates" :names="filteredRestaurantNames"/>
         </div>
       </section>
 
@@ -185,12 +185,14 @@ const toggleMapView = () => {
 const filteredRestaurantCoordinates = computed(() => {
   return filtered_restaurants.value.map(restaurant => {
     if (restaurant.location && restaurant.location.coordinates) {
-      console.log(restaurant.location.coordinates);
-
       return restaurant.location.coordinates;
     }
     return null;
   }).filter(coord => coord !== null); 
+});
+
+const filteredRestaurantNames = computed(() => {
+  return filtered_restaurants.value.map(restaurant => restaurant.name);
 });
 
 onMounted(async () => {
