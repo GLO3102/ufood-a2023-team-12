@@ -3,7 +3,7 @@
 </template>
 
 <script setup>
-import { onMounted, ref, watch } from 'vue';
+import { onMounted, ref, watch, inject } from 'vue';
 import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 
@@ -12,6 +12,7 @@ const mapContainer = ref(null);
 const props = defineProps({
   coordinates: Array,
   names: Array,
+  namesSearch:Array
 });
 
 const map = ref(null);
@@ -33,19 +34,18 @@ onMounted(() => {
     },
     {enableHighAccuracy: true}
   );
-  setMarkers(props.coordinates, props.names);
+  setMarkers(props.coordinates, props.names, props.namesSearch);
 });
 
-watch(() => [props.coordinates, props.names], ([newCoordinates, newNames]) => {
-  setMarkers(newCoordinates, newNames);
-}, { deep: true });
-watch(() => props.coordinates, (newCoordinates) => {
-  console.log('Coordinates updated:', newCoordinates);
-  setMarkers(newCoordinates);
-}, { deep: true });
+watch(
+  () => [props.coordinates, props.names, props.namesSearch], 
+  ([newCoordinates, newNames, newNamesSearch]) => {
+    setMarkers(newCoordinates, newNames, newNamesSearch);
+  }, 
+  { deep: true }
+);
 
-
-function setMarkers(coordinates, names) {
+function setMarkers(coordinates, names, namesSearch) {
   if (!map.value) return;
 
   markers.value.forEach(marker => marker.remove());
@@ -54,10 +54,12 @@ function setMarkers(coordinates, names) {
   if (coordinates && names && coordinates.length === names.length) {
     coordinates.forEach((coord, index) => {
       if (coord && coord.length >= 2) {
-        const marker = L.marker([coord[1], coord[0]])
-          .addTo(map.value)
-          .bindTooltip(names[index], { permanent: true }).openTooltip();
-        markers.value.push(marker);
+        if (!namesSearch.length || namesSearch.includes(names[index])) {
+          const marker = L.marker([coord[1], coord[0]])
+            .addTo(map.value)
+            .bindTooltip(names[index] || '', { permanent: true }).openTooltip();
+          markers.value.push(marker);
+        }
       }
     });
   }
@@ -67,7 +69,13 @@ function setMarkers(coordinates, names) {
 
 <style scoped>
 .map-container {
-  height: 715px;
+  height: 700px;
   width: 100%;
+}
+
+@media (max-width: 480px) { 
+  .map-container {
+    height: 450px;
+  }
 }
 </style>

@@ -42,6 +42,8 @@ const matchedRestaurants = ref([]);
 const isOpened = ref(true);
 const selectedRestaurant = ref(null);
 const router = useRouter();
+const restaurantNames = ref([]);
+const emits = defineEmits(['updateRestaurantNames']);
 
 async function searchRestaurant() {
   try {
@@ -51,11 +53,13 @@ async function searchRestaurant() {
       matchedRestaurants.value = data.filter((restaurant) =>
         restaurant.name.toLowerCase().includes(restaurantInput.value.toLowerCase())
       );
+      restaurantNames.value = matchedRestaurants.value.map(r => r.name);
       isOpened.value = matchedRestaurants.value.length > 0;
     } else {
       matchedRestaurants.value = [];
       isOpened.value = false;
     }
+    emits('updateRestaurantNames', restaurantNames.value);
   } catch (error) {
     console.error("Error occurred:", error);
   }
@@ -84,6 +88,8 @@ function handleInputChange() {
     searchRestaurant();
   } else {
     matchedRestaurants.value = [];
+    restaurantNames.value = [];
+    emits('updateRestaurantNames', restaurantNames.value);
     isOpened.value = false;
   }
 }
@@ -95,6 +101,7 @@ function selectRestaurant(restaurant) {
   isOpened.value = false;
   router.push({ name: "Restaurant", params: { id: restaurant.id } });
 }
+
 </script>
 
 <style scoped>

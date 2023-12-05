@@ -10,12 +10,13 @@
           class="form-control searchbar mt-3"
           placeholder="Search Restaurants"
         /> -->
-        <search-bar class="searchbar mt-3" />
+        <search-bar class="searchbar mt-3" @updateRestaurantNames="handleRestaurantNamesUpdate"/>
       </div>
     </div>
 
     <div class="d-flex restaurants-section">
       <div class="p-5">
+        <button @click="toggleMapView" class="btn btn-primary">Carte</button> 
         <div class="accordion" id="accordionFilters">
           <div class="accordion-item">
             <h2 class="accordion-header">
@@ -112,7 +113,6 @@
             </div>
           </div>
         </div>
-        <button @click="toggleMapView" class="toggle-map-view">Carte</button> 
       </div>
 
       <section class="w-100" v-if="!showMap">
@@ -140,7 +140,7 @@
       </section>
       <section class="w-100 h-100" v-else>
         <div class="p-5">
-          <HomeMap :coordinates="filteredRestaurantCoordinates" :names="filteredRestaurantNames"/>
+          <HomeMap :coordinates="filteredRestaurantCoordinates" :names="filteredRestaurantNames" :namesSearch="restaurantNamesInHome"/>
         </div>
       </section>
 
@@ -177,18 +177,18 @@ const rateModaleOpened = ref(false);
 const popUpOpened = ref(false);
 const popUpMessage = ref("");
 const showMap = ref(false);
+const restaurantNamesInHome = ref([]);
+
+function handleRestaurantNamesUpdate(names) {
+  restaurantNamesInHome.value = names;
+}
 
 const toggleMapView = () => {
   showMap.value = !showMap.value;
 };
 
 const filteredRestaurantCoordinates = computed(() => {
-  return filtered_restaurants.value.map(restaurant => {
-    if (restaurant.location && restaurant.location.coordinates) {
-      return restaurant.location.coordinates;
-    }
-    return null;
-  }).filter(coord => coord !== null); 
+  return filtered_restaurants.value.map(restaurant => restaurant.location.coordinates);
 });
 
 const filteredRestaurantNames = computed(() => {
@@ -343,6 +343,7 @@ watch(
   background-color: #5e503f;
   color: #eae0d5;
 }
+
 
 @media screen and (max-width: 990px) {
   .restaurants-section {
