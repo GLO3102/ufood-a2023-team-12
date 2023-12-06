@@ -1,11 +1,11 @@
 <template>
   <div id="app">
-    <navigation-bar
-      :is-logged-in="isLoggedIn"
-      @as-logged-out="isLoggedIn = false"
-    />
+    <navigation-bar 
+    :loggedUser="loggedUser"
+    @logout="this.loggedUser = null"/>
 
-    <router-view @as-logged-in="isLoggedIn = true" />
+    <router-view 
+    @login="getLoggedUser"/>
   </div>
 </template>
 
@@ -22,11 +22,13 @@ export default {
   },
   data() {
     return {
-      isLoggedIn: false,
-      visit: {},
+      loggedUser: {},
     };
   },
   methods: {
+    getLoggedUser(){
+      this.loggedUser = JSON.parse(localStorage.getItem("user"))
+    },
     handleDocumentClick(event) {
       const navbar = document.querySelector(".navbar-collapse");
       if (navbar) {
@@ -35,6 +37,7 @@ export default {
     },
   },
   mounted() {
+    this.loggedUser = JSON.parse(localStorage.getItem("user"))
     document.addEventListener("click", this.handleDocumentClick);
   },
   beforeUnmount() {

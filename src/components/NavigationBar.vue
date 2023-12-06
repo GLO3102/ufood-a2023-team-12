@@ -28,15 +28,15 @@
         </ul>
         <user-search :is-large="true" v-if="innerWidth >= navCollapseValue"></user-search>
         <ul class="col justify-content-end navbar-nav">
-          <li v-if="loggedIn" class="nav-item" id="username" @click="this.$router.push('/user/' + userId)">
+          <li v-if="props.loggedUser != null" class="nav-item" id="username" @click="this.$router.push('/user/' + props.loggedUser.id)">
             <span class="nav-link text-warning" to="/user">{{
-              user.name
+              props.loggedUser.name
             }}</span>
           </li>
-          <li v-if="!loggedIn" class="nav-item">
+          <li v-if="props.loggedUser == null" class="nav-item">
             <router-link class="nav-link" to="/login">Login</router-link>
           </li>
-          <li v-if="loggedIn" class="nav-item" id="btn_logout">
+          <li v-if="props.loggedUser != null" class="nav-item" id="btn_logout">
             <router-link class="nav-link" to="/" @click="logoutUser"
               >Logout</router-link
             >
@@ -48,32 +48,20 @@
 </template>
 
 <script setup>
-import { onMounted, onBeforeUnmount, computed, watch, ref } from "vue";
+import { onMounted, onBeforeUnmount, watch, ref } from "vue";
 import UserSearch from "./UserSearch.vue";
 import { logout } from "../api/user";
 
-const props = defineProps({
-  isLoggedIn: Boolean,
-});
-
-const emit = defineEmits(["asLoggedOut"]);
-
-const loggedIn = ref(props.isLoggedIn);
-const userId = ref();
 const innerWidth = ref(window.innerWidth);
 const navCollapseValue = 990;
 
-const user = computed(() => {
-  const userData = JSON.parse(localStorage.getItem("user"));
-  return userData;
-});
+const props = defineProps({
+  loggedUser: Object,
+})
 
-watch(
-  () => props.isLoggedIn,
-  (newValue) => {
-    loggedIn.value = newValue;
-  }
-);
+const emit = defineEmits([
+  'logout'
+])
 
 watch(
   () => innerWidth.value,
@@ -85,10 +73,7 @@ watch(
 const logoutUser = async () => {
   await logout();
   localStorage.removeItem("user");
-  loggedIn.value = false;
-  emit("asLoggedOut", {
-    isLoggedIn: false,
-  });
+  emit('logout');
 };
 
 const handleWindowResize = () => {
@@ -96,11 +81,6 @@ const handleWindowResize = () => {
 };
 
 onMounted(() => {
-  if (localStorage.getItem("user")) {
-    loggedIn.value = true;
-    userId.value = JSON.parse(localStorage.getItem("user")).id;
-  }
-
   window.addEventListener("resize", handleWindowResize);
 });
 

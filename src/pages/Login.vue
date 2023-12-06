@@ -41,8 +41,10 @@ import { login } from "../api/user";
 const email = ref("");
 const password = ref("");
 const router = useRouter();
-const emit = defineEmits(["asLoggedIn"]);
 const errorMessage = ref(null);
+const emit = defineEmits([
+  'login',
+])
 
 const handleSubmit = async () => {
   const userData = {
@@ -52,10 +54,8 @@ const handleSubmit = async () => {
   try {
     const result = await login(userData);
     localStorage.setItem("user", JSON.stringify(result));
-    emit("asLoggedIn", {
-      isLoggedIn: true,
-    });
     router.push("/");
+    emit('login');
   } catch (error) {
     email.value = "";
     password.value = "";
