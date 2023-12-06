@@ -67,7 +67,17 @@
         </div>
       </div>
     </div>
-
+    <rate-restaurant-modale
+        v-if="rateModaleOpened"
+        @close-modale="rateModaleOpened = false"
+        @open-pop-up-modale="(message) => {popUpMessage = message; popUpOpened = true}"
+        :restaurant-id="restaurant.id"
+      />
+      <pop-up-modale
+        v-if="popUpOpened"
+        @close-pop-up="popUpOpened = false"
+        :message="popUpMessage"
+      />
     <div><Map :coordinates="restaurantCoordinates" /></div>
   </div>
 </template>
@@ -84,6 +94,8 @@ import { getRestaurantById } from "../api/restaurants.js";
 import { getFavoriteLists } from "../api/user.js";
 import { addRestaurantToFavoritesList } from "../api/favorites.js";
 import LoginModale from "../components/Modales/LoginModale.vue";
+import RateRestaurantModale from "../components/Modales/RateRestaurantModale.vue";
+import PopUpModale from "../components/Modales/PopUpModale.vue";
 
 const route = useRoute();
 const restaurantId = ref(route.params.id);
@@ -93,7 +105,8 @@ const showDropdown = ref(false);
 const selectedList = ref("");
 const allLists = ref([]);
 const isLoginModaleOpened = ref(false);
-const isRatingModaleOpened = ref(false);
+const rateModaleOpened = ref(false);
+const popUpOpened = ref(false);
 
 const emit = defineEmits(["openRateModale"]);
 const feedbackMessage = ref("");
@@ -206,7 +219,7 @@ const addToFavorites = async () => {
 function openRatingModale() {
   const userToken = getUserToken();
   if (userToken) {
-    isRatingModaleOpened.value = true;
+    rateModaleOpened.value = true;
   } else {
     // window.alert('Please log in to rate this restaurant.');
     //router.push({ name: 'Login' });
