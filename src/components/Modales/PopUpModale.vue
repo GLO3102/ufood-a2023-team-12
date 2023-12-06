@@ -9,7 +9,7 @@
         <font-awesome-icon icon="fa-solid fa-xmark" />
       </button>
     </div>
-    <div id="popUpContent" class="d-flex alt-font justify-content-center">
+    <div id="popUpContent" class="d-flex justify-content-center">
       {{ props.message }}
     </div>
   </dialog>
@@ -62,7 +62,7 @@ onMounted(() => {
 #popUpContent {
   font-size: 1.5rem;
   padding: 1rem;
-  color: rgba(10, 8, 5, 0.928);
+  color: white;
 }
 
 @keyframes fadeIn {

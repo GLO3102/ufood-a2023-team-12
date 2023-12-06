@@ -7,7 +7,7 @@
       <input
         class="form-control usernameInput"
         type="search"
-        placeholder="User search"
+        placeholder="Search for users"
         v-model="usernameInput"
         aria-label="Search"
         @click="handleSearchInputClick"
@@ -21,16 +21,24 @@
         <span class="alt-font">{{ user.name }}</span>
       </div>
     </div>
+
+    <PopUpModale v-if="popUpOpened"
+    @close-pop-up="popUpOpened=false"
+    :message="'You need to be logged in to use this feature...'"
+    />
+
   </div>
 </template>
   
   <script setup>
 import { ref, defineProps, onMounted, onBeforeUnmount } from "vue";
 import { getUsers } from "../api/userSearch.js";
+import PopUpModale from "./Modales/PopUpModale.vue";
 
 const usernameInput = ref("");
 const matchedUsers = ref([]);
 const isOpened = ref(true);
+const popUpOpened = ref(false);
 
 const props = defineProps({
   isSmall: Boolean,
@@ -39,6 +47,12 @@ const props = defineProps({
 
 async function searchUser() {
   try {
+
+    if(localStorage.getItem('user') == null){
+      popUpOpened.value = true;
+      return;
+    }
+
     const data = await getUsers(usernameInput);
     matchedUsers.value = data;
     isOpened.value = true;
