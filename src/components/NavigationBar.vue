@@ -28,10 +28,8 @@
         </ul>
         <user-search :is-large="true" v-if="innerWidth >= navCollapseValue"></user-search>
         <ul class="col justify-content-end navbar-nav">
-          <li v-if="props.loggedUser != null" class="nav-item" id="username" @click="this.$router.push('/user/' + props.loggedUser.id)">
-            <span class="nav-link text-warning" to="/user">{{
-              props.loggedUser.name
-            }}</span>
+          <li v-if="props.loggedUser != null" class="nav-item" id="username">
+            <router-link class="nav-link" style="color:gold;" :to="`/user/${props.loggedUser.id}`">{{props.loggedUser.name}}</router-link>
           </li>
           <li v-if="props.loggedUser == null" class="nav-item">
             <router-link class="nav-link" to="/login">Login</router-link>
