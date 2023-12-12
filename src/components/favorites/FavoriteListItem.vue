@@ -13,7 +13,7 @@
             {{ list.name }}
           </h4>
           <input
-            v-else
+            v-else-if="isEditing && props.isUserPageOwner"
             type="text"
             v-model="editedName"
             @keyup.enter="saveListName"
@@ -21,7 +21,7 @@
             class="form-control"
           />
 
-          <div v-if="!isEditing">
+          <div v-if="!isEditing && props.isUserPageOwner">
             <font-awesome-icon
               icon="fa-solid fa-pen"
               @click="startEdit"
@@ -47,6 +47,7 @@ import { ref, defineProps, defineEmits } from "vue";
 const props = defineProps({
   list: Object,
   isSelected: Boolean,
+  isUserPageOwner: Boolean
 });
 
 const emits = defineEmits(["delete-list", "update-list", "select-list"]);

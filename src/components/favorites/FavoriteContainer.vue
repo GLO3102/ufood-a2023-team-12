@@ -19,6 +19,7 @@
         <div v-if="isUserPageOwner">
           <favorite-list-item
             v-for="list in allLists"
+            :is-user-page-owner="props.isUserPageOwner"
             :key="list.id"
             :list="list"
             :isSelected="selectedList && list.id === selectedList.id"
@@ -95,7 +96,7 @@ const submitFavoritesList = async () => {
     validateTextInput(listName.value);
     const newList = await createFavoritesList(
       listName.value,
-      user.value.email
+      props.user.email
     );
     allLists.value.push(newList);
     listName.value = "";
@@ -106,7 +107,6 @@ const submitFavoritesList = async () => {
 
 const getFavoritesList = async () => {
   try {
-    console.log(props.user.name)
     const response = await getFavoriteLists(props.user.id);
     allLists.value = response.items;
   } catch (error) {
