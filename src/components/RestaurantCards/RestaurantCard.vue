@@ -13,18 +13,26 @@
         />
       </div>
       <div class="restaurant_info alt-font">
-        <h2>{{ props.restaurant.name }}</h2>
+        <div class="overflowable">
+          <h2>{{ props.restaurant.name }}</h2>
+        </div>
         <div>
           <span class="highlight">Address:</span>
-          <p>{{ props.restaurant.address }}</p>
+          <div class="overflowable">
+            <p>{{ props.restaurant.address }}</p>
+          </div>
         </div>
         <div>
           <span class="highlight">Price Range:</span>
-          <p>{{ getFilterPriceName(props.restaurant.price_range) }}</p>
+          <div class="overflowable">
+            <p>{{ getFilterPriceName(props.restaurant.price_range) }}</p>
+          </div>
         </div>
         <div>
           <span class="highlight">Genre:</span>
-          <p>{{ props.restaurant.genres.join(", ") }}</p>
+          <div class="overflowable">
+            <p>{{ props.restaurant.genres.join(", ") }}</p>
+          </div>
         </div>
         <RatingStars :rating="props.restaurant.rating" />
       </div>
@@ -92,11 +100,12 @@ function openRatingModale() {
 <style scoped>
 .restaurant_card {
   position:relative;
-  width: 325px;
+  max-width: 325px;
   height: fit-content;
   margin-right: 15px;
 }
 .restaurant_card_clickable {
+  max-width: 100%;
   border: 1px solid #000;
   border-radius: 0.5rem 0.5rem 0.5rem 0;
   background-color: #EAE0D5;
@@ -118,8 +127,17 @@ function openRatingModale() {
   border-radius: 0.5rem 0.5rem 0 0;
 }
 
+.overflowable{
+  max-width: 100%;
+}
+.overflowable > *{
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
 .restaurant_info{
-  margin: 1rem;
+  max-width: 100%;
+  padding: 1rem;
 }
 .restaurant_info p {
   color: rgb(192, 68, 6);
