@@ -1,7 +1,7 @@
 <template>
   <div class="w-100">
     <h3 class="mt-3">Favorite Restaurants</h3>
-    <div>
+    <div v-if="props.isUserPageOwner">
       <strong>New List</strong>
       <div v-if="errorMessage" class="alert alert-danger">
         {{ errorMessage }}
@@ -16,7 +16,7 @@
 
     <div v-if="allLists.length > 0" class="favorite-lists mt-3">
       <div class="d-flex favorites-section justify-content-start">
-        <div>
+        <div v-if="isUserPageOwner">
           <favorite-list-item
             v-for="list in allLists"
             :key="list.id"
@@ -24,6 +24,15 @@
             :isSelected="selectedList && list.id === selectedList.id"
             @delete-list="deleteLastName"
             @update-list="saveListName"
+            @select-list="selectList"
+          />
+        </div>
+        <div v-else>
+          <favorite-list-item
+            v-for="list in allLists"
+            :key="list.id"
+            :list="list"
+            :isSelected="selectedList && list.id === selectedList.id"
             @select-list="selectList"
           />
         </div>
@@ -41,7 +50,7 @@
               :key="restaurant.id"
             >
               <restaurant-card :restaurant="restaurant" />
-              <div class="favorites-btn-section mb-3 w-100">
+              <div v-if="isUserPageOwner" class="favorites-btn-section mb-3 w-100">
                 <button @click="removeRestaurant(restaurant.id)" class="btn btn-success">
                   Remove
                 </button>
@@ -73,11 +82,12 @@ const selectedList = ref(null);
 const errorMessage = ref("");
 const allLists = ref([]);
 const detailedRestaurantList = ref([]);
+const user = ref(props.user);
 const emit = defineEmits(["openRateModale"]);
-
-const userData = computed(() => {
-  return JSON.parse(localStorage.getItem("user"));
-});
+const props = defineProps({
+  isUserPageOwner: Boolean,
+  user: Object
+})
 
 const submitFavoritesList = async () => {
   errorMessage.value = "";
@@ -85,7 +95,7 @@ const submitFavoritesList = async () => {
     validateTextInput(listName.value);
     const newList = await createFavoritesList(
       listName.value,
-      userData.value.email
+      user.value.email
     );
     allLists.value.push(newList);
     listName.value = "";
@@ -96,7 +106,8 @@ const submitFavoritesList = async () => {
 
 const getFavoritesList = async () => {
   try {
-    const response = await getFavoriteLists(userData.value.id);
+    console.log(props.user.name)
+    const response = await getFavoriteLists(props.user.id);
     allLists.value = response.items;
   } catch (error) {
     errorMessage.value = error.message || "An unexpected error occurred.";

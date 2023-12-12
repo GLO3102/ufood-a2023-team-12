@@ -34,8 +34,10 @@
       </div>
 
       <hr />
-      <section class="d-flex w-100 justify-content-start">
-        <FavoriteContainer />
+      <section v-if="!isLoading" class="d-flex w-100 justify-content-start">
+        <FavoriteContainer 
+        :is-user-page-owner="isUserPageOwner"
+        :user="user"/>
       </section>
     </div>
 
@@ -48,40 +50,59 @@
 </template>
 
 <script setup>
-import { ref, computed, onMounted, onUpdated } from "vue";
-import { useRoute } from 'vue-router';
+import { ref, computed, onMounted, onUpdated, watch } from "vue";
+import { useRoute } from "vue-router";
 import * as api from "../api/restaurants";
 import * as apiUser from "../api/user";
 import FavoriteContainer from "../components/favorites/FavoriteContainer.vue";
 import RestaurantCard from "../components/RestaurantCards/RestaurantCard.vue";
 import RateRestaurantModaleReadOnly from "../components/Modales/RateRestaurantModaleReadOnly.vue";
 
+const route = useRoute();
 const selectedValue = ref("1");
 const visits = ref([]);
 const restaurants = ref([]);
 const rateModaleOpened = ref(false);
 const review = ref({});
-const user = ref({})
-
-const route = useRoute();
+const isLoading = ref(true);
+const user = ref({});
+const isUserPageOwner = ref(false);
 
 onMounted(async () => {
   try {
-
+    isLoading.value = true;
     user.value = await apiUser.getUserInfo(route.params.id);
-    console.log(user.value)
-
     const fetchedVisits = await api.getUserVisits(route.params.id);
     visits.value = fetchedVisits;
-
     const tempRestaurants = await getRestaurantsAsync(fetchedVisits);
     restaurants.value = tempRestaurants;
+    isUserPageOwner.value = checkIfUserPageOwner();
   } catch {
     console.error("Failed to fetch visits:");
   } finally {
     selectedValue.value = "1";
+    isLoading.value = false;
   }
 });
+
+watch(
+  () => route.params.id,
+  async (newVal, oldVal) => {
+    try {
+      isLoading.value=true;
+      user.value = await apiUser.getUserInfo(newVal);
+      const fetchedVisits = await api.getUserVisits(newVal);
+      visits.value = fetchedVisits;
+      const tempRestaurants = await getRestaurantsAsync(fetchedVisits);
+      restaurants.value = tempRestaurants;
+      isUserPageOwner.value = checkIfUserPageOwner();
+    } catch (error) {
+      console.error("Failed to fetch user");
+    }finally{
+      isLoading.value = false;
+    }
+  }
+);
 
 async function getRestaurantsAsync(visits) {
   let tempRestaurants = [];
@@ -106,6 +127,14 @@ function viewReview(visit) {
   rateModaleOpened.value = true;
 }
 
+function checkIfUserPageOwner() {
+  if(localStorage.getItem('user') != null){
+    if(JSON.parse(localStorage.getItem('user')).id == user.value.id)
+      return true
+    else
+      return false;
+  }
+}
 </script>
 
 <style>
