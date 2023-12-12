@@ -6,20 +6,6 @@
       <hr />
       <h4><font-awesome-icon icon="fa-solid fa-star" /> {{ user.rating }}</h4>
       <hr />
-      <div class="select-box">
-        <h3>Recently Visited Restaurants</h3>
-        <select v-model="selectedValue" class="form-select">
-          <option value="0">List with no results</option>
-          <option selected value="1">List with results</option>
-        </select>
-      </div>
-
-      <div v-if="selectedValue === '0'">
-        <p class="pt-2">No restaurant recently visited</p>
-        <router-link class="nav-link" to="/">
-          <button class="back-button">See all restaurants</button>
-        </router-link>
-      </div>
       <div
         v-if="!isLoading && restaurants.length > 0"
         class="cardContainer d-flex flex-row flex-wrap pt-3 justify-content-center"
@@ -31,6 +17,12 @@
           :is-user-page="true"
           @open-rate-modale-read-only="viewReview(visit)"
         />
+      </div>
+      <div class="d-flex flex-column justify-content-center" v-else-if="!isLoading && restaurants.length == 0">
+        <p class="pt-2">No restaurant recently visited</p>
+        <router-link class="nav-link" to="/">
+          <button class="btn btn-success back-button">See all restaurants</button>
+        </router-link>
       </div>
 
       <hr />
@@ -153,6 +145,10 @@ function checkIfUserPageOwner() {
 
 .user-section {
   padding: 3rem !important;
+}
+
+.back-button{
+  width: 100%;
 }
 
 @media (max-width: 990px) {
