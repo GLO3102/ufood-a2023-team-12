@@ -8,6 +8,29 @@
       <hr />
       <h4><font-awesome-icon icon="fa-solid fa-star" /> {{ user.rating }}</h4>
       <hr />
+
+
+      <section class="followers-section">
+        <h2>Followers</h2>
+        <ul v-if="user.followers && user.followers.length > 0">
+          <li v-for="follower in user.followers" :key="follower.id">
+            {{ follower.name }}
+          </li>
+        </ul>
+        <p v-else>No followers found.</p>
+      </section>
+
+
+      <section class="following-section">
+        <h2>Following</h2>
+        <ul v-if="user.following && user.following.length > 0">
+          <li v-for="followed in user.following" :key="followed.id">
+            {{ followed.name }}
+          </li>
+        </ul>
+        <p v-else>No following found.</p>
+      </section>
+
       <div
         v-if="!isLoading && restaurants.length > 0"
         class="cardContainer d-flex flex-row flex-wrap pt-3 justify-content-center"
@@ -29,7 +52,7 @@
 
       <hr />
       <section v-if="!isLoading" class="d-flex w-100 justify-content-start">
-        <FavoriteContainer 
+        <FavoriteContainer
         :is-user-page-owner="isUserPageOwner"
         :user="user"/>
       </section>
@@ -88,8 +111,8 @@ async function userPageSetup(userID){
     if(!isUserPageOwner.value){
       isFollowed.value = loggedUser.value.following.some(cuser => cuser.id == user.value.id);
     }
-  } catch {
-    console.error("Failed to fetch visits:");
+  } catch (error) {
+    console.error("Failed to fetch user data:", error);
   } finally {
     selectedValue.value = "1";
     isLoading.value = false;
