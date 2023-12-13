@@ -14,7 +14,9 @@
         <h2>Followers</h2>
         <ul v-if="user.followers && user.followers.length > 0">
           <li v-for="follower in user.followers" :key="follower.id">
-            {{ follower.name }}
+            <router-link :to="{ name: 'User', params: { id: follower.id }}">
+              {{ follower.name }}
+            </router-link>
           </li>
         </ul>
         <p v-else>No followers found.</p>
@@ -25,7 +27,9 @@
         <h2>Following</h2>
         <ul v-if="user.following && user.following.length > 0">
           <li v-for="followed in user.following" :key="followed.id">
-            {{ followed.name }}
+            <router-link :to="{ name: 'User', params: { id: followed.id }}">
+              {{ followed.name }}
+            </router-link>
           </li>
         </ul>
         <p v-else>No following found.</p>
