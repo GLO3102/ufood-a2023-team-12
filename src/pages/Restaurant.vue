@@ -39,7 +39,11 @@
             Mark as visited
           </button>
 
-          <button  class="btn btn-primary" @click="toggleDropdown" v-if ="isUserLoggedIn">
+          <button
+            class="btn btn-primary"
+            @click="toggleDropdown"
+            v-if="isUserLoggedIn"
+          >
             Add to Favorites
           </button>
           <button class="btn btn-primary" @click="addToFavorites" v-else>
@@ -49,7 +53,6 @@
             v-if="isLoginModaleOpened"
             @close-modale="isLoginModaleOpened = false"
           />
-          
 
           <select
             v-show="showDropdown"
@@ -68,17 +71,28 @@
       </div>
     </div>
     <rate-restaurant-modale
-        v-if="rateModaleOpened"
-        @close-modale="rateModaleOpened = false"
-        @open-pop-up-modale="(message) => {popUpMessage = message; popUpOpened = true}"
-        :restaurant-id="restaurant.id"
-      />
-      <pop-up-modale
-        v-if="popUpOpened"
-        @close-pop-up="popUpOpened = false"
-        :message="popUpMessage"
-      />
+      v-if="rateModaleOpened"
+      @close-modale="rateModaleOpened = false"
+      @open-pop-up-modale="
+        (message) => {
+          popUpMessage = message;
+          popUpOpened = true;
+        }
+      "
+      :restaurant-id="restaurant.id"
+    />
+    <pop-up-modale
+      v-if="popUpOpened"
+      @close-pop-up="popUpOpened = false"
+      :message="popUpMessage"
+    />
     <div><Map :coordinates="restaurantCoordinates" /></div>
+    <div>
+      <SuggestionsContainer
+        :genres="genres"
+        :priceRange="restaurant.price_range"
+      />
+    </div>
   </div>
 </template>
 
@@ -87,6 +101,7 @@ import { getUserToken } from "../api/restaurantApiURL";
 import { getFilterPriceName } from "../components/Utils.js";
 import RestaurantImages from "../components/RestaurantImages.vue";
 import Map from "../components/Map.vue";
+import SuggestionsContainer from "../components/suggestions/SuggestionsContainer.vue";
 
 import { onMounted, ref, computed } from "vue";
 import { useRoute } from "vue-router";
@@ -116,7 +131,7 @@ const toggleDropdown = () => {
   if (isUserLoggedIn.value) {
     showDropdown.value = !showDropdown.value;
   } else {
-    window.alert('Please log in before adding to favorites.');
+    window.alert("Please log in before adding to favorites.");
   }
 };
 
@@ -182,7 +197,10 @@ const getFavoritesList = async () => {
       return;
     }
   } catch (error) {
-    console.error("Erreur lors de la récupération des listes de favoris:", error);
+    console.error(
+      "Erreur lors de la récupération des listes de favoris:",
+      error
+    );
   }
 };
 
@@ -225,8 +243,7 @@ function openRatingModale() {
     //router.push({ name: 'Login' });
     isLoginModaleOpened.value = true;
   }
-};
-
+}
 </script>
 
 <style scoped>
@@ -273,7 +290,7 @@ function openRatingModale() {
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
   background-color: rgba(255, 255, 255, 0.5);
   gap: 10px;
-  position:relative;
+  position: relative;
 }
 
 .restaurant_reviews {

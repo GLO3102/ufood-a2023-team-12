@@ -23,6 +23,39 @@ export const getRestaurants = async () => {
   }
 };
 
+export const getRestaurantsSuggestions = async (genres, priceRange) => {
+  if (genres || priceRange) {
+    try {
+      let url = `${BASE_URL_UNSECURE}/restaurants?limit=3`;
+      if (genres) {
+        url += `&genres=${encodeURIComponent(genres)}`;
+      }
+      if (priceRange) {
+        url += `&price_range=${encodeURIComponent(priceRange)}`;
+      }
+
+      const response = await fetch(url, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          Accept:
+            "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7",
+        },
+      });
+
+      if (response.status != 200) {
+        throw new Error("An error occurred");
+      }
+
+      const restaurants = await response.json();
+      return restaurants.items;
+    } catch (e) {
+      console.log(e);
+    }
+  }
+};
+
+
 export const getRestaurantById = async (restaurantId) => {
   try {
     const response = await fetch(`${BASE_URL_UNSECURE}/restaurants/${restaurantId}`, {
