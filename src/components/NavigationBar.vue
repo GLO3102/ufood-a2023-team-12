@@ -71,6 +71,7 @@ watch(
 const logoutUser = async () => {
   await logout();
   localStorage.removeItem("user");
+  localStorage.removeItem("authToken");
   emit('logout');
 };
 

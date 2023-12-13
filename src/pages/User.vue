@@ -1,6 +1,8 @@
 <template>
-  <div class="user-container d-flex justify-content-center">
+  <div v-if="!isLoading" class="user-container d-flex justify-content-center">
     <div class="user-section d-flex flex-column align-items-center">
+      <button v-if="!isUserPageOwner && !isFollowed" @click="followUser">Follow</button>
+      <button v-else-if="!isUserPageOwner && isFollowed" @click="unfollowUser">Unfollow</button>
       <h1>{{ user.name }}</h1>
       <p>{{ user.email }}</p>
       <hr />
@@ -59,42 +61,40 @@ const review = ref({});
 const isLoading = ref(true);
 const user = ref({});
 const isUserPageOwner = ref(false);
+const isFollowed = ref(false);
+const loggedUser = ref(JSON.parse(localStorage.getItem('user')));
 
-onMounted(async () => {
+onMounted(() => {
+  userPageSetup(route.params.id);
+});
+
+watch(
+  () => route.params.id,
+  (newVal, oldVal) => {
+    userPageSetup(newVal);
+  }
+);
+
+async function userPageSetup(userID){
   try {
     isLoading.value = true;
-    user.value = await apiUser.getUserInfo(route.params.id);
-    const fetchedVisits = await api.getUserVisits(route.params.id);
+    user.value = await apiUser.getUserInfo(userID);
+    const fetchedVisits = await api.getUserVisits(userID);
     visits.value = fetchedVisits;
     const tempRestaurants = await getRestaurantsAsync(fetchedVisits);
     restaurants.value = tempRestaurants;
+
     isUserPageOwner.value = checkIfUserPageOwner();
+    if(!isUserPageOwner.value){
+      isFollowed.value = loggedUser.value.following.some(cuser => cuser.id == user.value.id);
+    }
   } catch {
     console.error("Failed to fetch visits:");
   } finally {
     selectedValue.value = "1";
     isLoading.value = false;
   }
-});
-
-watch(
-  () => route.params.id,
-  async (newVal, oldVal) => {
-    try {
-      isLoading.value=true;
-      user.value = await apiUser.getUserInfo(newVal);
-      const fetchedVisits = await api.getUserVisits(newVal);
-      visits.value = fetchedVisits;
-      const tempRestaurants = await getRestaurantsAsync(fetchedVisits);
-      restaurants.value = tempRestaurants;
-      isUserPageOwner.value = checkIfUserPageOwner();
-    } catch (error) {
-      console.error("Failed to fetch user");
-    }finally{
-      isLoading.value = false;
-    }
-  }
-);
+}
 
 async function getRestaurantsAsync(visits) {
   let tempRestaurants = [];
@@ -113,6 +113,31 @@ async function getRestaurantsAsync(visits) {
 
   return tempRestaurants;
 }
+
+async function followUser(){
+  try{
+    const follow = await apiUser.followUser(user.value.id);
+  }catch{
+    throw new Error("error trying to follow user");
+  }finally{
+    const result = await apiUser.getUserInfo(loggedUser.value.id)
+    localStorage.setItem('user', JSON.stringify(result));
+    isFollowed.value = true;
+  }
+}
+
+async function unfollowUser(){
+  try{
+    const unfollow = await apiUser.unfollowUser(user.value.id);
+  }catch{
+    throw new Error("error trying to unfollow user");
+  }finally{
+    const result = await apiUser.getUserInfo(loggedUser.value.id)
+    localStorage.setItem('user', JSON.stringify(result));
+    isFollowed.value = false;
+  }
+}
+
 
 function viewReview(visit) {
   review.value = visit;

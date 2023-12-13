@@ -54,6 +54,7 @@ const handleSubmit = async () => {
   try {
     const result = await login(userData);
     localStorage.setItem("user", JSON.stringify(result));
+    localStorage.setItem("authToken", JSON.parse(localStorage.getItem('user')).token);
     router.push("/");
     emit('login');
   } catch (error) {

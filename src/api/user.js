@@ -98,3 +98,50 @@ export const getUserInfo = async (ownerId) => {
     throw error;
   }
 };
+
+export const followUser = async (
+  user_id,
+) => {
+  try {
+    const response = await fetch(
+      `${BASE_URL}/follow`,
+      {
+        method: "POST",
+        headers: {
+          "Authorization": getUserToken(),
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          id: user_id,
+        }),
+      },
+    );
+
+    await response.json();
+    return response;
+  } catch (e) {
+    console.log(e);
+  }
+};
+
+export const unfollowUser = async (
+  user_id,
+) => {
+  try {
+    const response = await fetch(
+      `${BASE_URL}/follow/${user_id}`,
+      {
+        method: "DELETE",
+        headers: {
+          "Authorization": getUserToken(),
+          "Content-Type": "application/json",
+        },
+      },
+    );
+
+    await response.json();
+    return response;
+  } catch (e) {
+    console.log(e);
+  }
+};
