@@ -26,7 +26,7 @@ export const getRestaurants = async () => {
 export const getRestaurantsSuggestions = async (genres, priceRange) => {
   if (genres || priceRange) {
     try {
-      let url = `${BASE_URL_UNSECURE}/restaurants?limit=3`;
+      let url = `${BASE_URL_UNSECURE}/restaurants?limit=4`;
       if (genres) {
         url += `&genres=${encodeURIComponent(genres)}`;
       }

@@ -1,11 +1,8 @@
 <template>
   <div id="app">
-    <navigation-bar 
-    :loggedUser="loggedUser"
-    @logout="this.loggedUser = null"/>
+    <navigation-bar :loggedUser="loggedUser" @logout="this.loggedUser = null" />
 
-    <router-view 
-    @login="getLoggedUser"/>
+    <router-view @login="getLoggedUser" :key="$route.fullPath" />
   </div>
 </template>
 
@@ -26,8 +23,8 @@ export default {
     };
   },
   methods: {
-    getLoggedUser(){
-      this.loggedUser = JSON.parse(localStorage.getItem("user"))
+    getLoggedUser() {
+      this.loggedUser = JSON.parse(localStorage.getItem("user"));
     },
     handleDocumentClick(event) {
       const navbar = document.querySelector(".navbar-collapse");
@@ -37,7 +34,7 @@ export default {
     },
   },
   mounted() {
-    this.loggedUser = JSON.parse(localStorage.getItem("user"))
+    this.loggedUser = JSON.parse(localStorage.getItem("user"));
     document.addEventListener("click", this.handleDocumentClick);
   },
   beforeUnmount() {

@@ -25,7 +25,8 @@ import RestaurantCard from "../RestaurantCards/RestaurantCard.vue";
 
 const props = defineProps({
   genres: String,
-  priceRange: String,
+  priceRange: Number,
+  currentId: String,
 });
 
 const suggestions = ref([]);
@@ -36,7 +37,9 @@ async function fetchSuggestions() {
       props.genres,
       props.priceRange
     );
-    suggestions.value = fetchedRestaurantsSuggestions;
+    suggestions.value = fetchedRestaurantsSuggestions.filter(
+      (e) => e.id != props.currentId
+    );
   } catch (e) {
     console.error("Failed to fetch restaurants:", e);
   }
@@ -44,6 +47,7 @@ async function fetchSuggestions() {
 
 watch(() => props.genres, fetchSuggestions);
 watch(() => props.priceRange, fetchSuggestions);
+watch(() => props.currentId, fetchSuggestions);
 
 onMounted(fetchSuggestions);
 </script>

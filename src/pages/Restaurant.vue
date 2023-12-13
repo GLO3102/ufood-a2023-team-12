@@ -91,6 +91,7 @@
       <SuggestionsContainer
         :genres="genres"
         :priceRange="restaurant.price_range"
+        :currentId="restaurant.id"
       />
     </div>
   </div>
