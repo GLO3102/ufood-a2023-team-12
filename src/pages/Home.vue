@@ -1,118 +1,10 @@
 <template>
   <div class="main-container">
-    <div class="header-container">
-      <div class="header-content">
-        <h1 class="header-title alt-font">
-          Taste the World. One Restaurant at a Time.
-        </h1>
-        <!-- <input
-          type="search"
-          class="form-control searchbar mt-3"
-          placeholder="Search Restaurants"
-        /> -->
-        <search-bar class="searchbar mt-3" @updateRestaurantNames="handleRestaurantNamesUpdate"/>
-      </div>
-    </div>
-
+    <home-header />
     <div class="d-flex restaurants-section">
       <div class="p-5">
-        <button @click="toggleMapView" class="btn btn-primary">Carte</button> 
-        <div class="accordion" id="accordionFilters">
-          <div class="accordion-item">
-            <h2 class="accordion-header">
-              <button
-                class="accordion-button"
-                type="button"
-                data-bs-toggle="collapse"
-                data-bs-target="#collapseOne"
-                aria-expanded="true"
-                aria-controls="collapseOne"
-              >
-                <h6 class="mb-0">Filters</h6>
-              </button>
-            </h2>
-            <div
-              id="collapseOne"
-              class="accordion-collapse collapse show"
-              data-bs-parent="#accordionFilters"
-            >
-              <div class="accordion-body">
-                <div class="pb-3">
-                  <button class="clear-filters" @click="clearFilters">
-                    <font-awesome-icon icon="fa-solid fa-xmark" /> Clear Filters
-                  </button>
-                </div>
-                <h6>Price</h6>
-                <div
-                  v-for="price in filterPrices"
-                  :key="price"
-                  class="form-check"
-                >
-                  <input
-                    class="form-check-input"
-                    type="checkbox"
-                    :value="price"
-                    :id="`filterPrices${price}`"
-                    v-model="selectedPrices[price]"
-                  />
-                  <label :for="`filterPrices${price}`" class="form-check-label">
-                    {{ getFilterPriceName(price) }}
-                  </label>
-                </div>
-
-                <hr />
-                <h6>Cuisine / Food Types</h6>
-
-                <div
-                  v-for="(type, index) in filterTypes"
-                  :key="index"
-                  class="form-check"
-                >
-                  <input
-                    class="form-check-input"
-                    type="checkbox"
-                    :value="type"
-                    :id="`filterTypes${index + 1}`"
-                    v-model="selectedTypes[type]"
-                  />
-                  <label
-                    :for="`filterTypes${index + 1}`"
-                    class="form-check-label"
-                  >
-                    {{ type }}
-                  </label>
-                </div>
-
-                <hr />
-                <h6>Ratings</h6>
-
-                <div
-                  v-for="rating in filterRatings"
-                  :key="rating"
-                  class="form-check"
-                >
-                  <input
-                    class="form-check-input"
-                    type="checkbox"
-                    :value="rating"
-                    :id="`filterRatings${rating}`"
-                    v-model="selectedRatings[rating]"
-                  />
-                  <label
-                    :for="`filterRatings${rating}`"
-                    class="form-check-label"
-                  >
-                    <font-awesome-icon
-                      v-for="n in rating"
-                      :key="n"
-                      icon="fa-solid fa-star"
-                    />
-                  </label>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
+        <button @click="toggleMapView" class="btn btn-primary">Carte</button>
+        <restaurant-filters :onFilterChange="handleFilterChange" />
       </div>
 
       <section class="w-100" v-if="!showMap">
@@ -130,7 +22,12 @@
             v-for="restaurant in filtered_restaurants"
             :is-home-page="true"
             :key="restaurant.id"
-            @open-rate-modale="(id) => { rateRestaurantId = id; rateModaleOpened = true}"
+            @open-rate-modale="
+              (id) => {
+                rateRestaurantId = id;
+                rateModaleOpened = true;
+              }
+            "
             :restaurant="restaurant"
           ></restaurant-card>
         </div>
@@ -140,14 +37,23 @@
       </section>
       <section class="w-100 h-100" v-else>
         <div class="p-5">
-          <HomeMap :coordinates="filteredRestaurantCoordinates" :names="filteredRestaurantNames" :namesSearch="restaurantNamesInHome"/>
+          <HomeMap
+            :coordinates="filteredRestaurantCoordinates"
+            :names="filteredRestaurantNames"
+            :namesSearch="restaurantNamesInHome"
+          />
         </div>
       </section>
 
       <rate-restaurant-modale
         v-if="rateModaleOpened"
         @close-modale="rateModaleOpened = false"
-        @open-pop-up-modale="(message) => {popUpMessage = message; popUpOpened = true}"
+        @open-pop-up-modale="
+          (message) => {
+            popUpMessage = message;
+            popUpOpened = true;
+          }
+        "
         :restaurant-id="rateRestaurantId"
       />
       <pop-up-modale
@@ -164,9 +70,10 @@ import { onMounted, ref, reactive, watch, computed } from "vue";
 import { getRestaurants } from "../api/restaurants.js";
 import { getAllFilterTypes } from "../api/filters.js";
 import RestaurantCard from "../components/RestaurantCards/RestaurantCard.vue";
+import RestaurantFilters from "../components/RestaurantFilters.vue";
 import RateRestaurantModale from "../components/Modales/RateRestaurantModale.vue";
 import PopUpModale from "../components/Modales/PopUpModale.vue";
-import SearchBar from "../components/searchBar/SearchBar.vue";
+import HomeHeader from "../components/HomeHeader.vue";
 import HomeMap from "../components/HomeMap.vue";
 
 const restaurants = ref([]);
@@ -174,26 +81,57 @@ const rateRestaurantId = ref();
 const filtered_restaurants = ref([]);
 const isLoading = ref(true);
 const rateModaleOpened = ref(false);
-const popUpOpened = ref(false);
-const popUpMessage = ref("");
 const showMap = ref(false);
-const restaurantNamesInHome = ref([]);
 
+const filterPrices = ref([1, 2, 3]);
+const selectedPrices = reactive({});
+const filterTypes = ref([]);
+const selectedTypes = reactive({});
+const filterRatings = ref([5, 4, 3, 2, 1]);
+const selectedRatings = reactive({});
+const restaurantNamesInHome = ref([]);
 function handleRestaurantNamesUpdate(names) {
   restaurantNamesInHome.value = names;
 }
-
 const toggleMapView = () => {
   showMap.value = !showMap.value;
 };
-
 const filteredRestaurantCoordinates = computed(() => {
-  return filtered_restaurants.value.map(restaurant => restaurant.location.coordinates);
+  return filtered_restaurants.value.map(
+    (restaurant) => restaurant.location.coordinates
+  );
+});
+const filteredRestaurantNames = computed(() => {
+  return filtered_restaurants.value.map((restaurant) => restaurant.name);
 });
 
-const filteredRestaurantNames = computed(() => {
-  return filtered_restaurants.value.map(restaurant => restaurant.name);
-});
+const handleFilterChange = (filters) => {
+  const { selectedPrices, selectedTypes, selectedRatings } = filters;
+
+  const selectedPriceValues = Object.keys(selectedPrices)
+    .filter((key) => selectedPrices[key])
+    .map(Number);
+  const selectedTypeValues = Object.keys(selectedTypes).filter(
+    (key) => selectedTypes[key]
+  );
+  const selectedRatingValues = Object.keys(selectedRatings)
+    .filter((key) => selectedRatings[key])
+    .map(Number);
+
+  filtered_restaurants.value = restaurants.value.filter((restaurant) => {
+    const matchesPrice =
+      selectedPriceValues.length === 0 ||
+      selectedPriceValues.includes(restaurant.price_range);
+    const matchesType =
+      selectedTypeValues.length === 0 ||
+      selectedTypeValues.some((type) => restaurant.genres.includes(type));
+    const matchesRating =
+      selectedRatingValues.length === 0 ||
+      selectedRatingValues.includes(Math.floor(restaurant.rating));
+
+    return matchesPrice && matchesType && matchesRating;
+  });
+};
 
 onMounted(async () => {
   try {
@@ -207,26 +145,9 @@ onMounted(async () => {
   }
 });
 
-const filterPrices = ref([1, 2, 3]);
-const selectedPrices = reactive({});
-
 filterPrices.value.forEach((range) => {
   selectedPrices[range] = false;
 });
-
-const getFilterPriceName = (price) => {
-  switch (price) {
-    case 1:
-      return "Cheap";
-    case 2:
-      return "Moderate";
-    case 3:
-      return "Expensive";
-  }
-};
-
-const filterTypes = ref([]);
-const selectedTypes = reactive({});
 
 onMounted(async () => {
   try {
@@ -240,24 +161,9 @@ onMounted(async () => {
   }
 });
 
-const filterRatings = ref([5, 4, 3, 2, 1]);
-const selectedRatings = reactive({});
-
 filterRatings.value.forEach((rating) => {
   selectedRatings[rating] = false;
 });
-
-const clearFilters = () => {
-  for (const price in selectedPrices) {
-    selectedPrices[price] = false;
-  }
-  for (const type in selectedTypes) {
-    selectedTypes[type] = false;
-  }
-  for (const rating in selectedRatings) {
-    selectedRatings[rating] = false;
-  }
-};
 
 watch(
   [selectedPrices, selectedTypes, selectedRatings],
@@ -284,67 +190,9 @@ watch(
     );
   }
 );
-
-
 </script>
 
 <style scoped>
-.header-container {
-  background-image: url("https://images.unsplash.com/photo-1552566626-52f8b828add9?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=3570&q=80;");
-  height: 400px;
-  width: 100%;
-
-  background-size: cover;
-  background-position: center;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  position: relative;
-}
-.header-container:before {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background-color: rgba(0, 0, 0, 0.6);
-  z-index: 1;
-}
-.header-content {
-  z-index: 2;
-}
-.searchbar {
-  max-width: 400px;
-  margin: 0 auto;
-  border-radius: 25px;
-}
-.header-title {
-  color: #fff;
-  margin-bottom: 20px;
-}
-.form-check-label {
-  font-size: 14px;
-  color: #0a0908;
-}
-.clear-filters {
-  font-size: 14px;
-}
-.accordion {
-  border-radius: 0.5rem;
-  min-width: 250px;
-}
-.accordion-item {
-  border: 1px solid black;
-  background-color: #eae0d5;
-}
-.accordion-button,
-.accordion-button:not(.collapsed) {
-  background-color: #5e503f;
-  color: #eae0d5;
-}
-
-
 @media screen and (max-width: 990px) {
   .restaurants-section {
     flex-direction: column;
