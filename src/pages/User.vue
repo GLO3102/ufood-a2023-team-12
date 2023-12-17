@@ -1,20 +1,31 @@
 <template>
   <div v-if="!isLoading" class="user-container d-flex justify-content-center">
     <div class="user-section d-flex flex-column align-items-center">
-      <button v-if="!isUserPageOwner && !isFollowed" @click="followUser">Follow</button>
-      <button v-else-if="!isUserPageOwner && isFollowed" @click="unfollowUser">Unfollow</button>
+      <button
+        v-if="!isUserPageOwner && !isFollowed"
+        @click="followUser"
+        class="btn btn-success"
+      >
+        Follow
+      </button>
+      <button
+        v-else-if="!isUserPageOwner && isFollowed"
+        @click="unfollowUser"
+        class="btn btn-success"
+      >
+        Unfollow
+      </button>
       <h1>{{ user.name }}</h1>
       <p>{{ user.email }}</p>
       <hr />
       <h4><font-awesome-icon icon="fa-solid fa-star" /> {{ user.rating }}</h4>
       <hr />
 
-
       <section class="followers-section">
         <h2>Followers</h2>
         <ul v-if="user.followers && user.followers.length > 0">
           <li v-for="follower in user.followers" :key="follower.id">
-            <router-link :to="{ name: 'User', params: { id: follower.id }}">
+            <router-link :to="{ name: 'User', params: { id: follower.id } }">
               {{ follower.name }}
             </router-link>
           </li>
@@ -22,12 +33,11 @@
         <p v-else>No followers found.</p>
       </section>
 
-
       <section class="following-section">
         <h2>Following</h2>
         <ul v-if="user.following && user.following.length > 0">
           <li v-for="followed in user.following" :key="followed.id">
-            <router-link :to="{ name: 'User', params: { id: followed.id }}">
+            <router-link :to="{ name: 'User', params: { id: followed.id } }">
               {{ followed.name }}
             </router-link>
           </li>
@@ -47,7 +57,10 @@
           @open-rate-modale-read-only="viewReview(visit)"
         />
       </div>
-      <div class="d-flex flex-column justify-content-center" v-else-if="!isLoading && restaurants.length == 0">
+      <div
+        class="d-flex flex-column justify-content-center"
+        v-else-if="!isLoading && restaurants.length == 0"
+      >
         <p class="pt-2">No restaurant recently visited</p>
         <router-link class="nav-link" to="/">
           <button class="btn btn-success back-button">See all restaurants</button>
@@ -56,9 +69,7 @@
 
       <hr />
       <section v-if="!isLoading" class="d-flex w-100 justify-content-start">
-        <FavoriteContainer
-        :is-user-page-owner="isUserPageOwner"
-        :user="user"/>
+        <FavoriteContainer :is-user-page-owner="isUserPageOwner" :user="user" />
       </section>
     </div>
 
@@ -89,7 +100,7 @@ const isLoading = ref(true);
 const user = ref({});
 const isUserPageOwner = ref(false);
 const isFollowed = ref(false);
-const loggedUser = ref(JSON.parse(localStorage.getItem('user')));
+const loggedUser = ref(JSON.parse(localStorage.getItem("user")));
 
 onMounted(() => {
   userPageSetup(route.params.id);
@@ -102,7 +113,7 @@ watch(
   }
 );
 
-async function userPageSetup(userID){
+async function userPageSetup(userID) {
   try {
     isLoading.value = true;
     user.value = await apiUser.getUserInfo(userID);
@@ -112,8 +123,10 @@ async function userPageSetup(userID){
     restaurants.value = tempRestaurants;
 
     isUserPageOwner.value = checkIfUserPageOwner();
-    if(!isUserPageOwner.value){
-      isFollowed.value = loggedUser.value.following.some(cuser => cuser.id == user.value.id);
+    if (!isUserPageOwner.value) {
+      isFollowed.value = loggedUser.value.following.some(
+        (cuser) => cuser.id == user.value.id
+      );
     }
   } catch (error) {
     console.error("Failed to fetch user data:", error);
@@ -141,30 +154,29 @@ async function getRestaurantsAsync(visits) {
   return tempRestaurants;
 }
 
-async function followUser(){
-  try{
+async function followUser() {
+  try {
     const follow = await apiUser.followUser(user.value.id);
-  }catch{
+  } catch {
     throw new Error("error trying to follow user");
-  }finally{
-    const result = await apiUser.getUserInfo(loggedUser.value.id)
-    localStorage.setItem('user', JSON.stringify(result));
+  } finally {
+    const result = await apiUser.getUserInfo(loggedUser.value.id);
+    localStorage.setItem("user", JSON.stringify(result));
     isFollowed.value = true;
   }
 }
 
-async function unfollowUser(){
-  try{
+async function unfollowUser() {
+  try {
     const unfollow = await apiUser.unfollowUser(user.value.id);
-  }catch{
+  } catch {
     throw new Error("error trying to unfollow user");
-  }finally{
-    const result = await apiUser.getUserInfo(loggedUser.value.id)
-    localStorage.setItem('user', JSON.stringify(result));
+  } finally {
+    const result = await apiUser.getUserInfo(loggedUser.value.id);
+    localStorage.setItem("user", JSON.stringify(result));
     isFollowed.value = false;
   }
 }
-
 
 function viewReview(visit) {
   review.value = visit;
@@ -172,11 +184,9 @@ function viewReview(visit) {
 }
 
 function checkIfUserPageOwner() {
-  if(localStorage.getItem('user') != null){
-    if(JSON.parse(localStorage.getItem('user')).id == user.value.id)
-      return true
-    else
-      return false;
+  if (localStorage.getItem("user") != null) {
+    if (JSON.parse(localStorage.getItem("user")).id == user.value.id) return true;
+    else return false;
   }
 }
 </script>
@@ -184,7 +194,7 @@ function checkIfUserPageOwner() {
 <style>
 .user-section {
   width: 80%;
-  color: rgb(192, 68, 6);
+  color: rgb(237, 223, 217);
 }
 
 .select-box {
@@ -199,7 +209,7 @@ function checkIfUserPageOwner() {
   padding: 3rem !important;
 }
 
-.back-button{
+.back-button {
   width: 100%;
 }
 
