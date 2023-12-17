@@ -101,6 +101,7 @@
           id="visitDate"
           class="w-100 rounded date"
           type="date"
+          :max="maxDate"
         />
       </div>
 
@@ -152,7 +153,7 @@ const color = (number) => {
 
 function submitRating() {
   try {
-    console.log(props.restaurantId)
+    console.log(props.restaurantId);
     postRestaurantVisit(
       props.restaurantId,
       rating.value,
@@ -165,6 +166,23 @@ function submitRating() {
     emit("openPopUpModale", "An error has occured.");
   }
 }
+const maxDate = ref("");
+
+onMounted(() => {
+  const today = new Date();
+  const timeZone = "America/Montreal";
+
+  const formatter = new Intl.DateTimeFormat("en-CA", {
+    timeZone: timeZone,
+    year: "numeric",
+    month: "2-digit",
+    day: "2-digit",
+  });
+
+  const formattedDate = formatter.format(today).split("/").reverse().join("-");
+
+  maxDate.value = formattedDate;
+});
 </script>
 
 <style>

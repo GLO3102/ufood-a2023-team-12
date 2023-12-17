@@ -21,8 +21,10 @@ import { Swiper, SwiperSlide } from "swiper/vue";
 import "swiper/swiper-bundle.css";
 import { Pagination } from "swiper/modules";
 import "swiper/css/pagination";
-import { defineProps } from "vue";
+import { ref, defineProps } from "vue";
 
+const onSwiper = ref(null);
+const onSlideChange = ref(null);
 const props = defineProps({
   images: Array,
 });
