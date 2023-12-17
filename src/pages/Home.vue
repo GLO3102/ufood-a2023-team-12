@@ -3,7 +3,18 @@
     <home-header @update:restaurantNamesInHome="handleRestaurantNamesUpdate" />
     <div class="d-flex restaurants-section">
       <div class="p-5">
-        <button @click="toggleMapView" class="btn btn-primary">Carte</button>
+        <div class="form-check form-switch">
+          <input
+            class="form-check-input"
+            type="checkbox"
+            role="switch"
+            id="swicthCarte"
+            v-model="showMap"
+          />
+          <label class="form-check-label" for="swicthCarte"
+            ><h5>Carte</h5></label
+          >
+        </div>
         <restaurant-filters :onFilterChange="handleFilterChange" />
       </div>
 
@@ -95,9 +106,6 @@ const popUpOpened = ref(false);
 function handleRestaurantNamesUpdate(names) {
   restaurantNamesInHome.value = names;
 }
-const toggleMapView = () => {
-  showMap.value = !showMap.value;
-};
 const filteredRestaurantCoordinates = computed(() => {
   return filtered_restaurants.value.map(
     (restaurant) => restaurant.location.coordinates
@@ -195,6 +203,9 @@ watch(
 </script>
 
 <style scoped>
+.form-check-label {
+  color: #eae0d5;
+}
 @media screen and (max-width: 990px) {
   .restaurants-section {
     flex-direction: column;
