@@ -8,9 +8,16 @@
       </div>
       <form @submit.prevent="submitFavoritesList">
         <div class="form-group">
-          <input type="text" class="form-control new-list-input" v-model="listName" placeholder="Enter list name">
+          <input
+            type="text"
+            class="form-control new-list-input"
+            v-model="listName"
+            placeholder="Enter list name"
+          />
         </div>
-        <button type="submit" class="btn btn-success btn-sm new-list-btn">Create List</button>
+        <button type="submit" class="btn btn-success btn-sm new-list-btn">
+          Create List
+        </button>
       </form>
     </div>
 
@@ -51,8 +58,14 @@
               :key="restaurant.id"
             >
               <restaurant-card :restaurant="restaurant" />
-              <div v-if="isUserPageOwner" class="favorites-btn-section mb-3 w-100">
-                <button @click="removeRestaurant(restaurant.id)" class="btn btn-success">
+              <div
+                v-if="isUserPageOwner"
+                class="favorites-btn-section mb-3 w-100"
+              >
+                <button
+                  @click="removeRestaurant(restaurant.id)"
+                  class="btn btn-success"
+                >
                   Remove
                 </button>
               </div>
@@ -83,21 +96,17 @@ const selectedList = ref(null);
 const errorMessage = ref("");
 const allLists = ref([]);
 const detailedRestaurantList = ref([]);
-const user = ref(props.user);
 const emit = defineEmits(["openRateModale"]);
 const props = defineProps({
   isUserPageOwner: Boolean,
-  user: Object
-})
+  user: Object,
+});
 
 const submitFavoritesList = async () => {
   errorMessage.value = "";
   try {
     validateTextInput(listName.value);
-    const newList = await createFavoritesList(
-      listName.value,
-      props.user.email
-    );
+    const newList = await createFavoritesList(listName.value, props.user.email);
     allLists.value.push(newList);
     listName.value = "";
   } catch (error) {
@@ -178,14 +187,13 @@ onMounted(getFavoritesList);
     padding: 0;
     flex-direction: column;
   }
-
 }
-.new-list-input{
+.new-list-input {
   width: 18rem;
   border: 1px solid black;
   border-radius: 0.5rem 0.5rem 0.5rem 0;
 }
-.new-list-btn{
+.new-list-btn {
   border: 1px solid black;
   border-radius: 0 0 0.5rem 0.5rem;
 }
